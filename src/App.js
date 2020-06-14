@@ -10,16 +10,17 @@ const Map = ReactMapboxGl({
 function App() {
   return (
     <div className="App">
-      <Map
-        style="mapbox://styles/sabrimyllaud/ckal2ef6g3fat1ir1jnzuyh6q"
-        containerStyle={{
-          height: '100vh',
-          width: '100vw',
-          center: [2.351027, 48.856669], //   [longitude,latitude]
-          zoom: 12,
-          attributionControl: false,
-        }}
-      ></Map>
+      <div className="map-container">
+        <Map
+          style="mapbox://styles/sabrimyllaud/ckal2ef6g3fat1ir1jnzuyh6q"
+          containerStyle={{
+            height: '100vh',
+            width: '100vw',
+            // center: [3.92, 46.62], //   [longitude,latitude]
+            // zoom: 4,
+          }}
+        ></Map>
+      </div>
     </div>
   );
 }
