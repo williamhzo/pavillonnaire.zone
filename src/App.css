@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+/* remove mapbox logo */
+.mapbox-logo {
+  display: none;
+}
+.mapboxgl-ctrl-logo {
+  display: none !important;
+}
+.mapbox-improve-map {
+  display: none;
+}
+.mapboxgl-ctrl-compass {
+  display: none;
+}
