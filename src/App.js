@@ -11,6 +11,7 @@ function App() {
   return (
     <div className="App">
       <div className="map-container">
+        <h1 className="map-title">Pavillonnaire.zone</h1>
         <Map
           style="mapbox://styles/sabrimyllaud/ckal2ef6g3fat1ir1jnzuyh6q"
           containerStyle={{
