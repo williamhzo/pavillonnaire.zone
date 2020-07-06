@@ -7,8 +7,8 @@ mapboxgl.accessToken =
   'pk.eyJ1Ijoic2FicmlteWxsYXVkIiwiYSI6ImNrYWwyYmxmbzA3cnQyeW15cTY0aTd4cTgifQ.6OY0hboWqf4zuhVXdYtFxw';
 
 function App() {
-  const [longitude, setLongitude] = useState(1.87211111);
-  const [latitude, setLatitude] = useState(46.6211111);
+  const [longitude, setLongitude] = useState(1.872);
+  const [latitude, setLatitude] = useState(46.62);
   const [zoom, setZoom] = useState(4.5);
 
   const mapContainer = useRef(null);
@@ -22,8 +22,8 @@ function App() {
     });
     map
       .on('move', () => {
-        setLongitude(map.getCenter().longitude);
-        setLatitude(map.getCenter().latitude);
+        setLongitude(map.getCenter());
+        setLatitude(map.getCenter());
         setZoom(map.getZoom());
       })
       .addControl(new mapboxgl.NavigationControl());
