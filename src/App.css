@@ -1,7 +1,31 @@
-.App {
-  text-align: center;
-  background-color: pink;
+@font-face {
+  font-family: 'Yoster-Island';
+  src: local('yoster-island.regular'),
+    url(./assets/fonts/yoster-island.regular.ttf) format('truetype');
 }
+
+.App {
+  background-color: pink;
+  height: 100%;
+  width: 100%;
+}
+
+h1{
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  top: 1.5rem;
+  color: white;
+  mix-blend-mode: difference;
+  font-family: 'Yoster-Island';
+  font-size: 1.125rem;
+  z-index: 10;
+}
+/* 
+.mapbox-logo{
+  height: 100vh;
+  width: 100%;
+} */
 
 .mapContainer {
   position: absolute;
@@ -9,26 +33,16 @@
   right: 0;
   left: 0;
   bottom: 0;
-}
+  }
 
-.map-title {
-  color: pink;
-  font-size: 2.5rem;
+/* .mapboxgl-control-container{
   position: absolute;
-  margin: 25px;
-  z-index: 10;
-}
+  right: 10rem;
+  bottom: 10rem;
+  background-color: red;
+} */
 
 /* remove mapbox logo */
 .mapbox-logo {
   display: none;
-} /*
-.mapboxgl-ctrl-logo {
-  display: none !important;
-}
-.mapbox-improve-map {
-  display: none;
-}
-.mapboxgl-ctrl-compass {
-  display: none;
-} */
+} 

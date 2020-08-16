@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-// import ReactMapboxGl from 'react-mapbox-gl';
 import mapboxgl from 'mapbox-gl';
 import './App.css';
 
@@ -26,59 +25,16 @@ function App() {
         setLatitude(map.getCenter());
         setZoom(map.getZoom());
       })
-      .addControl(new mapboxgl.NavigationControl());
-    // map.addControl(new mapboxgl.NavigationControl());
   }, []);
 
-  console.log(longitude, latitude, zoom);
   return (
     <div className="App">
-      <div className="map-container">
         <h1 className="map-title">Pavillonnaire.zone</h1>
-        <div
-          className="mapContainer"
+        <div className="mapContainer"
           ref={(el) => (mapContainer.current = el)}
         ></div>
-      </div>
     </div>
   );
 }
 
 export default App;
-
-// const MapboxGLMap = () => {
-//   const [map, setMap] = useState(null);
-//   const mapContainer = useRef(null);
-
-//   useEffect(() => {
-//     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY;
-//     const initializeMap = ({ setMap, mapContainer }) => {
-//       const map = new mapboxgl.Map({
-//         container: mapContainer.current,
-//         style: "mapbox://styles/mapbox/streets-v11", // stylesheet location
-//         center: [0, 0],
-//         zoom: 5
-//       });
-
-//       map.on("load", () => {
-//         setMap(map);
-//         map.resize();
-//       });
-//     };
-
-//     if (!map) initializeMap({ setMap, mapContainer });
-//   }, [map]);
-
-//   return <div ref={el => (mapContainer.current = el)} style={styles} />;
-// };
-
-// geo loc
-// map.addControl(new mapboxgl.NavigationControl(), 'bottom-right').addControl(
-//   new mapboxgl.GeolocateControl({
-//     positionOptions: {
-//       enableHighAccuracy: true,
-//     },
-//     trackUserLocation: true,
-//   }),
-//   'bottom-right'
-// );
