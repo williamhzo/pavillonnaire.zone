@@ -6,8 +6,24 @@
   display: none;
 }
 
+/* prevent overlay between title and search bar */
+.mapboxgl-ctrl-top-right {
+  z-index: 20;
+}
+
+.mapboxgl-ctrl-top-right .mapboxgl-ctrl {
+  margin-top: 1.5rem;
+  margin-right: 1.5rem;
+  padding: 0;
+}
+
 .mapboxgl-ctrl-bottom-left {
   display: none;
+}
+
+.mapboxgl-ctrl-bottom-right .mapboxgl-ctrl-group {
+  margin-right: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .mapboxgl-ctrl-attrib {

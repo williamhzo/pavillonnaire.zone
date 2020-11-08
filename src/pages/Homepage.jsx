@@ -1,48 +1,61 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import '../styles/map.css';
+import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css';
+
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+// import Geocoder from 'react-map-gl-geocoder';
 
 const MAPBOX_STYLE = 'mapbox://styles/sabrimyllaud/ckcavaw0y4hx81ipjdzbdw1up';
+const MAPBOX_API_TOKEN =
+  'pk.eyJ1Ijoic2FicmlteWxsYXVkIiwiYSI6ImNrYWwyYmxmbzA3cnQyeW15cTY0aTd4cTgifQ.6OY0hboWqf4zuhVXdYtFxw';
 const INITIAL_LONGITUDE = 1.872;
 const INITIAL_LATITUDE = 46.62;
 const MOBILE_INITIAL_ZOOM = 4;
 const DESKTOP_INITIAL_ZOOM = 5;
 const ZOOM_LIMIT = 3.5;
 
-mapboxgl.accessToken =
-  'pk.eyJ1Ijoic2FicmlteWxsYXVkIiwiYSI6ImNrYWwyYmxmbzA3cnQyeW15cTY0aTd4cTgifQ.6OY0hboWqf4zuhVXdYtFxw';
+// mapboxgl.accessToken = MAPBOX_API_TOKEN;
 
 export default function Homepage() {
   const isLaptop = useMediaQuery('(min-width: 1024px)');
 
   const mapContainerRef = useRef(null);
+  const geocoderContainerRef = useRef(null);
 
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
+      accessToken: MAPBOX_API_TOKEN,
       style: MAPBOX_STYLE,
       center: [INITIAL_LONGITUDE, INITIAL_LATITUDE],
       zoom: isLaptop ? DESKTOP_INITIAL_ZOOM : MOBILE_INITIAL_ZOOM,
       minZoom: ZOOM_LIMIT,
     });
 
-    // add navigation control (zoom buttons)
+    const geocoder = new MapboxGeocoder({
+      container: geocoderContainerRef.current,
+      accessToken: MAPBOX_API_TOKEN,
+      countries: 'fr',
+      placeholder: 'Recherche par lieu',
+      mapboxgl: mapboxgl,
+    });
+
+    // Navigation control (zoom buttons)
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
-    // map.on('move', () => {
-    //   setLongitude(map.getCenter());
-    //   setLatitude(map.getCenter());
-    //   setZoom(map.getZoom());
-    // });
+    // Search
+    map.addControl(geocoder);
 
-    // clean up on unmount
+    // Clean up on unmount
     return () => map.remove();
   }, [isLaptop]);
 
   return (
     <main className="h-screen w-screen relative">
-      <h1 className="text-2xl text-white blend-difference w-full text-center fixed mt-6 z-10">
+      <h1 className="fixed text-2xl text-white blend-difference text-center w-full mt-6 z-10">
         Pavillonnaire.zone
       </h1>
       <div className="map-container w-full h-full" ref={mapContainerRef}></div>
