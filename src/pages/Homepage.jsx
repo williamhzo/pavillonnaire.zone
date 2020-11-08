@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import '../styles/map.css';
-import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-// import Geocoder from 'react-map-gl-geocoder';
 
 const MAPBOX_STYLE = 'mapbox://styles/sabrimyllaud/ckcavaw0y4hx81ipjdzbdw1up';
 const MAPBOX_API_TOKEN =
@@ -55,8 +53,8 @@ export default function Homepage() {
 
   return (
     <main className="h-screen w-screen relative">
-      <h1 className="fixed text-2xl text-white blend-difference text-center w-full mt-6 z-10">
-        Pavillonnaire.zone
+      <h1 className="fixed text-lg text-white blend-difference text-center w-full mt-6 z-10">
+        <a href="http://www.pavillonnaire.zone/">Pavillonnaire.zone</a>
       </h1>
       <div className="map-container w-full h-full" ref={mapContainerRef}></div>
     </main>
