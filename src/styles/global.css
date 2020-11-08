@@ -1,0 +1,15 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Yoster-Island';
+}
+
+@font-face {
+  font-family: 'Yoster-Island';
+  src: local('yoster-island.regular'),
+    url(../assets/fonts/yoster-island.regular.ttf) format('truetype');
+}
