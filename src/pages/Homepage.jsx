@@ -1,16 +1,20 @@
 import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import '../styles/map.css';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const MAPBOX_STYLE = 'mapbox://styles/sabrimyllaud/ckcavaw0y4hx81ipjdzbdw1up';
 const INITIAL_POINT_LONGITUDE = 1.872;
 const INITIAL_POINT_LATITUDE = 46.62;
-const INITIAL_POINT_ZOOM = 5;
+const INITIAL_MOBILE_POINT_ZOOM = 4;
+const INITIAL_DESKTOP_POINT_ZOOM = 5;
 
 mapboxgl.accessToken =
   'pk.eyJ1Ijoic2FicmlteWxsYXVkIiwiYSI6ImNrYWwyYmxmbzA3cnQyeW15cTY0aTd4cTgifQ.6OY0hboWqf4zuhVXdYtFxw';
 
 export default function Homepage() {
+  const isLaptop = useMediaQuery('(min-width: 1024px)');
+
   const mapContainerRef = useRef(null);
 
   useEffect(() => {
@@ -18,7 +22,7 @@ export default function Homepage() {
       container: mapContainerRef.current,
       style: MAPBOX_STYLE,
       center: [INITIAL_POINT_LONGITUDE, INITIAL_POINT_LATITUDE],
-      zoom: INITIAL_POINT_ZOOM,
+      zoom: isLaptop ? INITIAL_DESKTOP_POINT_ZOOM : INITIAL_MOBILE_POINT_ZOOM,
     });
 
     // add navigation control (zoom buttons)
