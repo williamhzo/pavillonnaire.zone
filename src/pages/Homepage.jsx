@@ -4,10 +4,11 @@ import '../styles/map.css';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const MAPBOX_STYLE = 'mapbox://styles/sabrimyllaud/ckcavaw0y4hx81ipjdzbdw1up';
-const INITIAL_POINT_LONGITUDE = 1.872;
-const INITIAL_POINT_LATITUDE = 46.62;
-const INITIAL_MOBILE_POINT_ZOOM = 4;
-const INITIAL_DESKTOP_POINT_ZOOM = 5;
+const INITIAL_LONGITUDE = 1.872;
+const INITIAL_LATITUDE = 46.62;
+const MOBILE_INITIAL_ZOOM = 4;
+const DESKTOP_INITIAL_ZOOM = 5;
+const ZOOM_LIMIT = 3.5;
 
 mapboxgl.accessToken =
   'pk.eyJ1Ijoic2FicmlteWxsYXVkIiwiYSI6ImNrYWwyYmxmbzA3cnQyeW15cTY0aTd4cTgifQ.6OY0hboWqf4zuhVXdYtFxw';
@@ -21,8 +22,9 @@ export default function Homepage() {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: MAPBOX_STYLE,
-      center: [INITIAL_POINT_LONGITUDE, INITIAL_POINT_LATITUDE],
-      zoom: isLaptop ? INITIAL_DESKTOP_POINT_ZOOM : INITIAL_MOBILE_POINT_ZOOM,
+      center: [INITIAL_LONGITUDE, INITIAL_LATITUDE],
+      zoom: isLaptop ? DESKTOP_INITIAL_ZOOM : MOBILE_INITIAL_ZOOM,
+      minZoom: ZOOM_LIMIT,
     });
 
     // add navigation control (zoom buttons)
@@ -36,7 +38,7 @@ export default function Homepage() {
 
     // clean up on unmount
     return () => map.remove();
-  }, []);
+  }, [isLaptop]);
 
   return (
     <main className="h-screen w-screen relative">
