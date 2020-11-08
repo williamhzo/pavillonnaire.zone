@@ -15,8 +15,6 @@ const MOBILE_INITIAL_ZOOM = 4;
 const DESKTOP_INITIAL_ZOOM = 5;
 const ZOOM_LIMIT = 3.5;
 
-// mapboxgl.accessToken = MAPBOX_API_TOKEN;
-
 export default function Homepage() {
   const isLaptop = useMediaQuery('(min-width: 1024px)');
 
@@ -37,6 +35,7 @@ export default function Homepage() {
       container: geocoderContainerRef.current,
       accessToken: MAPBOX_API_TOKEN,
       countries: 'fr',
+      language: 'fr-FR',
       placeholder: 'Recherche par lieu',
       mapboxgl: mapboxgl,
     });
