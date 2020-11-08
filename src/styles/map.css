@@ -1,12 +1,15 @@
-.mapContainer {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
+.mapboxgl-canvas {
+  outline: none;
 }
 
-/* remove mapbox logo */
 .mapbox-logo {
+  display: none;
+}
+
+.mapboxgl-ctrl-bottom-left {
+  display: none;
+}
+
+.mapboxgl-ctrl-attrib {
   display: none;
 }
