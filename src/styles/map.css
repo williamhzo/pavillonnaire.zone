@@ -11,6 +11,11 @@
   z-index: 20;
 }
 
+.mapboxgl-ctrl-group button {
+  width: 36px;
+  height: 36px;
+}
+
 .mapboxgl-ctrl-bottom-right .mapboxgl-ctrl-geocoder {
   margin-bottom: 1.5rem;
   margin-right: 1.5rem;
