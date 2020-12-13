@@ -4,7 +4,7 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import '../styles/map.css'
 
-import useMediaQuery from '@material-ui/core/useMediaQuery'
+import useMediaQuery from '../hooks/useMediaQuery'
 
 const MAPBOX_STYLE = 'mapbox://styles/sabrimyllaud/ckcavaw0y4hx81ipjdzbdw1up'
 const MAPBOX_API_TOKEN =
