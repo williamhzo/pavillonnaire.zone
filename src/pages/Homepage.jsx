@@ -74,7 +74,7 @@ export default function Homepage() {
             viewBox="0 0 256 256"
             xmlns="http://www.w3.org/2000/svg"
             preserveAspectRatio="xMidYMid"
-            className="fill-current text-white blend-difference absolute z-10 w-9 h-9 left-6 bottom-6"
+            className="fill-current text-white blend-difference absolute z-10 w-9 h-9 left-6 bottom-12"
           >
             <path
               height="100%"
