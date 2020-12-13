@@ -11,8 +11,8 @@
   z-index: 20;
 }
 
-.mapboxgl-ctrl-top-right .mapboxgl-ctrl {
-  margin-top: 1.5rem;
+.mapboxgl-ctrl-bottom-right .mapboxgl-ctrl-geocoder {
+  margin-bottom: 1.5rem;
   margin-right: 1.5rem;
   padding: 0;
   font-family: 'Yoster-Island';
@@ -22,9 +22,9 @@
   display: none;
 }
 
-.mapboxgl-ctrl-bottom-right .mapboxgl-ctrl-group {
+.mapboxgl-ctrl-top-right .mapboxgl-ctrl {
   margin-right: 1.5rem;
-  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
 }
 
 .mapboxgl-ctrl-attrib {
