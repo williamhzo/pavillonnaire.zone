@@ -16,16 +16,15 @@ module.exports = {
     fontFamily: {
       display: ['Gilroy', 'sans-serif'],
       body: ['Graphik', 'sans-serif'],
+      serif: ['Yoster-Island', 'serif'],
     },
     extend: {},
   },
   variants: {
-  // all the following default to ['responsive']
+    // all the following default to ['responsive']
     mixBlendMode: ['responsive'],
     backgroundBlendMode: ['responsive'],
     isolation: ['responsive'],
   },
-  plugins: [
-    require('tailwindcss-blend-mode')(),
-  ],
+  plugins: [require('tailwindcss-blend-mode')()],
 }
