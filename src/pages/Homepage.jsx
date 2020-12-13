@@ -38,10 +38,16 @@ export default function Homepage() {
       language: 'fr-FR',
       placeholder: 'Recherche par lieu',
       mapboxgl: mapboxgl,
+      collapsed: true,
+      limit: 3,
+      enableEventLogging: false,
     })
 
     // Navigation control (zoom buttons)
-    map.addControl(new mapboxgl.NavigationControl(), 'top-right')
+    map.addControl(
+      new mapboxgl.NavigationControl({ showZoom: isLaptop }),
+      'top-right'
+    )
 
     // Search
     map.addControl(geocoder, 'bottom-right')
