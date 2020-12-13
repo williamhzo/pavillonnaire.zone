@@ -54,7 +54,8 @@ export default function Homepage() {
 
     // Clean up on unmount
     return () => map.remove()
-  }, [isLaptop])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <main className="h-screen w-screen relative">
@@ -74,7 +75,7 @@ export default function Homepage() {
             viewBox="0 0 256 256"
             xmlns="http://www.w3.org/2000/svg"
             preserveAspectRatio="xMidYMid"
-            className="fill-current text-white blend-difference absolute z-10 w-9 h-9 left-6 bottom-12"
+            className="fill-current text-white blend-difference absolute z-10 w-9 h-9 left-6 bottom-14"
           >
             <path
               height="100%"
