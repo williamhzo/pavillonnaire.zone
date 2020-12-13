@@ -58,7 +58,7 @@ export default function Homepage() {
 
   return (
     <main className="h-screen w-screen relative">
-      <h1 className="fixed font-serif text-lg text-white blend-difference text-center w-full mt-6 z-10">
+      <h1 className="fixed font-serif text-lg text-white blend-difference text-center w-full mt-7 z-10">
         <a href="http://www.pavillonnaire.zone/">pavillonnaire.zone</a>
       </h1>
       <div
