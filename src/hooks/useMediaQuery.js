@@ -1,22 +1,37 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react';
 
-export default function useMediaQuery(query) {
-  const [isMatchingQuery, setIsMatchingQuery] = useState(false)
+/**
+ *  Hook for using media queries for conditional rendering.
+ *
+ *  @example
+ *  const isPageWide = useMediaQuery('(min-width: 800px)');
+ *  const isPageWide = useMediaQuery(device.laptop);
+ */
+export default function useMediaQuery(query)  {
+  const [isMatchingQuery, setIsMatchingQuery] = useState(false);
 
   function onMediaQueryChange(event) {
-    setIsMatchingQuery(event.matches)
+    setIsMatchingQuery(event.matches);
   }
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia(query)
+    const mediaQuery = window.matchMedia(query);
 
     if (mediaQuery.matches !== isMatchingQuery)
-      setIsMatchingQuery(mediaQuery.matches)
+      setIsMatchingQuery(mediaQuery.matches);
 
-    mediaQuery.addEventListener('change', onMediaQueryChange)
+    try {
+      // Chrome & Firefox
+      mediaQuery.addEventListener('change', onMediaQueryChange);
 
-    return () => mediaQuery.removeEventListener('change', onMediaQueryChange)
-  }, [isMatchingQuery, query])
+      return () => mediaQuery.removeEventListener('change', onMediaQueryChange);
+    } catch {
+      // Safari < 14, IE, Edge < 16
+      mediaQuery.addListener(onMediaQueryChange);
 
-  return isMatchingQuery
+      return () => mediaQuery.removeListener(onMediaQueryChange);
+    }
+  }, [isMatchingQuery, query]);
+
+  return isMatchingQuery;
 }
