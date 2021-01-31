@@ -1,5 +1,5 @@
 import Div100vh from 'react-div-100vh'
-import { useMapBox } from '../../utils/useMapBox'
+import { useMapBox } from '../../hooks/useMapBox'
 import React from 'react'
 
 export default function Map() {
@@ -7,8 +7,9 @@ export default function Map() {
 
   return (
     <Div100vh className="w-full">
-      <h1 className="fixed font-serif text-lg text-white blend-difference text-center w-full mt-7 z-10">
-        <a href="http://www.pavillonnaire.zone/">pavillonnaire.zone</a>
+      <h1 className="flyToTextButton fixed font-serif text-lg text-white blend-difference text-center w-full mt-7 z-10">
+        pavillonnaire.zone
+        {/* <a href="http://www.pavillonnaire.zone/">pavillonnaire.zone</a> */}
       </h1>
       <div
         className="map-container w-full h-full relative"
@@ -32,6 +33,10 @@ export default function Map() {
             />
           </svg>
         </a>
+
+        {/* <button className="flyToTextButton absolute z-20 bg-white p-2 ">
+          Montre moi le texte !
+        </button> */}
       </div>
     </Div100vh>
   )
