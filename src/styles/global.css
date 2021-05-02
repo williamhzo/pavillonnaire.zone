@@ -1,7 +1,8 @@
 @font-face {
   font-family: 'Yoster-Island';
   src: local('yoster-island.regular'),
-    url(../assets/fonts/yoster-island.regular.ttf) format('truetype');
+    url(./fonts/yoster-island.regular.ttf) format('truetype');
+    /* url(../../public/fonts/yoster-island.regular.ttf) format('truetype'); */
 }
 
 *,
