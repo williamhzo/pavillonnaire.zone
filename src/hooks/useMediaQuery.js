@@ -31,7 +31,7 @@ export default function useMediaQuery(query)  {
 
       return () => mediaQuery.removeListener(onMediaQueryChange);
     }
-  }, [isMatchingQuery, query]);
+  }, []);
 
   return isMatchingQuery;
 }

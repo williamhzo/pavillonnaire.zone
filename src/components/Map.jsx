@@ -1,9 +1,10 @@
-import Div100vh from 'react-div-100vh'
-import { useMapBox } from '../../hooks/useMapBox'
-import React from 'react'
+import React from "react";
+import Div100vh from "react-div-100vh";
+import { useMapBox } from "../hooks/useMapBox";
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
 export default function Map() {
-  const mapContainerRef = useMapBox()
+  const mapContainerRef = useMapBox();
 
   return (
     <Div100vh className="w-full">
@@ -39,5 +40,5 @@ export default function Map() {
         </button> */}
       </div>
     </Div100vh>
-  )
+  );
 }

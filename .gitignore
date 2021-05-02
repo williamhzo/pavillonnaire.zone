@@ -8,20 +8,28 @@
 # testing
 /coverage
 
+# next.js
+/.next/
+/out/
+
 # production
 /build
 
 # misc
 .DS_Store
+.eslintrc
+.prettierrc
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
-/db
-.eslintrc
-.prettierrc
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-/src/styles/tailwind.output.css
+# map data
+/db
