@@ -1,6 +1,6 @@
 import useMediaQuery from "./useMediaQuery";
-import useToggle from "./useToggle";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 
 const MAPBOX_STYLE = "mapbox://styles/sabrimyllaud/ckcavaw0y4hx81ipjdzbdw1up";
 const MAPBOX_API_TOKEN =
@@ -15,23 +15,23 @@ const ZOOM_LIMIT = 3.5;
 const FLY_TO_TEXT_LONGITUDE = 46.62;
 const FLY_TO_TEXT_LATITUDE = 1.872;
 
-function defineTargetPosition(isMapToInitialPosition) {
-  return isMapToInitialPosition
-    ? [FLY_TO_TEXT_LONGITUDE, FLY_TO_TEXT_LATITUDE]
-    : [INITIAL_LONGITUDE, INITIAL_LATITUDE];
-}
+// function defineTargetPosition(isMapToInitialPosition) {
+//   return isMapToInitialPosition
+//     ? [FLY_TO_TEXT_LONGITUDE, FLY_TO_TEXT_LATITUDE]
+//     : [INITIAL_LONGITUDE, INITIAL_LATITUDE];
+// }
 
-function defineTargetZoom(isMapToInitialPosition, isLaptop) {
-  if (isLaptop) {
-    return isMapToInitialPosition
-      ? DESKTOP_FLY_TO_TEXT_ZOOM
-      : DESKTOP_INITIAL_ZOOM;
-  } else {
-    return isMapToInitialPosition
-      ? MOBILE_FLY_TO_TEXT_ZOOM
-      : MOBILE_INITIAL_ZOOM;
-  }
-}
+// function defineTargetZoom(isMapToInitialPosition, isLaptop) {
+//   if (isLaptop) {
+//     return isMapToInitialPosition
+//       ? DESKTOP_FLY_TO_TEXT_ZOOM
+//       : DESKTOP_INITIAL_ZOOM;
+//   } else {
+//     return isMapToInitialPosition
+//       ? MOBILE_FLY_TO_TEXT_ZOOM
+//       : MOBILE_INITIAL_ZOOM;
+//   }
+// }
 
 export function useMapBox() {
   // const [isMapToInitialPosition, toggleMapPosition] = useToggle()
@@ -42,11 +42,10 @@ export function useMapBox() {
   const mapContainerRef = useRef(null);
   const geocoderContainerRef = useRef(null);
 
-  let mapboxgl, MapboxGeocoder;
+  let mapboxgl;
 
   useEffect(() => {
     mapboxgl = require("mapbox-gl");
-    MapboxGeocoder = require("@mapbox/mapbox-gl-geocoder");
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
@@ -122,7 +121,7 @@ export function useMapBox() {
     // Clean up on unmount
     return () => map.remove();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isLaptop, mapboxgl]);
 
   return mapContainerRef;
 }
