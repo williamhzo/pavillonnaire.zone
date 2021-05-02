@@ -14,8 +14,8 @@ module.exports = {
       xl: "1280px",
     },
     fontFamily: {
-      display: ["Gilroy", "sans-serif"],
-      body: ["Graphik", "sans-serif"],
+      display: ["Gilroy", "Arial", "sans-serif"],
+      body: ["Alice", "Arial", "sans-serif"],
       serif: ["Yoster-Island", "serif"],
     },
     extend: {},

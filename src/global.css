@@ -8,6 +8,12 @@
     url(../public/fonts/yoster-island.regular.ttf) format('truetype');
 }
 
+@font-face {
+  font-family: 'Alice';
+  src: local('Alice-Regular'),
+    url(../public/fonts/Alice-Regular.ttf) format('truetype');
+}
+
 *,
 *::before,
 *::after {
@@ -15,7 +21,7 @@
 }
 
 body {
-  font-family: 'Yoster-Island';
+  font-family: 'Alice';
   height: 100vh;
   /* mobile viewport bug fix */
   height: -webkit-fill-available;
