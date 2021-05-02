@@ -1,14 +1,15 @@
-import React from 'react'
+import React from "react";
 
-import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
-import '../styles/map.css'
-
-import Map from '../components/Map/Map'
+import SEO from "../components/SEO";
+import Map from "../components/Map";
 
 export default function Homepage() {
   return (
-    <main className="w-screen relative">
-      <Map />
-    </main>
-  )
+    <>
+      <SEO />
+      <main className="w-screen relative">
+        <Map />
+      </main>
+    </>
+  );
 }
