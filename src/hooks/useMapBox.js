@@ -1,5 +1,5 @@
 import useMediaQuery from "./useMediaQuery";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 
 const MAPBOX_STYLE = "mapbox://styles/sabrimyllaud/ckcavaw0y4hx81ipjdzbdw1up";
@@ -36,6 +36,9 @@ const FLY_TO_TEXT_LATITUDE = 1.872;
 export function useMapBox() {
   // const [isMapToInitialPosition, toggleMapPosition] = useToggle()
   // const [isMapToInitialPosition, toggleMapPosition] = useState(true)
+  const [lng, setLng] = useState(-70.9);
+  const [lat, setLat] = useState(42.35);
+  const [zoom, setZoom] = useState(9);
 
   const isLaptop = useMediaQuery("(min-width: 1024px)");
 
@@ -70,7 +73,7 @@ export function useMapBox() {
 
     // Navigation control (zoom buttons)
     map.addControl(
-      new mapboxgl.NavigationControl({ showZoom: isLaptop }),
+      new mapboxgl.NavigationControl({ showZoom: false }),
       "top-right"
     );
 
@@ -91,12 +94,6 @@ export function useMapBox() {
     //     // to pan.
     //     speed: 0.8, // make the flying slow
     //     curve: 1.4, // change the speed at which it zooms out
-
-    //     // This can be any easing function: it takes a number between
-    //     // 0 and 1 and returns another number between 0 and 1.
-    //     easing: function (t) {
-    //       return t
-    //     },
     //     essential: true,
     //   })
 
@@ -113,15 +110,26 @@ export function useMapBox() {
     //   toggleMapPosition(!isMapToInitialPosition)
     // }
 
-    // document.querySelectorAll('.flyToTextButton').forEach((element) => {
-    //   // element.addEventListener('click', flyToText)
-    //   element.addEventListener('click', fitBoundsToText)
-    // })
+    function flyToLocation() {
+      map.flyTo({
+        center: [-69.212, 42.325],
+        zoom: 9,
+        essential: true,
+      });
+    }
+
+    // document.getElementById("flyTo").addEventListener("click", flyToLocation);
+
+    map.on("move", () => {
+      setLng(map.getCenter().lng.toFixed(4));
+      setLat(map.getCenter().lat.toFixed(4));
+      setZoom(map.getZoom().toFixed(2));
+    });
 
     // Clean up on unmount
     return () => map.remove();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLaptop, mapboxgl]);
 
-  return mapContainerRef;
+  return { mapContainerRef, lng, lat, zoom };
 }
