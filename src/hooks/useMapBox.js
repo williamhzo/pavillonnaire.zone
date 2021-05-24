@@ -1,16 +1,16 @@
-import useMediaQuery from "./useMediaQuery";
-import { useEffect, useRef, useState } from "react";
-import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import useMediaQuery from './useMediaQuery';
+import { useEffect, useRef, useState } from 'react';
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
-const MAPBOX_STYLE = "mapbox://styles/sabrimyllaud/ckcavaw0y4hx81ipjdzbdw1up";
+const MAPBOX_STYLE = 'mapbox://styles/sabrimyllaud/ckcavaw0y4hx81ipjdzbdw1up';
 const MAPBOX_API_TOKEN =
-  "pk.eyJ1Ijoic2FicmlteWxsYXVkIiwiYSI6ImNrYWwyYmxmbzA3cnQyeW15cTY0aTd4cTgifQ.6OY0hboWqf4zuhVXdYtFxw";
+  'pk.eyJ1Ijoic2FicmlteWxsYXVkIiwiYSI6ImNrYWwyYmxmbzA3cnQyeW15cTY0aTd4cTgifQ.6OY0hboWqf4zuhVXdYtFxw';
 const INITIAL_LONGITUDE = 1.872;
 const INITIAL_LATITUDE = 46.62;
-const MOBILE_INITIAL_ZOOM = 4;
-const DESKTOP_INITIAL_ZOOM = 5;
+const MOBILE_INITIAL_ZOOM = 3.8;
+const DESKTOP_INITIAL_ZOOM = 4.5;
 const MOBILE_FLY_TO_TEXT_ZOOM = 4;
-const DESKTOP_FLY_TO_TEXT_ZOOM = 5;
+const DESKTOP_FLY_TO_TEXT_ZOOM = 4.3;
 const ZOOM_LIMIT = 3.5;
 const FLY_TO_TEXT_LONGITUDE = 46.62;
 const FLY_TO_TEXT_LATITUDE = 1.872;
@@ -40,7 +40,7 @@ export function useMapBox() {
   const [lat, setLat] = useState(42.35);
   const [zoom, setZoom] = useState(9);
 
-  const isLaptop = useMediaQuery("(min-width: 1024px)");
+  const isLaptop = useMediaQuery('(min-width: 1024px)');
 
   const mapContainerRef = useRef(null);
   const geocoderContainerRef = useRef(null);
@@ -48,7 +48,7 @@ export function useMapBox() {
   let mapboxgl;
 
   useEffect(() => {
-    mapboxgl = require("mapbox-gl");
+    mapboxgl = require('mapbox-gl');
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
@@ -62,9 +62,9 @@ export function useMapBox() {
     const geocoder = new MapboxGeocoder({
       container: geocoderContainerRef.current,
       accessToken: MAPBOX_API_TOKEN,
-      countries: "fr",
-      language: "fr-FR",
-      placeholder: "Recherche par lieu",
+      countries: 'fr',
+      language: 'fr-FR',
+      placeholder: 'Recherche par lieu',
       mapboxgl: mapboxgl,
       collapsed: true,
       limit: 3,
@@ -74,11 +74,11 @@ export function useMapBox() {
     // Navigation control (zoom buttons)
     map.addControl(
       new mapboxgl.NavigationControl({ showZoom: false }),
-      "top-right"
+      'top-right'
     );
 
     // Search
-    map.addControl(geocoder, "bottom-right");
+    map.addControl(geocoder, 'bottom-right');
 
     // Fly to
     // function flyToText() {
@@ -120,7 +120,7 @@ export function useMapBox() {
 
     // document.getElementById("flyTo").addEventListener("click", flyToLocation);
 
-    map.on("move", () => {
+    map.on('move', () => {
       setLng(map.getCenter().lng.toFixed(4));
       setLat(map.getCenter().lat.toFixed(4));
       setZoom(map.getZoom().toFixed(2));

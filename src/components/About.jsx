@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 export default function About() {
   return (
@@ -20,14 +20,14 @@ export default function About() {
           />
         </svg>
       </div>
-      <p className="mb-2">
+      <p className="mb-4">
         Le pavillonnaire est un territoire dont on connaît trop peu la culture.
         Nous sommes beaucoup à y avoir grandi ou vécu, et pourtant l’idée d’une
         culture pavillonnaire reste encore discrète et fragile. Que se
         cache-t-il derrière ces maisons que beaucoup croient toutes identiques ?
         qu’en pensent leurs habitants, et quel univers y ont-ils développé ?
       </p>
-      <p className="mb-2">
+      <p className="mb-4">
         pavillonnaire.zone (v1.0) est un outil contributif dont le but est de
         faire émerger les éléments d’une culture pavillonnaire, en même temps
         qu’il permet de les situer. La page web rassemblera bientôt (future
@@ -35,7 +35,7 @@ export default function About() {
         interactive. Elle deviendra le support cliquable à une archive
         géolocalisée.
       </p>
-      <p className="mb-2">
+      <p className="mb-4">
         La map donne à voir, sans ambiguïté, et pour la première fois, la
         silhouette du pavillonnaire sur le territoire français. Pixels noirs,
         éparpillés entre campagnes et centres-villes. La trace est issue d'un
@@ -57,7 +57,7 @@ export default function About() {
         de la DREAL Normandie pour sa démarche « devenir des zones
         pavillonnaires ».
       </p>
-      <p className="mb-2">
+      <p className="mb-4">
         L’archive explore l’idée d’une culture pavillonnaire, au travers des
         travaux ou des expériences qui en émanent. Elle rassemble un imaginaire
         en constellation, sans souci de hiérarchie entre les différents items
@@ -65,7 +65,7 @@ export default function About() {
         exploration, pour la visibilité d’une culture discrète, vécue de
         l’intérieure.
       </p>
-      <p className="mb-2">
+      <p className="mb-4">
         <span className="mr-2">🏡</span> Le tout est le fruit de la
         collaboration entre{' '}
         <a
@@ -92,7 +92,7 @@ export default function About() {
         </a>
         .
       </p>
-      <p className="mb-2">
+      <p className="mb-4">
         <span className="mr-2">✉️</span> Ecrivez-nous si vous voulez{' '}
         <a className="underline" href="mailto:contribuer@pavillonnaire.zone">
           contribuer@pavillonnaire.zone
@@ -112,5 +112,5 @@ export default function About() {
         </a>
       </p>
     </div>
-  )
+  );
 }
