@@ -26,6 +26,15 @@ body {
   /* mobile viewport bug fix */
   height: -webkit-fill-available;
   min-height: -webkit-fill-available;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+body::-webkit-scrollbar {
+  /* WebKit */
+  width: 0;
+  height: 0;
 }
 
 html {
@@ -51,6 +60,11 @@ textarea {
   font-size: 16px;
 }
 
+p::selection, a::selection, h1::selection, h2::selection, h3::selection, h4::selection, h5::selection, h6::selection {
+  background: white; /* WebKit/Blink Browsers */
+  color: black;
+}
+
 .mapboxgl-canvas {
   outline: none;
 }
@@ -65,7 +79,7 @@ textarea {
 }
 
 .mapboxgl-ctrl-group {
-  border-radius: 0 ;
+  border-radius: 0;
 }
 
 .mapboxgl-ctrl-group button {
@@ -84,8 +98,8 @@ textarea {
   max-width: 100px;
 }
 
-.mapboxgl-ctrl-geocoder{
-  border-radius: 0 ;
+.mapboxgl-ctrl-geocoder {
+  border-radius: 0;
 }
 
 .mapboxgl-ctrl-geocoder--icon-search {
