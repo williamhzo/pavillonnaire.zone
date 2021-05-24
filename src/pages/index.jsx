@@ -26,7 +26,7 @@ export default function Homepage() {
           <Map hide={showAbout} />
 
           {showAbout && (
-            <div className="h-full w-full flex justify-center items-start p-6 md:p-20 lg:pb-6 ">
+            <div className="h-full w-full flex justify-center items-start p-6 py-20 md:p-20  ">
               <About />
             </div>
           )}
