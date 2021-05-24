@@ -1,15 +1,15 @@
-import React from "react";
-import Div100vh from "react-div-100vh";
+import React from 'react'
+import Div100vh from 'react-div-100vh'
 
-import SEO from "../components/SEO";
-import Map from "../components/Map";
-import About from "../components/About";
-import AboutIcon from "../components/AboutIcon";
-import Instagram from "../components/Instagram";
-import useToggle from "../hooks/useToggle";
+import SEO from '../components/SEO'
+import Map from '../components/Map'
+import About from '../components/About'
+import AboutIcon from '../components/AboutIcon'
+import Instagram from '../components/Instagram'
+import useToggle from '../hooks/useToggle'
 
 export default function Homepage() {
-  const [showAbout, toggleAbout] = useToggle(false);
+  const [showAbout, toggleAbout] = useToggle(false)
 
   return (
     <>
@@ -26,7 +26,7 @@ export default function Homepage() {
           <Map hide={showAbout} />
 
           {showAbout && (
-            <div className="h-full w-full flex justify-center items-start p-20 lg:pb-6 ">
+            <div className="h-full w-full flex justify-center items-start p-6 md:p-20 lg:pb-6 ">
               <About />
             </div>
           )}
@@ -35,5 +35,5 @@ export default function Homepage() {
         </Div100vh>
       </main>
     </>
-  );
+  )
 }
