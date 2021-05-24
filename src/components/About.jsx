@@ -102,7 +102,14 @@ export default function About() {
 
       <p>
         <span className="mr-2">💾</span>{' '}
-        <a className="underline">Guide contribution</a>
+        <a
+          className="underline"
+          href="./assets/guide-contribution.pdf"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Guide contribution
+        </a>
       </p>
     </div>
   )
