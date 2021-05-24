@@ -58,7 +58,6 @@ input[type='week'],
 select:focus,
 textarea {
   font-size: 16px;
-  color: white !important ;
 }
 
 p::selection,
@@ -103,7 +102,6 @@ h6::selection {
   margin-right: 1.5rem;
   padding: 0;
   font-family: 'Yoster-Island';
-  color: white;
   background-color: transparent;
   border: 1px solid white;
   border-radius: 0;
@@ -120,7 +118,6 @@ svg.mapboxgl-ctrl-geocoder--icon {
 
 .mapboxgl-ctrl-geocoder--input {
   color: white !important;
-  color: rgba(255,255,255,1) !important;
   height: 36px !important;
   padding: 0 36px !important;
 }
@@ -136,7 +133,7 @@ svg.mapboxgl-ctrl-geocoder--icon {
 }
 
 .mapboxgl-ctrl-geocoder--icon-close{
-  display: none;
+  display: none !important;
 }
 
 
