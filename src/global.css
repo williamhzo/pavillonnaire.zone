@@ -58,9 +58,17 @@ input[type='week'],
 select:focus,
 textarea {
   font-size: 16px;
+  color: white !important ;
 }
 
-p::selection, a::selection, h1::selection, h2::selection, h3::selection, h4::selection, h5::selection, h6::selection {
+p::selection,
+a::selection,
+h1::selection,
+h2::selection,
+h3::selection,
+h4::selection,
+h5::selection,
+h6::selection {
   background: white; /* WebKit/Blink Browsers */
   color: black;
 }
@@ -76,6 +84,7 @@ p::selection, a::selection, h1::selection, h2::selection, h3::selection, h4::sel
 /* prevent overlay between title and search bar */
 .mapboxgl-ctrl-top-right {
   z-index: 20;
+  mix-blend-mode: difference ;
 }
 
 .mapboxgl-ctrl-group {
@@ -85,6 +94,8 @@ p::selection, a::selection, h1::selection, h2::selection, h3::selection, h4::sel
 .mapboxgl-ctrl-group button {
   width: 36px;
   height: 36px;
+  background-color: black;
+  border: 1px solid white;
 }
 
 .mapboxgl-ctrl-bottom-right .mapboxgl-ctrl-geocoder {
@@ -92,10 +103,52 @@ p::selection, a::selection, h1::selection, h2::selection, h3::selection, h4::sel
   margin-right: 1.5rem;
   padding: 0;
   font-family: 'Yoster-Island';
+  color: white;
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 0;
 }
+
+svg.mapboxgl-ctrl-geocoder--icon {
+  fill: #fff;
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 22px;
+  height: 22px;
+}
+
+.mapboxgl-ctrl-geocoder--input {
+  color: white !important;
+  color: rgba(255,255,255,1) !important;
+  height: 36px !important;
+  padding: 0 36px !important;
+}
+
+.mapboxgl-ctrl-geocoder--input:focus {
+  color: white !important;
+  outline: none;
+}
+
+.suggestions-wrapper a{
+  color:white !important;
+  background-color:black !important;
+}
+
+.mapboxgl-ctrl-geocoder--icon-close{
+  display: none;
+}
+
+
+.mapboxgl-ctrl-geocoder--button {
+  background: black !important;
+}
+
+
 
 .mapboxgl-ctrl-bottom-right {
   max-width: 100px;
+  mix-blend-mode: difference ;
 }
 
 .mapboxgl-ctrl-geocoder {
@@ -120,14 +173,14 @@ p::selection, a::selection, h1::selection, h2::selection, h3::selection, h4::sel
 }
 
 .mapboxgl-ctrl-geocoder.mapboxgl-ctrl-geocoder--collapsed {
-  width: 36px;
-  min-width: 36px;
+  width: 36px !important;
+  height: 36px;
+  min-width: 36px !important;
 }
 
 .mapboxgl-ctrl-geocoder {
+  height: 36px;
   width: 33.3333%;
-  font-size: 15px;
-  line-height: 20px;
   max-width: 360px;
 }
 
@@ -148,3 +201,4 @@ p::selection, a::selection, h1::selection, h2::selection, h3::selection, h4::sel
 .mapboxgl-ctrl-attrib {
   display: none;
 }
+
