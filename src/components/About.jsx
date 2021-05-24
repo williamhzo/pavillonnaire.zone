@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 export default function About() {
   return (
@@ -39,21 +39,21 @@ export default function About() {
         La map donne à voir, sans ambiguïté, et pour la première fois, la
         silhouette du pavillonnaire sur le territoire français. Pixels noirs,
         éparpillés entre campagnes et centres-villes. La trace est issue d'un
-        traitement de{" "}
+        traitement de{' '}
         <a
           className="underline"
           href="https://www.insee.fr/fr/statistiques/2520034"
         >
           données carroyées
-        </a>{" "}
+        </a>{' '}
         de l'INSEE. Chaque pixel correspond à un carreau de 200/200 mètres,
-        estimé à dominante pavillonnaire suivant les{" "}
+        estimé à dominante pavillonnaire suivant les{' '}
         <a
           className="underline"
           href="http://www.donnees.normandie.developpement-durable.gouv.fr/pavillonnaire/details.html"
         >
           critères de sélection
-        </a>{" "}
+        </a>{' '}
         de la DREAL Normandie pour sa démarche « devenir des zones
         pavillonnaires ».
       </p>
@@ -67,24 +67,33 @@ export default function About() {
       </p>
       <p className="mb-2">
         <span className="mr-2">🏡</span> Le tout est le fruit de la
-        collaboration entre{" "}
+        collaboration entre{' '}
         <a
           className="underline"
           href="https://www.linkedin.com/in/samy-brillaud-b94234199/"
         >
           Samy Brillaud
-        </a>{" "}
-        (curation, QGIS) et{" "}
+        </a>{' '}
+        (curation, QGIS) et{' '}
         <a
           className="underline"
           href="https://www.linkedin.com/in/williamhermozo/"
         >
           William Hermozo
-        </a>{" "}
-        (développement web) qui ont eux même grandi dans la zone.
+        </a>{' '}
+        (développement web) qui ont eux même grandi dans la{' '}
+        <a
+          className="underline"
+          href="https://goo.gl/maps/FFbuSHsMo4TDCq3e8"
+          target="_blank"
+          rel="noreferrer"
+        >
+          zone
+        </a>
+        .
       </p>
       <p className="mb-2">
-        <span className="mr-2">✉️</span> Ecrivez-nous si vous voulez{" "}
+        <span className="mr-2">✉️</span> Ecrivez-nous si vous voulez{' '}
         <a className="underline" href="mailto:contribuer@pavillonnaire.zone">
           contribuer@pavillonnaire.zone
         </a>
@@ -92,9 +101,16 @@ export default function About() {
       </p>
 
       <p>
-        <span className="mr-2">💾</span>{" "}
-        <a className="underline">Guide contribution</a>
+        <span className="mr-2">💾</span>{' '}
+        <a
+          className="underline"
+          href="./assets/guide-contribution.pdf"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Guide contribution
+        </a>
       </p>
     </div>
-  );
+  )
 }
