@@ -8,7 +8,6 @@ export default function SEO() {
   return (
     <Head>
       <title>pavillonnaire.zone</title>
-
       <meta charSet="UTF-8" />
       <meta name="viewport" content="width=device-width" />
       <meta
@@ -20,13 +19,15 @@ export default function SEO() {
         property="og:description"
         content="Une Map pour l'épanouissement d'une culture pavillonnaire 🏡"
       />
-      {/* <meta property="og:image" content="https://www.mywebsite.com/image.jpg" />
-      <meta property="og:image:alt" content="Image description" />
-      <meta property="og:locale" content="fr_FR" />
       <meta property="og:type" content="website" />
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta property="og:url" content="https://www.mywebsite.com/page" />
-      <link rel="canonical" href="https://www.mywebsite.com/page" /> */}
+      <meta property="og:locale" content="fr_FR" />
+      <meta property="og:url" content="https://www.pavillonnaire.zone.com/" />
+      <link rel="canonical" href="https://www.pavillonnaire.zone.com/" />
+      {/* 
+        <meta property="og:image" content="https://www.mywebsite.com/image.jpg" />
+        <meta property="og:image:alt" content="Image description" />
+        <meta name="twitter:card" content="summary_large_image" />
+      */}
 
       <link rel="icon" href="./favicon.ico/favicon.ico" />
       <link rel="icon" href="./favicon.ico/favicon.svg" type="image/svg+xml" />
