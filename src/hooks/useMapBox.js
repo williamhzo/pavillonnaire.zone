@@ -7,13 +7,13 @@ const MAPBOX_API_TOKEN =
   'pk.eyJ1Ijoic2FicmlteWxsYXVkIiwiYSI6ImNrYWwyYmxmbzA3cnQyeW15cTY0aTd4cTgifQ.6OY0hboWqf4zuhVXdYtFxw';
 const INITIAL_LONGITUDE = 1.872;
 const INITIAL_LATITUDE = 46.62;
-const MOBILE_INITIAL_ZOOM = 3.8;
-const DESKTOP_INITIAL_ZOOM = 4;
-const MOBILE_FLY_TO_TEXT_ZOOM = 4;
-const DESKTOP_FLY_TO_TEXT_ZOOM = 4.3;
-const ZOOM_LIMIT = 3.5;
-const FLY_TO_TEXT_LONGITUDE = 46.62;
-const FLY_TO_TEXT_LATITUDE = 1.872;
+const MOBILE_INITIAL_ZOOM = 3;
+const DESKTOP_INITIAL_ZOOM = 3.2;
+// const MOBILE_FLY_TO_TEXT_ZOOM = 4;
+// const DESKTOP_FLY_TO_TEXT_ZOOM = 4.3;
+const ZOOM_LIMIT = 4.4;
+// const FLY_TO_TEXT_LONGITUDE = 46.62;
+// const FLY_TO_TEXT_LATITUDE = 1.872;
 
 // function defineTargetPosition(isMapToInitialPosition) {
 //   return isMapToInitialPosition
@@ -49,8 +49,6 @@ export function useMapBox() {
 
   useEffect(() => {
     mapboxgl = require('mapbox-gl');
-    
-    const marker = new mapboxgl.Marker({ color: "#fff" })
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
