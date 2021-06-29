@@ -49,6 +49,8 @@ export function useMapBox() {
 
   useEffect(() => {
     mapboxgl = require('mapbox-gl');
+    
+    const marker = new mapboxgl.Marker({ color: "#fff" })
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
@@ -58,6 +60,7 @@ export function useMapBox() {
       zoom: isLaptop ? DESKTOP_INITIAL_ZOOM : MOBILE_INITIAL_ZOOM,
       minZoom: ZOOM_LIMIT,
     });
+
 
     const geocoder = new MapboxGeocoder({
       container: geocoderContainerRef.current,
@@ -69,6 +72,7 @@ export function useMapBox() {
       collapsed: true,
       limit: 3,
       enableEventLogging: false,
+      marker: { color: "#000" }
     });
 
     // Navigation control (zoom buttons)

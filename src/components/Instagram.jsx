@@ -16,7 +16,7 @@ export default function Instagram() {
         className="fill-current  blend-difference absolute z-10 w-9 h-9 left-6 bottom-6"
       >
         <rect x="0.5" y="0.5" width="35" height="35" stroke="white" />
-        <circle cx="18" cy="18" r="9" stroke="white" stroke-width="2" />
+        <circle cx="18" cy="18" r="9" stroke="white" strokeWidth="2" />
         <circle cx="30" cy="6" r="2" fill="white" />
       </svg>
     </a>
