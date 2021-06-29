@@ -13,7 +13,7 @@ export default function Instagram() {
         viewBox="0 0 36 36"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="fill-current  blend-difference absolute z-10 w-9 h-9 left-6 bottom-6"
+        className="fill-current blend-difference absolute z-10 w-9 h-9 left-6 bottom-6 hover:filter hover:invert"
       >
         <rect x="0.5" y="0.5" width="35" height="35" stroke="white" />
         <circle cx="18" cy="18" r="9" stroke="white" strokeWidth="2" />
