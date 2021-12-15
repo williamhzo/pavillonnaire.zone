@@ -16,7 +16,6 @@ class MyDocument extends Document {
 
           <script
             async
-            defer
             src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.min.js"
           ></script>
 
