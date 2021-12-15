@@ -64,6 +64,29 @@ export function useMapBox() {
       setZoom(map.getZoom().toFixed(2));
     });
 
+    // see https://docs.mapbox.com/help/tutorials/add-points-pt-3/ for more.
+
+    map.on("click", (event) => {
+      const features = map.queryRenderedFeatures(event.point, {
+        layers: ["edition"],
+      });
+
+      if (!features.length) {
+        return;
+      }
+
+      const feature = features[0];
+
+      console.log(`features`, features);
+
+      const popup = new mapboxgl.Popup({ offset: [0, 0] })
+        .setLngLat(feature.geometry.coordinates)
+        .setHTML(
+          `<h3>${feature.properties.Titre}</h3><p>${feature.properties.Type}</p>`
+        )
+        .addTo(map);
+    });
+
     // Clean up on unmount
     return () => map.remove();
     // eslint-disable-next-line react-hooks/exhaustive-deps

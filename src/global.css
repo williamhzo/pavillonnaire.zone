@@ -198,3 +198,53 @@ svg.mapboxgl-ctrl-geocoder--icon {
 .mapboxgl-ctrl-attrib {
   display: none;
 }
+
+/* Popup styles 
+
+see https://docs.mapbox.com/help/tutorials/building-a-store-locator/#define-interactivity-functions
+
+*/
+
+.mapboxgl-popup-close-button {
+  display: none;
+}
+
+.mapboxgl-popup-content {
+  min-width: fit-content;
+  /* max-width: 200px; */
+  font-family: 'Alice';
+  box-shadow: 0;
+  border-radius: 0;
+  border: 1px solid black;
+  z-index: 9999;
+}
+
+.mapboxgl-popup-tip{
+  height: 50px;
+  border: 1px solid black;
+  z-index: 1;
+}
+
+.mapboxgl-popup-content h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.mapboxgl-popup-content p {
+  text-align: center;
+  font-size: 14px;
+}
+
+/* 
+
+.mapboxgl-popup-content div {
+  padding: 10px;
+}
+
+.mapboxgl-popup-anchor-top > .mapboxgl-popup-content {
+  margin-top: 15px;
+}
+
+.mapboxgl-popup-anchor-top > .mapboxgl-popup-tip {
+  border-bottom-color: #91c949;
+} */
