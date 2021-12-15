@@ -1,13 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 /**
  *  Hook for using media queries for conditional rendering.
- *
- *  @example
- *  const isPageWide = useMediaQuery('(min-width: 800px)');
- *  const isPageWide = useMediaQuery(device.laptop);
  */
-export default function useMediaQuery(query)  {
+export default function useMediaQuery(query) {
   const [isMatchingQuery, setIsMatchingQuery] = useState(false);
 
   function onMediaQueryChange(event) {
@@ -22,9 +18,9 @@ export default function useMediaQuery(query)  {
 
     try {
       // Chrome & Firefox
-      mediaQuery.addEventListener('change', onMediaQueryChange);
+      mediaQuery.addEventListener("change", onMediaQueryChange);
 
-      return () => mediaQuery.removeEventListener('change', onMediaQueryChange);
+      return () => mediaQuery.removeEventListener("change", onMediaQueryChange);
     } catch {
       // Safari < 14, IE, Edge < 16
       mediaQuery.addListener(onMediaQueryChange);
