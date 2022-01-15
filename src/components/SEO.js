@@ -104,9 +104,6 @@ export default function SEO() {
         href="./favicon.ico/favicon-16x16.png"
       />
       <link rel="manifest" href="/manifest.json" />
-
-      {/* <link rel="stylesheet" href="/assets/css/styles.css" />
-          <link rel="stylesheet" href="/assets/css/print.css" media="print" /> */}
     </Head>
   );
 }

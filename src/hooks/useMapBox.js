@@ -25,7 +25,6 @@ export function useMapBox() {
   const geocoderContainerRef = useRef(null);
 
   let mapboxgl;
-  // FIXME:
   mapboxgl = require("mapbox-gl");
 
   const tooltipRef = useRef(new mapboxgl.Popup({ offset: [0, 0] }));
@@ -81,6 +80,7 @@ export function useMapBox() {
       }
 
       const feature = features[0];
+      console.log(`feature.properties`, feature.properties);
 
       // Create tooltip node
       const tooltipNode = document.createElement("div");
@@ -94,9 +94,7 @@ export function useMapBox() {
     });
 
     // TODO: clear tooltip at mouse leave
-    map.on("mouseleave", () => {
-      tooltipRef.current = null;
-    });
+    map.on("mouseleave", (event) => {});
 
     // Clean up on unmount
     return () => map.remove();

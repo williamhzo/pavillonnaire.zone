@@ -11,7 +11,7 @@ L’archive explore l’idée d’une culture pavillonnaire, au travers des trav
 
 🏡 Le tout est le fruit de la collaboration entre Samy Brillaud (curation, QGIS) et William Hermozo (développement web) qui ont eux même grandi dans la zone.
 
-✉️ Ecrivez-nous si vous voulez contribuer@pavillonnaire.zone
+💌 Ecrivez-nous si vous voulez contribuer@pavillonnaire.zone
 💾 Guide contribution (TBD)
 
 

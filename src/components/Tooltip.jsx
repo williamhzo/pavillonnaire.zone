@@ -4,8 +4,6 @@ export default function Tooltip({ feature }) {
   const { title, type, author, director, artist, album, editor, year, place } =
     feature.properties || {};
 
-  console.log(`feature`, feature);
-
   return (
     <div id={feature.id}>
       <h3>{title}</h3>

@@ -6,8 +6,6 @@ export default function About() {
       <div className="w-full flex justify-end">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          // width="500"
-          // height="500"
           viewBox="0 0 500 500"
           className="w-40"
         >
@@ -22,18 +20,19 @@ export default function About() {
       </div>
       <p className="mb-4">
         Le pavillonnaire est un territoire dont on connaît trop peu la culture.
-        Nous sommes beaucoup à y avoir grandi ou vécu, et pourtant l’idée d’une
-        culture pavillonnaire reste encore discrète et fragile. Que se
-        cache-t-il derrière ces maisons que beaucoup croient toutes identiques ?
-        qu’en pensent leurs habitants, et quel univers y ont-ils développé ?
+        Nous sommes beaucoup à y avoir grandi ou vécu, et pourtant l&apos;idée
+        d&apos;une culture pavillonnaire reste encore discrète et fragile. Que
+        se cache-t-il derrière ces maisons que beaucoup croient toutes
+        identiques ? qu&apos;en pensent leurs habitants, et quel univers y
+        ont-ils développé ?
       </p>
       <p className="mb-4">
         pavillonnaire.zone (v1.0) est un outil contributif dont le but est de
-        faire émerger les éléments d’une culture pavillonnaire, en même temps
-        qu’il permet de les situer. La page web rassemblera bientôt (future
-        v2.0) les éléments d’une archive et ceux d’une cartographie de façon
-        interactive. Elle deviendra le support cliquable à une archive
-        géolocalisée.
+        faire émerger les éléments d&apos;une culture pavillonnaire, en même
+        temps qu&apos;il permet de les situer. La page web rassemblera bientôt
+        (future v2.0) les éléments d&apos;une archive et ceux d&apos;une
+        cartographie de façon interactive. Elle deviendra le support cliquable à
+        une archive géolocalisée.
       </p>
       <p className="mb-4">
         La map donne à voir, sans ambiguïté, et pour la première fois, la
@@ -58,12 +57,12 @@ export default function About() {
         pavillonnaires ».
       </p>
       <p className="mb-4">
-        L’archive explore l’idée d’une culture pavillonnaire, au travers des
-        travaux ou des expériences qui en émanent. Elle rassemble un imaginaire
-        en constellation, sans souci de hiérarchie entre les différents items
-        qui la composent. Une sélection contributive, à prendre comme une
-        exploration, pour la visibilité d’une culture discrète, vécue de
-        l’intérieure.
+        L&apos;archive explore l&apos;idée d&apos;une culture pavillonnaire, au
+        travers des travaux ou des expériences qui en émanent. Elle rassemble un
+        imaginaire en constellation, sans souci de hiérarchie entre les
+        différents items qui la composent. Une sélection contributive, à prendre
+        comme une exploration, pour la visibilité d&apos;une culture discrète,
+        vécue de l&apos;intérieure.
       </p>
       <p className="mb-4">
         <span className="mr-2">🏡</span> Le tout est le fruit de la
