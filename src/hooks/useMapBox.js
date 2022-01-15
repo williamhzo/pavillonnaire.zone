@@ -1,6 +1,9 @@
 import useMediaQuery from "./useMediaQuery";
 import { useEffect, useRef, useState } from "react";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import ReactDOM from "react-dom";
+
+import Tooltip from "../components/Tooltip";
 
 const MAPBOX_STYLE = "mapbox://styles/sabrimyllaud/ckcavaw0y4hx81ipjdzbdw1up";
 const MAPBOX_API_TOKEN =
@@ -22,9 +25,10 @@ export function useMapBox() {
   const geocoderContainerRef = useRef(null);
 
   let mapboxgl;
-
   // FIXME:
   mapboxgl = require("mapbox-gl");
+
+  const tooltipRef = useRef(new mapboxgl.Popup({ offset: [0, 0] }));
 
   useEffect(() => {
     const map = new mapboxgl.Map({
@@ -65,8 +69,9 @@ export function useMapBox() {
     });
 
     // see https://docs.mapbox.com/help/tutorials/add-points-pt-3/ for more.
+    // see https://github.com/mapbox/mapbox-react-examples/blob/master/react-tooltip/src/Map.js.
 
-    map.on("click", (event) => {
+    map.on("mousemove", (event) => {
       const features = map.queryRenderedFeatures(event.point, {
         layers: ["edition"],
       });
@@ -77,14 +82,20 @@ export function useMapBox() {
 
       const feature = features[0];
 
-      console.log(`features`, features);
+      // Create tooltip node
+      const tooltipNode = document.createElement("div");
+      ReactDOM.render(<Tooltip feature={feature} />, tooltipNode);
 
-      const popup = new mapboxgl.Popup({ offset: [0, 0] })
-        .setLngLat(feature.geometry.coordinates)
-        .setHTML(
-          `<h3>${feature.properties.Titre}</h3><p>${feature.properties.Type}</p>`
-        )
+      // Set tooltip on map
+      tooltipRef.current
+        .setLngLat(event.lngLat)
+        .setDOMContent(tooltipNode)
         .addTo(map);
+    });
+
+    // TODO: clear tooltip at mouse leave
+    map.on("mouseleave", () => {
+      tooltipRef.current = null;
     });
 
     // Clean up on unmount
