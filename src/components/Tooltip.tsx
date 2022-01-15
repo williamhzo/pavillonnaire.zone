@@ -1,6 +1,12 @@
-import React from "react";
+import React from 'react';
 
-export default function Tooltip({ feature }) {
+type TooltipProps = {
+  feature: {
+    [key: string]: any; // FIXME: fix my type.
+  };
+};
+
+export default function Tooltip({ feature }: TooltipProps) {
   const { title, type, author, director, artist, album, editor, year, place } =
     feature.properties || {};
 
