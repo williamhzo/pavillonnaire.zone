@@ -1,15 +1,15 @@
-import React from "react";
-import Div100vh from "react-div-100vh";
+import React from 'react';
+import Div100vh from 'react-div-100vh';
 
-import SEO from "../components/SEO";
-import Map from "../components/Map";
-import About from "../components/About";
-import AboutIcon from "../components/AboutIcon";
-import Instagram from "../components/Instagram";
-import useToggle from "../hooks/useToggle";
+import SEO from '../components/SEO';
+import Map from '../components/Map';
+import About from '../components/About';
+import AboutIcon from '../components/AboutIcon';
+import Instagram from '../components/Instagram';
+import useToggle from '../hooks/useToggle';
 
 export default function Homepage() {
-  const [showAbout, toggleAbout] = useToggle(false);
+  const { value: showAbout, toggle: toggleAbout } = useToggle(false);
 
   return (
     <>
