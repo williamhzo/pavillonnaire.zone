@@ -64,7 +64,7 @@ export function useMapBox() {
     // see https://docs.mapbox.com/help/tutorials/add-points-pt-3/ for more.
     // see https://github.com/mapbox/mapbox-react-examples/blob/master/react-tooltip/src/Map.js.
 
-    map.on('mousemove', (event) => {
+    function renderTooltip(event: mapboxgl.MapMouseEvent & mapboxgl.EventData) {
       const features = map.queryRenderedFeatures(event.point, {
         layers: LAYERS,
       });
@@ -87,7 +87,12 @@ export function useMapBox() {
         .setLngLat(event.lngLat)
         .setDOMContent(tooltipNode)
         .addTo(map);
-    });
+    }
+
+    // desktop
+    map.on('mousemove', renderTooltip);
+    // mobile
+    map.on('touchstart', renderTooltip); // FIXME: need to maintain touch.
 
     // Clean up on unmount
     return () => map.remove();

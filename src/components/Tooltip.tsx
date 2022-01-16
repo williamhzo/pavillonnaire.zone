@@ -12,7 +12,7 @@ type TextProps = {
 };
 
 function Text({ children, className }: TextProps) {
-  return <p className={`text-center text-base ${className}`}>{children}</p>;
+  return <p className={`text-center text-sm ${className}`}>{children}</p>;
 }
 
 export default function Tooltip({ feature }: TooltipProps) {
@@ -21,7 +21,9 @@ export default function Tooltip({ feature }: TooltipProps) {
 
   return (
     <div id={feature.id} className="max-w-sm">
-      <h3 className="font-serif text-center text-lg">{title}</h3>
+      <h3 className="font-serif text-center text-base leading-6 mb-2">
+        {title}
+      </h3>
       <Text className="italic">{type}</Text>
       <Text>{author}</Text>
       <Text>{director}</Text>
