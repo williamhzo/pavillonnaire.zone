@@ -24,12 +24,8 @@ const LAYERS = [
 export function useMapBox() {
   const isLaptop = useMediaQuery('(min-width: 1024px)');
 
-  // FIXME:
   const mapContainerRef = useRef<any>(null);
   const geocoderContainerRef = useRef(null);
-
-  // let mapboxgl;
-  // mapboxgl = require('mapbox-gl');
 
   const tooltipRef = useRef(new mapboxgl.Popup({ offset: [0, 0] }));
 
@@ -49,13 +45,11 @@ export function useMapBox() {
       countries: 'fr',
       language: 'fr-FR',
       placeholder: 'Recherche par lieu',
-      // FIXME:
       mapboxgl: mapboxgl as any,
       collapsed: true,
       limit: 3,
       enableEventLogging: false,
-      // marker: { color: '#000' },
-      marker: true,
+      marker: { color: '#000' } as any,
     });
 
     // Navigation control (zoom buttons)

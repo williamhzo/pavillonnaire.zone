@@ -218,6 +218,8 @@ see https://docs.mapbox.com/help/tutorials/building-a-store-locator/#define-inte
 
 .mapboxgl-popup-tip {
   height: 50px;
-  border: 1px solid black;
+  border: none;
+  width: 1px;
+  background-color: black;
   z-index: 1;
 }

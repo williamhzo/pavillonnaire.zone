@@ -21,7 +21,7 @@ export default function Tooltip({ feature }: TooltipProps) {
 
   return (
     <div id={feature.id} className="max-w-sm">
-      <h3 className="font-serif text-center text-lg font-semibold">{title}</h3>
+      <h3 className="font-serif text-center text-lg">{title}</h3>
       <Text className="italic">{type}</Text>
       <Text>{author}</Text>
       <Text>{director}</Text>
