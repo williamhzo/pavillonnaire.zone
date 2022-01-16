@@ -2,10 +2,12 @@ import React from 'react';
 import { useMapBox } from '../hooks/useMapBox';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
-export default function Map({ hide }) {
-  const { mapContainerRef, lng, lat, zoom, flyToLocation } = useMapBox();
+type MapProps = {
+  hide: boolean;
+};
 
-  console.log(`{lng, lat, zoom}`, { lng, lat, zoom });
+export default function Map({ hide }: MapProps) {
+  const { mapContainerRef } = useMapBox();
 
   return (
     <div
@@ -13,6 +15,6 @@ export default function Map({ hide }) {
         hide ? 'hidden' : null
       }`}
       ref={mapContainerRef}
-    ></div>
+    />
   );
 }

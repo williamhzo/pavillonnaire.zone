@@ -9,7 +9,7 @@ import Instagram from '../components/Instagram';
 import useToggle from '../hooks/useToggle';
 
 export default function Homepage() {
-  const [showAbout, toggleAbout] = useToggle(false);
+  const { value: showAbout, toggle: toggleAbout } = useToggle(false);
 
   return (
     <>

@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 /**
  *  Hook for using media queries for conditional rendering.
  */
-export default function useMediaQuery(query) {
+export default function useMediaQuery(query: string): boolean {
   const [isMatchingQuery, setIsMatchingQuery] = useState(false);
 
-  function onMediaQueryChange(event) {
+  function onMediaQueryChange(event: MediaQueryListEvent) {
     setIsMatchingQuery(event.matches);
   }
 
@@ -18,9 +18,9 @@ export default function useMediaQuery(query) {
 
     try {
       // Chrome & Firefox
-      mediaQuery.addEventListener("change", onMediaQueryChange);
+      mediaQuery.addEventListener('change', onMediaQueryChange);
 
-      return () => mediaQuery.removeEventListener("change", onMediaQueryChange);
+      return () => mediaQuery.removeEventListener('change', onMediaQueryChange);
     } catch {
       // Safari < 14, IE, Edge < 16
       mediaQuery.addListener(onMediaQueryChange);

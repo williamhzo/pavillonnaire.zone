@@ -83,7 +83,7 @@ h6::selection {
 /* prevent overlay between title and search bar */
 .mapboxgl-ctrl-top-right {
   z-index: 20;
-  mix-blend-mode: difference ;
+  mix-blend-mode: difference;
 }
 
 .mapboxgl-ctrl-group {
@@ -127,25 +127,22 @@ svg.mapboxgl-ctrl-geocoder--icon {
   outline: none;
 }
 
-.suggestions-wrapper a{
-  color:white !important;
-  background-color:black !important;
+.suggestions-wrapper a {
+  color: white !important;
+  background-color: black !important;
 }
 
-.mapboxgl-ctrl-geocoder--icon-close{
+.mapboxgl-ctrl-geocoder--icon-close {
   display: none !important;
 }
-
 
 .mapboxgl-ctrl-geocoder--button {
   background: black !important;
 }
 
-
-
 .mapboxgl-ctrl-bottom-right {
   max-width: 100px;
-  mix-blend-mode: difference ;
+  mix-blend-mode: difference;
 }
 
 .mapboxgl-ctrl-geocoder {
@@ -197,4 +194,32 @@ svg.mapboxgl-ctrl-geocoder--icon {
 
 .mapboxgl-ctrl-attrib {
   display: none;
+}
+
+/* Popup styles 
+
+see https://docs.mapbox.com/help/tutorials/building-a-store-locator/#define-interactivity-functions
+
+*/
+
+.mapboxgl-popup-close-button {
+  display: none;
+}
+
+.mapboxgl-popup-content {
+  min-width: fit-content;
+  /* max-width: 200px; */
+  font-family: 'Alice';
+  box-shadow: 0;
+  border-radius: 0;
+  border: 1px solid black;
+  z-index: 9999;
+}
+
+.mapboxgl-popup-tip {
+  height: 50px;
+  border: none;
+  width: 1px;
+  background-color: black;
+  z-index: 1;
 }
