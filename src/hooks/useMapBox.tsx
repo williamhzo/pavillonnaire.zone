@@ -75,8 +75,6 @@ export function useMapBox() {
       }
 
       const feature = features[0];
-      console.log(`feature`, feature);
-      console.log(`feature.properties`, feature.properties);
 
       // Create tooltip node
       const tooltipNode = document.createElement('div');

@@ -207,13 +207,13 @@ see https://docs.mapbox.com/help/tutorials/building-a-store-locator/#define-inte
 }
 
 .mapboxgl-popup-content {
-  min-width: fit-content;
-  /* max-width: 200px; */
-  font-family: 'Alice';
   box-shadow: 0;
   border-radius: 0;
   border: 1px solid black;
-  z-index: 9999;
+}
+
+.mapboxgl-popup-anchor-bottom {
+  z-index: 20;
 }
 
 .mapboxgl-popup-tip {
