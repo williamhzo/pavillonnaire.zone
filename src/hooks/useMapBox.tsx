@@ -92,7 +92,7 @@ export function useMapBox() {
     // desktop
     map.on('mousemove', renderTooltip);
     // mobile
-    map.on('touchstart', renderTooltip); // FIXME: need to maintain touch.
+    map.on('touchstart', renderTooltip); // FIXME: should be toggled at click (not only touch start)
 
     // Clean up on unmount
     return () => map.remove();
