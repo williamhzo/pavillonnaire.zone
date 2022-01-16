@@ -11,13 +11,13 @@ export default function Tooltip({ feature }: TooltipProps) {
     feature.properties || {};
 
   return (
-    <div id={feature.id}>
-      <h3>{title}</h3>
-      <p>{type}</p>
-      <p>{author || director}</p>
-      <p>{editor}</p>
-      <p>{year}</p>
-      <p>{place}</p>
+    <div id={feature.id} className="max-w-sm">
+      <h3 className="text-center text-lg font-semibold">{title}</h3>
+      <p className="text-base">{type}</p>
+      <p className="text-base">{author || director}</p>
+      <p className="text-base">{editor}</p>
+      <p className="text-base">{year}</p>
+      <p className="text-base">{place}</p>
     </div>
   );
 }
