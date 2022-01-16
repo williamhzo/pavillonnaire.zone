@@ -13,12 +13,24 @@ const INITIAL_LATITUDE = 46.62;
 const MOBILE_INITIAL_ZOOM = 4.2;
 const DESKTOP_INITIAL_ZOOM = 4.4;
 const ZOOM_LIMIT = 3;
+const LAYERS = [
+  'musique',
+  'audiovisuel',
+  'mode',
+  'edition',
+  'social',
+  'photographie',
+  'arts plastiques',
+  'spectacle',
+  'sport',
+  'ville',
+];
 
 export function useMapBox() {
   const isLaptop = useMediaQuery('(min-width: 1024px)');
 
-  // const mapContainerRef = useRef<string | HTMLElement>('');
-  const mapContainerRef = useRef<any>(null); // FIXME:
+  // FIXME:
+  const mapContainerRef = useRef<any>(null);
   const geocoderContainerRef = useRef(null);
 
   // let mapboxgl;
@@ -42,7 +54,8 @@ export function useMapBox() {
       countries: 'fr',
       language: 'fr-FR',
       placeholder: 'Recherche par lieu',
-      mapboxgl: mapboxgl as any, // FIXME:
+      // FIXME:
+      mapboxgl: mapboxgl as any,
       collapsed: true,
       limit: 3,
       enableEventLogging: false,
@@ -64,14 +77,16 @@ export function useMapBox() {
 
     map.on('mousemove', (event) => {
       const features = map.queryRenderedFeatures(event.point, {
-        layers: ['edition'],
+        layers: LAYERS,
       });
 
       if (!features.length) {
+        tooltipRef.current.remove();
         return;
       }
 
       const feature = features[0];
+      console.log(`feature`, feature);
       console.log(`feature.properties`, feature.properties);
 
       // Create tooltip node
@@ -85,15 +100,10 @@ export function useMapBox() {
         .addTo(map);
     });
 
-    // TODO: clear tooltip at mouse leave
-    map.on('mouseleave', (event: any) => {
-      // code
-    });
-
     // Clean up on unmount
     return () => map.remove();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLaptop, mapboxgl]);
+  }, [isLaptop]);
 
   return { mapContainerRef };
 }
