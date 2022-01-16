@@ -16,14 +16,9 @@ const ZOOM_LIMIT = 3;
 const LAYERS = [
   'musique',
   'audiovisuel',
-  'mode',
   'edition',
-  'social',
-  'photographie',
-  'arts plastiques',
-  'spectacle',
-  'sport',
-  'ville',
+  // LAYERS TO BE ADDED SHORTLY ⬇️
+  // 'mode', 'social', 'photographie', 'arts plastiques', 'spectacle', 'sport', 'ville',
 ];
 
 export function useMapBox() {
