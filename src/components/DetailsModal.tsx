@@ -1,5 +1,4 @@
 import { MapboxGeoJSONFeature } from 'mapbox-gl';
-import Image from 'next/image';
 
 type TextProps = React.PropsWithChildren<{
   className?: string;
@@ -33,7 +32,7 @@ const DetailsModal: React.FC<DetailsModalProps> = (props) => {
       id="details-dialog"
       className="absolute h-full z-50 bg-white top-0 right-0 w-80 hidden border border-black"
     >
-      {image ? <Image src={image} alt={title} /> : null}
+      {image ? <img src={image} alt={title} /> : null}
 
       <h3 className="font-serif text-center text-base leading-6 mb-2">
         {title}
