@@ -13,7 +13,18 @@ const INITIAL_LATITUDE = 46.62;
 const MOBILE_INITIAL_ZOOM = 4.2;
 const DESKTOP_INITIAL_ZOOM = 4.4;
 const ZOOM_LIMIT = 3;
-const LAYERS = ['musique', 'audiovisuel', 'edition', 'photographie'];
+const LAYERS = [
+  'ville',
+  'audiovisuel',
+  'edition',
+  'musique',
+  'photographie',
+  'fashion',
+  'bozarts',
+  'initiative',
+  'sports',
+  'numerique',
+];
 
 export function useMapBox() {
   const isLaptop = useMediaQuery('(min-width: 1024px)');
