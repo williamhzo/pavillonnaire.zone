@@ -27,7 +27,7 @@ export default function useMediaQuery(query: string): boolean {
 
       return () => mediaQuery.removeListener(onMediaQueryChange);
     }
-  }, []);
+  }, [isMatchingQuery, query]);
 
   return isMatchingQuery;
 }

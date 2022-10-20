@@ -1,9 +1,7 @@
 import React from 'react';
 
 type TooltipProps = {
-  feature: {
-    [key: string]: any; // FIXME: fix my type.
-  };
+  feature: mapboxgl.MapboxGeoJSONFeature['state'];
 };
 
 type TextProps = {
@@ -20,7 +18,7 @@ export default function Tooltip({ feature }: TooltipProps) {
     feature.properties || {};
 
   return (
-    <div id={feature.id} className="min-w-fit max-w-sm font-body">
+    <div id={title} className="min-w-fit max-w-sm font-body">
       <h3 className="font-serif text-center text-base leading-6 mb-2">
         {title}
       </h3>

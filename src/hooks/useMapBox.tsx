@@ -1,5 +1,5 @@
 import useMediaQuery from './useMediaQuery';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import ReactDOM from 'react-dom';
 import mapboxgl from 'mapbox-gl';
@@ -13,25 +13,18 @@ const INITIAL_LATITUDE = 46.62;
 const MOBILE_INITIAL_ZOOM = 4.2;
 const DESKTOP_INITIAL_ZOOM = 4.4;
 const ZOOM_LIMIT = 3;
-const LAYERS = [
-  'musique',
-  'audiovisuel',
-  'edition',
-  // LAYERS TO BE ADDED SHORTLY ⬇️
-  // 'mode', 'social', 'photographie', 'arts plastiques', 'spectacle', 'sport', 'ville',
-];
+const LAYERS = ['musique', 'audiovisuel', 'edition', 'photographie'];
 
 export function useMapBox() {
   const isLaptop = useMediaQuery('(min-width: 1024px)');
 
-  const mapContainerRef = useRef<any>(null);
-  const geocoderContainerRef = useRef(null);
+  const mapContainerRef = useRef<HTMLDivElement | null>(null);
 
   const tooltipRef = useRef(new mapboxgl.Popup({ offset: [0, 0] }));
 
   useEffect(() => {
     const map: mapboxgl.Map = new mapboxgl.Map({
-      container: mapContainerRef.current,
+      container: mapContainerRef.current as HTMLDivElement,
       accessToken: MAPBOX_API_TOKEN,
       style: MAPBOX_STYLE,
       center: [INITIAL_LONGITUDE, INITIAL_LATITUDE],
@@ -39,8 +32,7 @@ export function useMapBox() {
       minZoom: ZOOM_LIMIT,
     });
 
-    const geocoder: MapboxGeocoder = new MapboxGeocoder({
-      // container: geocoderContainerRef.current, // TODO: is this needed?
+    const geocoder = new MapboxGeocoder({
       accessToken: MAPBOX_API_TOKEN,
       countries: 'fr',
       language: 'fr-FR',
