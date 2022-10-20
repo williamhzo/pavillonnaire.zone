@@ -18,13 +18,13 @@ const LAYERS = ['musique', 'audiovisuel', 'edition', 'photographie'];
 export function useMapBox() {
   const isLaptop = useMediaQuery('(min-width: 1024px)');
 
-  const mapContainerRef = useRef<string | HTMLElement | null>(null);
+  const mapContainerRef = useRef<HTMLDivElement | null>(null);
 
   const tooltipRef = useRef(new mapboxgl.Popup({ offset: [0, 0] }));
 
   useEffect(() => {
     const map: mapboxgl.Map = new mapboxgl.Map({
-      container: mapContainerRef.current as string | HTMLElement,
+      container: mapContainerRef.current as HTMLDivElement,
       accessToken: MAPBOX_API_TOKEN,
       style: MAPBOX_STYLE,
       center: [INITIAL_LONGITUDE, INITIAL_LATITUDE],
