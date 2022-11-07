@@ -196,6 +196,10 @@ svg.mapboxgl-ctrl-geocoder--icon {
   display: none;
 }
 
+.mapboxgl-map {
+  font: inherit;
+}
+
 /* Popup styles 
 
 see https://docs.mapbox.com/help/tutorials/building-a-store-locator/#define-interactivity-functions
