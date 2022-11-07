@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { MapboxGeoJSONFeature } from 'mapbox-gl';
 
 type TextProps = React.PropsWithChildren<{
@@ -5,7 +6,7 @@ type TextProps = React.PropsWithChildren<{
 }>;
 
 function Text({ children, className }: TextProps) {
-  return <p className={`text-center text-sm ${className}`}>{children}</p>;
+  return <p className={`text-center ${className}`}>{children}</p>;
 }
 
 type DetailsModalProps = React.PropsWithChildren<{
@@ -27,27 +28,56 @@ const DetailsModal: React.FC<DetailsModalProps> = (props) => {
     link,
   } = props.feature.properties || {};
 
+  function toggleAside() {
+    document.getElementById('details-dialog')?.classList.add('hidden');
+  }
+
   return (
-    <div
+    <aside
       id="details-dialog"
-      className="absolute h-full z-50 bg-white top-0 right-0 w-80 hidden border border-black"
+      className="absolute h-full z-50 bg-white top-0 right-0 w-full sm:w-[max(33%,350px)] hidden border border-black"
     >
-      {image ? <img src={image} alt={title} /> : null}
+      {image ? (
+        <img src={image} alt={title} className="object-cover h-1/3 w-full" />
+      ) : null}
 
-      <h3 className="font-serif text-center text-base leading-6 mb-2">
-        {title}
-      </h3>
+      <div className="flex flex-col items-center py-2 px-4 gap-2">
+        <button onClick={toggleAside} className="self-end">
+          &times;
+        </button>
 
-      <Text className="italic">{type}</Text>
-      <Text>{author}</Text>
-      <Text>{director}</Text>
-      <Text>{artist}</Text>
-      <Text>{editor}</Text>
-      <Text>{album}</Text>
-      <Text>{year}</Text>
-      <Text>{place}</Text>
-      <Text>{link}</Text>
-    </div>
+        <h3 className="font-serif text-center text-base leading-6 mb-2 ">
+          {title}
+        </h3>
+
+        {type ? <Text className="italic">{type}</Text> : null}
+
+        {author ? <Text>{author}</Text> : null}
+
+        {director ? <Text>{director}</Text> : null}
+
+        {artist ? <Text>{artist}</Text> : null}
+
+        {year ? <Text>{year}</Text> : null}
+
+        {place ? <Text>{place}</Text> : null}
+
+        {link ? (
+          <a
+            href={link}
+            target="_blank"
+            rel="noreferrer"
+            className="underline hover:no-underline text-sm"
+          >
+            Voir plus +
+          </a>
+        ) : null}
+
+        {editor ? <Text>{editor}</Text> : null}
+
+        {album ? <Text>{album}</Text> : null}
+      </div>
+    </aside>
   );
 };
 
