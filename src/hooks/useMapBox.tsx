@@ -51,11 +51,13 @@ export function useMapBox() {
       countries: 'fr',
       language: 'fr-FR',
       placeholder: 'Recherche par lieu',
-      mapboxgl: mapboxgl as any,
+      // @ts-expect-error undocumented type error
+      mapboxgl: mapboxgl,
       collapsed: true,
       limit: 3,
       enableEventLogging: false,
-      marker: { color: '#000' } as any,
+      // @ts-expect-error undocumented type error
+      marker: { color: '#000' },
     });
 
     // Navigation control (zoom buttons)
@@ -76,12 +78,15 @@ export function useMapBox() {
       });
 
       if (!features.length) {
+        map.getCanvas().style.cursor = 'inherit';
         tooltipRef.current.remove();
         return;
       }
 
       const feature = features[0];
       setFeature(feature);
+
+      map.getCanvas().style.cursor = 'pointer';
 
       // Create tooltip node
       const tooltipNode = document.createElement('div');
@@ -96,6 +101,7 @@ export function useMapBox() {
 
     // desktop
     map.on('mousemove', renderTooltip);
+
     // TODO: necessary?
     // mobile
     // map.on('touchstart', renderTooltip); // FIXME: should be toggled at click (not only touch start)

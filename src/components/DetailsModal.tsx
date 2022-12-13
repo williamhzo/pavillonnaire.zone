@@ -39,11 +39,16 @@ const DetailsModal: React.FC<DetailsModalProps> = (props) => {
       className="absolute h-full z-50 bg-white top-0 right-0 w-full sm:w-[max(33%,350px)] hidden border border-black"
     >
       {image ? (
-        <img src={image} alt={title} className="object-cover h-1/3 w-full" />
+        <div className="w-full flex h-1/3 justify-center">
+          <img src={image} alt={title} className="object-cover " />
+        </div>
       ) : null}
 
       <div className="flex flex-col items-center py-2 px-4 gap-2">
-        <button onClick={toggleAside} className="self-end">
+        <button
+          onClick={toggleAside}
+          className="self-end p-4 text-2xl md:text-base"
+        >
           &times;
         </button>
 
