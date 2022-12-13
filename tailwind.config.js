@@ -1,14 +1,6 @@
 module.exports = {
   mode: 'jit',
-  content: [
-    './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-  ],
-  purge: [
-    './public/**/*.html',
-    './src/**/*.{js,jsx,ts,tsx}',
-    './public/index.html',
-  ],
+  content: ['./public/**/*.html', './src/**/*.{js,jsx,ts,tsx,vue}'],
   media: false, // or 'darkMode'
   theme: {
     screens: {
