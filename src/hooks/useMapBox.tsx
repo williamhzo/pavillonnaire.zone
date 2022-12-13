@@ -1,11 +1,12 @@
 import useMediaQuery from './useMediaQuery';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import ReactDOM from 'react-dom';
-import mapboxgl from 'mapbox-gl';
+import mapboxgl, { MapboxGeoJSONFeature } from 'mapbox-gl';
 import Tooltip from '../components/Tooltip';
 
 const MAPBOX_STYLE = 'mapbox://styles/sabrimyllaud/ckcavaw0y4hx81ipjdzbdw1up';
+// TODO: Should be env vars
 const MAPBOX_API_TOKEN =
   'pk.eyJ1Ijoic2FicmlteWxsYXVkIiwiYSI6ImNrYWwyYmxmbzA3cnQyeW15cTY0aTd4cTgifQ.6OY0hboWqf4zuhVXdYtFxw';
 const INITIAL_LONGITUDE = 1.872;
@@ -27,6 +28,8 @@ const LAYERS = [
 ];
 
 export function useMapBox() {
+  const [feature, setFeature] = useState<MapboxGeoJSONFeature | undefined>();
+
   const isLaptop = useMediaQuery('(min-width: 1024px)');
 
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
@@ -48,11 +51,13 @@ export function useMapBox() {
       countries: 'fr',
       language: 'fr-FR',
       placeholder: 'Recherche par lieu',
-      mapboxgl: mapboxgl as any,
+      // @ts-expect-error undocumented type error
+      mapboxgl: mapboxgl,
       collapsed: true,
       limit: 3,
       enableEventLogging: false,
-      marker: { color: '#000' } as any,
+      // @ts-expect-error undocumented type error
+      marker: { color: '#000' },
     });
 
     // Navigation control (zoom buttons)
@@ -73,11 +78,15 @@ export function useMapBox() {
       });
 
       if (!features.length) {
+        map.getCanvas().style.cursor = 'inherit';
         tooltipRef.current.remove();
         return;
       }
 
       const feature = features[0];
+      setFeature(feature);
+
+      map.getCanvas().style.cursor = 'pointer';
 
       // Create tooltip node
       const tooltipNode = document.createElement('div');
@@ -92,13 +101,35 @@ export function useMapBox() {
 
     // desktop
     map.on('mousemove', renderTooltip);
+
+    // TODO: necessary?
     // mobile
-    map.on('touchstart', renderTooltip); // FIXME: should be toggled at click (not only touch start)
+    // map.on('touchstart', renderTooltip); // FIXME: should be toggled at click (not only touch start)
+
+    function toggleDetailsDialog(
+      event: mapboxgl.MapMouseEvent & mapboxgl.EventData
+    ) {
+      const dialog = document.getElementById('details-dialog');
+
+      const features = map.queryRenderedFeatures(event.point, {
+        layers: LAYERS,
+      });
+
+      if (!features.length) {
+        dialog?.classList.add('hidden');
+        setFeature(undefined);
+        return;
+      }
+
+      dialog?.classList.remove('hidden');
+    }
+
+    map.on('click', toggleDetailsDialog);
 
     // Clean up on unmount
     return () => map.remove();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLaptop]);
 
-  return { mapContainerRef };
+  return { mapContainerRef, feature };
 }
