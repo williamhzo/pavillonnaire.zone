@@ -51,13 +51,11 @@ export function useMapBox() {
       countries: 'fr',
       language: 'fr-FR',
       placeholder: 'Recherche par lieu',
-      // @ts-expect-error undocumented type error
-      mapboxgl: mapboxgl,
+      mapboxgl: mapboxgl as any,
       collapsed: true,
       limit: 3,
       enableEventLogging: false,
-      // @ts-expect-error undocumented type error
-      marker: { color: '#000' },
+      marker: { color: '#000' } as any,
     });
 
     // Navigation control (zoom buttons)
