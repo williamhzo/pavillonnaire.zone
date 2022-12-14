@@ -70,11 +70,13 @@ body {
 }
 
 .main-container-height {
-  height: 100vh;
+  height: 100dvh;
 
-  @supports (height: 100dvh) {
+  /* height: 100vh; */
+
+  /* @supports (height: 100dvh) {
     height: 100dvh;
-  }
+  } */
 }
 
 p::selection,
