@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function About() {
   return (
     <div className="text-white sm:w-11/12 md:w-3/4 lg:w-1/2 h-full overflow-auto ">
