@@ -69,16 +69,6 @@ body {
   font-family: 'Alice';
 }
 
-.main-container-height {
-  height: 100dvh;
-
-  /* height: 100vh; */
-
-  /* @supports (height: 100dvh) {
-    height: 100dvh;
-  } */
-}
-
 p::selection,
 a::selection,
 h1::selection,
