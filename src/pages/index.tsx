@@ -14,7 +14,7 @@ export default function Homepage() {
   return (
     <>
       <SEO />
-      <main className="w-screen relative bg-black">
+      <main className="w-full relative bg-black">
         <Div100vh>
           <AboutIcon handleClick={toggleAbout} />
 
