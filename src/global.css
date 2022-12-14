@@ -20,25 +20,53 @@
   box-sizing: border-box;
 }
 
+* {
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+#root,
+#__next {
+  isolation: isolate;
+}
+
 body {
   font-family: 'Alice';
-  height: 100vh;
-  /* mobile viewport bug fix */
-  height: -webkit-fill-available;
-  min-height: -webkit-fill-available;
-  overflow-y: scroll;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-}
-
-body::-webkit-scrollbar {
-  /* WebKit */
-  width: 0;
-  height: 0;
-}
-
-html {
-  height: -webkit-fill-available;
 }
 
 .main-container-height {
@@ -49,25 +77,6 @@ html {
   }
 }
 
-input[type='color'],
-input[type='date'],
-input[type='datetime'],
-input[type='datetime-local'],
-input[type='email'],
-input[type='month'],
-input[type='number'],
-input[type='password'],
-input[type='search'],
-input[type='tel'],
-input[type='text'],
-input[type='time'],
-input[type='url'],
-input[type='week'],
-select:focus,
-textarea {
-  font-size: 16px;
-}
-
 p::selection,
 a::selection,
 h1::selection,
@@ -76,7 +85,7 @@ h3::selection,
 h4::selection,
 h5::selection,
 h6::selection {
-  background: white; /* WebKit/Blink Browsers */
+  background: white;
   color: black;
 }
 
