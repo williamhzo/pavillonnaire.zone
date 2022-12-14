@@ -41,6 +41,14 @@ html {
   height: -webkit-fill-available;
 }
 
+.main-container-height {
+  height: 100vh;
+
+  @supports (height: 100dvh) {
+    height: 100dvh;
+  }
+}
+
 input[type='color'],
 input[type='date'],
 input[type='datetime'],
