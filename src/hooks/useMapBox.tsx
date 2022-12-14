@@ -2,7 +2,7 @@ import useMediaQuery from './useMediaQuery';
 import { useEffect, useRef, useState } from 'react';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import ReactDOM from 'react-dom';
-import mapboxgl, { MapboxGeoJSONFeature } from 'mapbox-gl';
+import mapboxgl, { MapboxGeoJSONFeature, Marker } from 'mapbox-gl';
 import Tooltip from '../components/Tooltip';
 
 const MAPBOX_STYLE = 'mapbox://styles/sabrimyllaud/ckcavaw0y4hx81ipjdzbdw1up';
@@ -51,11 +51,11 @@ export function useMapBox() {
       countries: 'fr',
       language: 'fr-FR',
       placeholder: 'Recherche par lieu',
-      mapboxgl: mapboxgl as any,
+      mapboxgl: mapboxgl,
       collapsed: true,
       limit: 3,
       enableEventLogging: false,
-      marker: { color: '#000' } as any,
+      marker: { color: '#000' } as unknown as Marker,
     });
 
     // Navigation control (zoom buttons)
