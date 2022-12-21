@@ -4,9 +4,26 @@ import About from '../components/About';
 import AboutIcon from '../components/AboutIcon';
 import Instagram from '../components/Instagram';
 import useToggle from '../hooks/useToggle';
+import { useEffect } from 'react';
 
 export default function Homepage() {
   const { value: showAbout, toggle: toggleAbout } = useToggle(false);
+
+  useEffect(() => {
+    function hideAbout(e: KeyboardEvent) {
+      if (showAbout && e.key === 'Escape') {
+        toggleAbout();
+      }
+
+      return;
+    }
+
+    document.body.addEventListener('keydown', hideAbout);
+
+    return () => {
+      document.body.removeEventListener('keydown', hideAbout);
+    };
+  }, [showAbout, toggleAbout]);
 
   return (
     <>
