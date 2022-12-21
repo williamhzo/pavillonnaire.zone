@@ -36,7 +36,7 @@ const DetailsModal: React.FC<DetailsModalProps> = (props) => {
   return (
     <aside
       id="details-dialog"
-      className="absolute h-full z-50 bg-white top-0 right-0 w-full sm:w-[max(33%,350px)] hidden border border-black"
+      className="absolute h-full z-50 bg-white top-0 right-0 w-full sm:w-[max(33%,350px)] hidden border border-black invert-select"
     >
       {image ? (
         <div className="w-full flex h-1/3 justify-center">
