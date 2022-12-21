@@ -11,7 +11,7 @@ export default function Homepage() {
   return (
     <>
       <SEO />
-      <main className="h-[100dvh] w-full relative bg-black">
+      <main className="h-[100dvh] w-full relative bg-black overflow-hidden">
         <AboutIcon handleClick={toggleAbout} />
 
         <h1 className="flyToTextButton fixed font-serif text-lg text-white blend-difference text-center w-full mt-7 z-10">
