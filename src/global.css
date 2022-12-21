@@ -81,6 +81,18 @@ h6::selection {
   color: black;
 }
 
+.invert-select p::selection,
+a::selection,
+h1::selection,
+h2::selection,
+h3::selection,
+h4::selection,
+h5::selection,
+h6::selection {
+  background: black;
+  color: white;
+}
+
 .mapboxgl-canvas {
   outline: none;
 }
@@ -209,7 +221,7 @@ svg.mapboxgl-ctrl-geocoder--icon {
   font: inherit;
 }
 
-/* Popup styles 
+/* Popup styles
 
 see https://docs.mapbox.com/help/tutorials/building-a-store-locator/#define-interactivity-functions
 
