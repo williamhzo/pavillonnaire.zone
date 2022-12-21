@@ -64,13 +64,13 @@ const DetailsModal: React.FC<DetailsModalProps> = (props) => {
 
         {artist ? <Text>{artist}</Text> : null}
 
-        {year ? <Text>{year}</Text> : null}
-
-        {place ? <Text>{place}</Text> : null}
+        {album ? <Text>{album}</Text> : null}
 
         {editor ? <Text>{editor}</Text> : null}
 
-        {album ? <Text>{album}</Text> : null}
+        {year ? <Text>{year}</Text> : null}
+
+        {place ? <Text>{place}</Text> : null}
 
         {abstract ? <Text>{abstract}</Text> : null}
 
