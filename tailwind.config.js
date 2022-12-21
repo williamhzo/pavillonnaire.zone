@@ -23,6 +23,9 @@ module.exports = {
     isolation: ['responsive'],
     extend: {},
   },
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  plugins: [require('tailwindcss-blend-mode')()],
+  plugins: [
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require('tailwindcss-blend-mode')(),
+    require('tailwind-scrollbar-hide'),
+  ],
 };
