@@ -5,13 +5,13 @@
 @font-face {
   font-family: 'Yoster-Island';
   src: local('yoster-island.regular'),
-    url(../public/fonts/yoster-island.regular.ttf) format('truetype');
+    url(../../public/fonts/yoster-island.regular.ttf) format('truetype');
 }
 
 @font-face {
   font-family: 'Alice';
   src: local('Alice-Regular'),
-    url(../public/fonts/Alice-Regular.ttf) format('truetype');
+    url(../../public/fonts/Alice-Regular.ttf) format('truetype');
 }
 
 *,
