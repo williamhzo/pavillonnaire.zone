@@ -1,15 +1,15 @@
 import React from 'react';
 import clsx from 'clsx';
 
-type TooltipProps = {
-  feature: mapboxgl.MapboxGeoJSONFeature['state'];
-};
-
 function Text({ children, className }: React.ComponentProps<'p'>) {
   return (
     <p className={clsx(['text-center', 'text-sm', className])}>{children}</p>
   );
 }
+
+type TooltipProps = {
+  feature: mapboxgl.MapboxGeoJSONFeature['state'];
+};
 
 const Tooltip: React.FC<TooltipProps> = ({ feature }) => {
   const { title, type, author, director, artist, album, editor, year, place } =
@@ -17,7 +17,7 @@ const Tooltip: React.FC<TooltipProps> = ({ feature }) => {
 
   return (
     <div id={title} className="min-w-fit max-w-sm font-body scrollbar-hide">
-      <h3 className="font-serif text-center text-base leading-6 mb-2">
+      <h3 className="mb-2 text-center font-serif text-base leading-6">
         {title}
       </h3>
       <Text className="italic">{type}</Text>

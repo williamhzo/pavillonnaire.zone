@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useMapBox } from '../hooks/useMapBox';
+import { useMapBox } from '~/hooks/useMapBox';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import DetailsModal from './DetailsModal';
 
@@ -7,7 +7,7 @@ type MapProps = {
   hide: boolean;
 };
 
-export default function Map({ hide }: MapProps) {
+const Map: React.FC<MapProps> = ({ hide }) => {
   const { mapContainerRef, feature } = useMapBox();
 
   function hideDetailsModal(e: KeyboardEvent) {
@@ -27,15 +27,13 @@ export default function Map({ hide }: MapProps) {
   }, []);
 
   return (
-    <>
-      <div
-        className={`map-container w-full h-full relative ${
-          hide ? 'hidden' : ''
-        }`}
-        ref={mapContainerRef}
-      >
-        {feature ? <DetailsModal feature={feature} /> : null}
-      </div>
-    </>
+    <div
+      className={`map-container relative h-full w-full ${hide ? 'hidden' : ''}`}
+      ref={mapContainerRef}
+    >
+      {feature ? <DetailsModal feature={feature} /> : null}
+    </div>
   );
-}
+};
+
+export default Map;

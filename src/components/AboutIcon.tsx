@@ -1,16 +1,16 @@
-import React from 'react';
-
 type AboutIconProps = {
   handleClick: () => void;
 };
 
-export default function AboutIcon({ handleClick }: AboutIconProps) {
+const AboutIcon: React.FC<AboutIconProps> = ({ handleClick }) => {
   return (
     <div
       onClick={handleClick}
-      className="fill-current text-white blend-difference absolute z-20 w-9 h-9 left-6 top-6 border border-white flex justify-center items-center group cursor-pointer"
+      className="group absolute left-6 top-6 z-20 flex h-9 w-9 cursor-pointer items-center justify-center border border-white fill-current text-white blend-difference"
     >
-      <div className="bg-white w-3 h-3 transform rotate-45 group-hover:rotate-0 transition duration-300 ease-in-out" />
+      <div className="h-3 w-3 rotate-45 transform bg-white transition duration-300 ease-in-out group-hover:rotate-0" />
     </div>
   );
-}
+};
+
+export default AboutIcon;
