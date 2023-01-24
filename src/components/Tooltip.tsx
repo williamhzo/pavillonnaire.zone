@@ -1,19 +1,17 @@
 import React from 'react';
+import clsx from 'clsx';
 
 type TooltipProps = {
   feature: mapboxgl.MapboxGeoJSONFeature['state'];
 };
 
-type TextProps = {
-  children: React.ReactNode;
-  className?: string;
-};
-
-function Text({ children, className }: TextProps) {
-  return <p className={`text-center text-sm ${className}`}>{children}</p>;
+function Text({ children, className }: React.ComponentProps<'p'>) {
+  return (
+    <p className={clsx(['text-center', 'text-sm', className])}>{children}</p>
+  );
 }
 
-export default function Tooltip({ feature }: TooltipProps) {
+const Tooltip: React.FC<TooltipProps> = ({ feature }) => {
   const { title, type, author, director, artist, album, editor, year, place } =
     feature.properties || {};
 
@@ -32,4 +30,6 @@ export default function Tooltip({ feature }: TooltipProps) {
       <Text>{place}</Text>
     </div>
   );
-}
+};
+
+export default Tooltip;
