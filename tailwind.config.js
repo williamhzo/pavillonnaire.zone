@@ -1,7 +1,7 @@
 module.exports = {
   mode: 'jit',
   content: ['./public/**/*.html', './src/**/*.{js,jsx,ts,tsx,vue}'],
-  media: false, // or 'darkMode'
+  media: false,
   theme: {
     screens: {
       sm: '640px',
