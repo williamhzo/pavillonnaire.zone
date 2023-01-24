@@ -1,9 +1,7 @@
-import React from 'react';
-
-export default function About() {
+const About: React.FC = () => {
   return (
-    <div className="text-white sm:w-11/12 md:w-3/4 lg:w-1/2 h-full overflow-auto scrollbar-hide">
-      <div className="w-full flex justify-end">
+    <div className="h-full overflow-auto text-white scrollbar-hide sm:w-11/12 md:w-3/4 lg:w-1/2">
+      <div className="flex w-full justify-end">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 500 500"
@@ -112,4 +110,6 @@ export default function About() {
       </p>
     </div>
   );
-}
+};
+
+export default About;

@@ -1,9 +1,9 @@
-import SEO from '../components/SEO';
-import Map from '../components/Map';
-import About from '../components/About';
-import AboutIcon from '../components/AboutIcon';
-import Instagram from '../components/Instagram';
-import useToggle from '../hooks/useToggle';
+import SEO from '~/components/SEO';
+import Map from '~/components/Map';
+import About from '~/components/About';
+import AboutIcon from '~/components/AboutIcon';
+import Instagram from '~/components/Instagram';
+import useToggle from '~/hooks/useToggle';
 import { useEffect } from 'react';
 
 export default function Homepage() {
@@ -28,17 +28,17 @@ export default function Homepage() {
   return (
     <>
       <SEO />
-      <main className="h-[100dvh] w-full relative bg-black overflow-hidden">
+      <main className="relative h-[100dvh] w-full overflow-hidden bg-black">
         <AboutIcon handleClick={toggleAbout} />
 
-        <h1 className="flyToTextButton fixed font-serif text-lg text-white blend-difference text-center w-full mt-7 z-10">
+        <h1 className="flyToTextButton fixed z-10 mt-7 w-full text-center font-serif text-lg text-white blend-difference">
           <a href="http://www.pavillonnaire.zone/">pavillonnaire.zone</a>
         </h1>
 
         <Map hide={showAbout} />
 
         {showAbout && (
-          <div className="h-full w-full flex justify-center items-start p-6 py-20 md:p-20">
+          <div className="flex h-full w-full items-start justify-center p-6 py-20 md:p-20">
             <About />
           </div>
         )}

@@ -1,6 +1,4 @@
-import React from 'react';
-
-export default function Instagram() {
+const Instagram: React.FC = () => {
   return (
     <a
       href="https://www.instagram.com/pavillonnaire.zone/"
@@ -13,7 +11,7 @@ export default function Instagram() {
         viewBox="0 0 36 36"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="fill-current blend-difference absolute z-10 w-9 h-9 left-6 bottom-6 hover:filter hover:invert"
+        className="absolute left-6 bottom-6 z-10 h-9 w-9 fill-current blend-difference hover:invert hover:filter"
       >
         <rect x="0.5" y="0.5" width="35" height="35" stroke="white" />
         <circle cx="18" cy="18" r="9" stroke="white" strokeWidth="2" />
@@ -21,4 +19,6 @@ export default function Instagram() {
       </svg>
     </a>
   );
-}
+};
+
+export default Instagram;

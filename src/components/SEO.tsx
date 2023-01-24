@@ -1,10 +1,6 @@
-import React from 'react';
-
 import Head from 'next/head';
 
-// TODO: SEO!
-
-export default function SEO() {
+const SEO: React.FC = () => {
   return (
     <Head>
       <title>pavillonnaire.zone</title>
@@ -23,7 +19,7 @@ export default function SEO() {
       <meta property="og:locale" content="fr_FR" />
       <meta property="og:url" content="https://www.pavillonnaire.zone.com/" />
       <link rel="canonical" href="https://www.pavillonnaire.zone.com/" />
-      {/* 
+      {/*
         <meta property="og:image" content="https://www.mywebsite.com/image.jpg" />
         <meta property="og:image:alt" content="Image description" />
         <meta name="twitter:card" content="summary_large_image" />
@@ -106,4 +102,6 @@ export default function SEO() {
       <link rel="manifest" href="/manifest.json" />
     </Head>
   );
-}
+};
+
+export default SEO;
