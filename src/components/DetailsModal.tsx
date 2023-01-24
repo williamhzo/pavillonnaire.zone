@@ -1,12 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
+import clsx from 'clsx';
 import { MapboxGeoJSONFeature } from 'mapbox-gl';
 
-type TextProps = React.PropsWithChildren<{
-  className?: string;
-}>;
-
-function Text({ children, className }: TextProps) {
-  return <p className={`text-center ${className}`}>{children}</p>;
+function Text({ children, className }: React.ComponentProps<'p'>) {
+  return <p className={clsx(['text-center', className])}>{children}</p>;
 }
 
 type DetailsModalProps = React.PropsWithChildren<{
@@ -36,15 +33,15 @@ const DetailsModal: React.FC<DetailsModalProps> = (props) => {
   return (
     <aside
       id="details-dialog"
-      className="absolute h-full z-50 bg-white top-0 right-0 w-full sm:w-[max(33%,350px)] hidden border border-black invert-select"
+      className="invert-select absolute top-0 right-0 z-50 hidden h-full w-full overflow-auto border border-black bg-white pb-4 scrollbar-hide sm:w-[max(33%,350px)]"
     >
       {image ? (
-        <div className="w-full flex h-1/3 justify-center">
+        <div className="flex h-1/3 w-full justify-center">
           <img src={image} alt={title} className="object-cover " />
         </div>
       ) : null}
 
-      <div className="flex flex-col items-center py-2 px-4 gap-2">
+      <div className="flex flex-col items-center gap-2 py-2 px-4">
         <button
           onClick={toggleAside}
           className="self-end p-4 text-2xl md:text-base"
@@ -52,7 +49,7 @@ const DetailsModal: React.FC<DetailsModalProps> = (props) => {
           &times;
         </button>
 
-        <h3 className="font-serif text-center text-base leading-6 mb-2 ">
+        <h3 className="mb-2 text-center font-serif text-base leading-6 ">
           {title}
         </h3>
 
@@ -72,15 +69,13 @@ const DetailsModal: React.FC<DetailsModalProps> = (props) => {
 
         {place ? <Text>{place}</Text> : null}
 
-        {abstract ? <Text>{abstract}</Text> : null}
-
         {link ? (
           <a
             href={link}
             target="_blank"
             rel="noreferrer"
             aria-hidden={true}
-            className=" mt-4 hover:translate-x-2 transition-transform duration-300 p-6"
+            className="my-6 p-6 transition-transform duration-300 hover:translate-x-2"
           >
             <span className="sr-only">Voir plus</span>
 
@@ -99,6 +94,8 @@ const DetailsModal: React.FC<DetailsModalProps> = (props) => {
             </svg>
           </a>
         ) : null}
+
+        {abstract ? <Text>{abstract}</Text> : null}
       </div>
     </aside>
   );
