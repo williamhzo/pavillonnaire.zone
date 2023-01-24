@@ -95,7 +95,7 @@ const DetailsModal: React.FC<DetailsModalProps> = (props) => {
           </a>
         ) : null}
 
-        {abstract ? <Text>{abstract}</Text> : null}
+        {abstract ? <Text className="text-justify">{abstract}</Text> : null}
       </div>
     </aside>
   );
