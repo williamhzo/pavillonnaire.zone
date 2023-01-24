@@ -1,4 +1,3 @@
-import { createRoot } from 'react-dom/client';
 import useMediaQuery from './useMediaQuery';
 import { useEffect, useRef, useState } from 'react';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
@@ -89,7 +88,7 @@ export function useMapBox() {
 
       // Create tooltip node
       const tooltipNode = document.createElement('div');
-      createRoot(tooltipNode).render(<Tooltip feature={feature} />);
+      ReactDOM.render(<Tooltip feature={feature} />, tooltipNode);
 
       // Set tooltip on map
       tooltipRef.current
