@@ -11,7 +11,7 @@ const Instagram: React.FC = () => {
         viewBox="0 0 36 36"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="absolute left-6 bottom-6 z-10 h-9 w-9 fill-current blend-difference hover:invert hover:filter"
+        className="absolute bottom-6 left-6 z-10 h-9 w-9 fill-current mix-blend-difference hover:invert hover:filter"
       >
         <rect x="0.5" y="0.5" width="35" height="35" stroke="white" />
         <circle cx="18" cy="18" r="9" stroke="white" strokeWidth="2" />
