@@ -24,7 +24,7 @@ export default function Homepage() {
       document.body.removeEventListener('keydown', hideAbout);
     };
   }, [showAbout, toggleAbout]);
-
+  // remove me
   return (
     <>
       <SEO />
