@@ -5,10 +5,11 @@ import ReactDOM from 'react-dom';
 import mapboxgl, { MapboxGeoJSONFeature, Marker } from 'mapbox-gl';
 import Tooltip from '~/components/Tooltip';
 
-const MAPBOX_STYLE = 'mapbox://styles/sabrimyllaud/ckcavaw0y4hx81ipjdzbdw1up';
 // TODO: Should be env vars
+const MAPBOX_STYLE = 'mapbox://styles/sabrimyllaud/ckcavaw0y4hx81ipjdzbdw1up';
 const MAPBOX_API_TOKEN =
   'pk.eyJ1Ijoic2FicmlteWxsYXVkIiwiYSI6ImNrYWwyYmxmbzA3cnQyeW15cTY0aTd4cTgifQ.6OY0hboWqf4zuhVXdYtFxw';
+
 const INITIAL_LONGITUDE = 1.872;
 const INITIAL_LATITUDE = 46.62;
 const MOBILE_INITIAL_ZOOM = 4.2;
@@ -32,8 +33,7 @@ export function useMapBox() {
 
   const isLaptop = useMediaQuery('(min-width: 1024px)');
 
-  const mapContainerRef = useRef<HTMLDivElement | null>(null);
-
+  const mapContainerRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef(new mapboxgl.Popup({ offset: [0, 0] }));
 
   useEffect(() => {
@@ -100,10 +100,6 @@ export function useMapBox() {
     // desktop
     map.on('mousemove', renderTooltip);
 
-    // TODO: necessary?
-    // mobile
-    // map.on('touchstart', renderTooltip); // FIXME: should be toggled at click (not only touch start)
-
     function toggleDetailsDialog(
       event: mapboxgl.MapMouseEvent & mapboxgl.EventData
     ) {
@@ -126,7 +122,6 @@ export function useMapBox() {
 
     // Clean up on unmount
     return () => map.remove();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLaptop]);
 
   return { mapContainerRef, feature };
