@@ -1,4 +1,6 @@
-const About: React.FC = () => {
+import { FC } from 'react';
+
+const About: FC = () => {
   return (
     <div className="h-full overflow-auto text-white scrollbar-hide sm:w-11/12 md:w-3/4 lg:w-1/2">
       <div className="flex w-full justify-end">

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { useMapBox } from '~/hooks/useMapBox';
+import { useMapBox } from 'hooks/useMapBox';
+import DetailsModal from 'components/DetailsModal';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
-import DetailsModal from './DetailsModal';
 
 type MapProps = {
   hide: boolean;

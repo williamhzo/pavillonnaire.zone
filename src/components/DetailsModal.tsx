@@ -1,16 +1,16 @@
-/* eslint-disable @next/next/no-img-element */
-import clsx from 'clsx';
 import { MapboxGeoJSONFeature } from 'mapbox-gl';
+import { ComponentProps, PropsWithChildren, FC } from 'react';
+import { cn } from 'utils';
 
-function Text({ children, className }: React.ComponentProps<'p'>) {
-  return <p className={clsx(['text-center', className])}>{children}</p>;
+function Text({ children, className }: ComponentProps<'p'>) {
+  return <p className={cn(['text-center', className])}>{children}</p>;
 }
 
-type DetailsModalProps = React.PropsWithChildren<{
+type DetailsModalProps = PropsWithChildren<{
   feature: MapboxGeoJSONFeature;
 }>;
 
-const DetailsModal: React.FC<DetailsModalProps> = (props) => {
+const DetailsModal: FC<DetailsModalProps> = (props) => {
   const {
     title,
     type,
@@ -33,7 +33,7 @@ const DetailsModal: React.FC<DetailsModalProps> = (props) => {
   return (
     <aside
       id="details-dialog"
-      className="invert-select absolute top-0 right-0 z-50 hidden h-full w-full overflow-auto border border-black bg-white pb-4 scrollbar-hide sm:w-[max(33%,350px)]"
+      className="invert-select absolute right-0 top-0 z-50 hidden h-full w-full overflow-auto border border-black bg-white pb-4 scrollbar-hide sm:w-[max(33%,350px)]"
     >
       {image ? (
         <div className="flex h-1/3 w-full justify-center">
@@ -41,7 +41,7 @@ const DetailsModal: React.FC<DetailsModalProps> = (props) => {
         </div>
       ) : null}
 
-      <div className="flex flex-col items-center gap-2 py-2 px-4">
+      <div className="flex flex-col items-center gap-2 px-4 py-2">
         <button
           onClick={toggleAside}
           className="self-end p-4 text-2xl md:text-base"
