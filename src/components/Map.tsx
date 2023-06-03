@@ -5,11 +5,7 @@ import { useMapBox } from 'hooks/useMapBox';
 import DetailsModal from 'components/DetailsModal';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
-type MapProps = {
-  hide: boolean;
-};
-
-const Map: FC<MapProps> = ({ hide }) => {
+const Map: FC = () => {
   const { mapContainerRef, feature } = useMapBox();
 
   function hideDetailsModal(e: KeyboardEvent) {
@@ -19,17 +15,13 @@ const Map: FC<MapProps> = ({ hide }) => {
 
   useEffect(() => {
     document.body.addEventListener('keydown', hideDetailsModal);
-
     return () => {
       document.body.removeEventListener('keydown', hideDetailsModal);
     };
   }, []);
 
   return (
-    <div
-      className={`map-container relative h-full w-full ${hide ? 'hidden' : ''}`}
-      ref={mapContainerRef}
-    >
+    <div className="map-container relative h-full w-full" ref={mapContainerRef}>
       {feature ? <DetailsModal feature={feature} /> : null}
     </div>
   );
