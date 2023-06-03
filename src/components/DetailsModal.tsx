@@ -1,3 +1,5 @@
+'use client';
+
 import { MapboxGeoJSONFeature } from 'mapbox-gl';
 import { ComponentProps, PropsWithChildren, FC } from 'react';
 import { cn } from 'utils';

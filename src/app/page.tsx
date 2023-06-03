@@ -12,11 +12,7 @@ export default function Homepage() {
 
   useEffect(() => {
     function hideAbout(e: KeyboardEvent) {
-      if (showAbout && e.key === 'Escape') {
-        toggleAbout();
-      }
-
-      return;
+      if (showAbout && e.key === 'Escape') toggleAbout();
     }
 
     document.body.addEventListener('keydown', hideAbout);

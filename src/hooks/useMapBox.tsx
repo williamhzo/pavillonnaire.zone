@@ -1,3 +1,5 @@
+'use client';
+
 import useMediaQuery from 'hooks/useMediaQuery';
 import { useEffect, useRef, useState } from 'react';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
