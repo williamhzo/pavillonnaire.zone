@@ -31,7 +31,7 @@ export default function Homepage() {
       <main className="relative h-[100dvh] w-full overflow-hidden bg-black">
         <AboutIcon handleClick={toggleAbout} />
 
-        <h1 className="fixed flyToTextButton z-10 mt-7 w-full text-center font-serif text-lg text-white mix-blend-difference">
+        <h1 className="flyToTextButton fixed z-10 mt-7 w-full text-center font-serif text-lg text-white mix-blend-difference">
           <a href="http://www.pavillonnaire.zone/">pavillonnaire.zone</a>
         </h1>
 
