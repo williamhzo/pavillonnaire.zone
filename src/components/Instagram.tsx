@@ -1,4 +1,8 @@
-const Instagram: React.FC = () => {
+'use client';
+
+import { FC } from 'react';
+
+const Instagram: FC = () => {
   return (
     <a
       href="https://www.instagram.com/pavillonnaire.zone/"

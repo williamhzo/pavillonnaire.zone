@@ -1,9 +1,11 @@
-import React from 'react';
-import clsx from 'clsx';
+'use client';
 
-function Text({ children, className }: React.ComponentProps<'p'>) {
+import { ComponentProps, FC } from 'react';
+import { cn } from 'utils';
+
+function Text({ children, className }: ComponentProps<'p'>) {
   return (
-    <p className={clsx(['text-center', 'text-sm', className])}>{children}</p>
+    <p className={cn(['text-center', 'text-sm', className])}>{children}</p>
   );
 }
 
@@ -11,7 +13,7 @@ type TooltipProps = {
   feature: mapboxgl.MapboxGeoJSONFeature['state'];
 };
 
-const Tooltip: React.FC<TooltipProps> = ({ feature }) => {
+const Tooltip: FC<TooltipProps> = ({ feature }) => {
   const { title, type, author, director, artist, album, editor, year, place } =
     feature.properties || {};
 

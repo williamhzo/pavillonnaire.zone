@@ -1,21 +1,20 @@
-import { useEffect } from 'react';
-import { useMapBox } from '~/hooks/useMapBox';
+'use client';
+
+import { FC, useEffect } from 'react';
+import { useMapBox } from 'hooks/useMapBox';
+import DetailsModal from 'components/DetailsModal';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
-import DetailsModal from './DetailsModal';
 
 type MapProps = {
   hide: boolean;
 };
 
-const Map: React.FC<MapProps> = ({ hide }) => {
+const Map: FC<MapProps> = ({ hide }) => {
   const { mapContainerRef, feature } = useMapBox();
 
   function hideDetailsModal(e: KeyboardEvent) {
-    if (e.key === 'Escape') {
+    if (e.key === 'Escape')
       document.getElementById('details-dialog')?.classList.add('hidden');
-    }
-
-    return;
   }
 
   useEffect(() => {

@@ -1,8 +1,7 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 
-/**
- *  Hook for using media queries for conditional rendering.
- */
 export default function useMediaQuery(query: string): boolean {
   const [isMatchingQuery, setIsMatchingQuery] = useState(false);
 

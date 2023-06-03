@@ -1,9 +1,11 @@
-import useMediaQuery from './useMediaQuery';
+'use client';
+
+import useMediaQuery from 'hooks/useMediaQuery';
 import { useEffect, useRef, useState } from 'react';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import ReactDOM from 'react-dom';
 import mapboxgl, { MapboxGeoJSONFeature, Marker } from 'mapbox-gl';
-import Tooltip from '~/components/Tooltip';
+import Tooltip from 'components/Tooltip';
 
 // TODO: Should be env vars
 const MAPBOX_STYLE = 'mapbox://styles/sabrimyllaud/ckcavaw0y4hx81ipjdzbdw1up';

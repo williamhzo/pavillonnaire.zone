@@ -1,8 +1,12 @@
+'use client';
+
+import { FC } from 'react';
+
 type AboutIconProps = {
   handleClick: () => void;
 };
 
-const AboutIcon: React.FC<AboutIconProps> = ({ handleClick }) => {
+const AboutIcon: FC<AboutIconProps> = ({ handleClick }) => {
   return (
     <div
       onClick={handleClick}
