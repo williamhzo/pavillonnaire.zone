@@ -2,10 +2,10 @@
 
 import { FC, useEffect } from 'react';
 import { useMapBox } from 'hooks/useMapBox';
-import DetailsModal from 'components/DetailsModal';
+import { DetailsModal } from 'components/DetailsModal';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
-const Map: FC = () => {
+export const Map: FC = () => {
   const { mapContainerRef, feature } = useMapBox();
 
   function hideDetailsModal(e: KeyboardEvent) {
@@ -26,5 +26,3 @@ const Map: FC = () => {
     </div>
   );
 };
-
-export default Map;

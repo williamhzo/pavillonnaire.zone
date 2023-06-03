@@ -1,8 +1,8 @@
 'use client';
 
-import Map from 'components/Map';
-import About from 'components/About';
-import Instagram from 'components/Instagram';
+import { Map } from 'components/Map';
+import { About } from 'components/About';
+import { Instagram } from 'components/Instagram';
 import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -35,7 +35,7 @@ export default function Homepage() {
         <div className="h-3 w-3 rotate-45 transform bg-white transition duration-300 ease-in-out group-hover:rotate-0" />
       </Link>
 
-      <h1 className="flyToTextButton fixed z-10 mt-7 w-full text-center font-serif text-lg text-white mix-blend-difference">
+      <h1 className="fixed z-10 mt-7 w-full text-center font-serif text-lg text-white mix-blend-difference">
         <Link href={ROOT_PATH}>pavillonnaire.zone</Link>
       </h1>
 

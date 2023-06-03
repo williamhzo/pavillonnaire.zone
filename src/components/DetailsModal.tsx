@@ -5,14 +5,14 @@ import { ComponentProps, PropsWithChildren, FC } from 'react';
 import { cn } from 'utils';
 
 function Text({ children, className }: ComponentProps<'p'>) {
-  return <p className={cn(['text-center', className])}>{children}</p>;
+  return <p className={cn('text-center', className)}>{children}</p>;
 }
 
 type DetailsModalProps = PropsWithChildren<{
   feature: MapboxGeoJSONFeature;
 }>;
 
-const DetailsModal: FC<DetailsModalProps> = (props) => {
+export const DetailsModal: FC<DetailsModalProps> = (props) => {
   const {
     title,
     type,
@@ -104,5 +104,3 @@ const DetailsModal: FC<DetailsModalProps> = (props) => {
     </aside>
   );
 };
-
-export default DetailsModal;

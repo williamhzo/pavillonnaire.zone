@@ -2,7 +2,7 @@
 
 import { FC } from 'react';
 
-const Instagram: FC = () => {
+export const Instagram: FC = () => {
   return (
     <a
       href="https://www.instagram.com/pavillonnaire.zone/"
@@ -24,5 +24,3 @@ const Instagram: FC = () => {
     </a>
   );
 };
-
-export default Instagram;

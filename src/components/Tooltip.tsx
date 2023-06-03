@@ -4,16 +4,14 @@ import { ComponentProps, FC } from 'react';
 import { cn } from 'utils';
 
 function Text({ children, className }: ComponentProps<'p'>) {
-  return (
-    <p className={cn(['text-center', 'text-sm', className])}>{children}</p>
-  );
+  return <p className={cn('text-center text-sm', className)}>{children}</p>;
 }
 
 type TooltipProps = {
   feature: mapboxgl.MapboxGeoJSONFeature['state'];
 };
 
-const Tooltip: FC<TooltipProps> = ({ feature }) => {
+export const Tooltip: FC<TooltipProps> = ({ feature }) => {
   const { title, type, author, director, artist, album, editor, year, place } =
     feature.properties || {};
 
@@ -33,5 +31,3 @@ const Tooltip: FC<TooltipProps> = ({ feature }) => {
     </div>
   );
 };
-
-export default Tooltip;
