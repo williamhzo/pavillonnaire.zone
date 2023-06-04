@@ -37,15 +37,15 @@ export function useMapBox() {
   useEffect(() => {
     const map: mapboxgl.Map = new mapboxgl.Map({
       container: mapContainerRef.current as HTMLDivElement,
-      accessToken: env.NEXT_PUBLIC_MAPBOX_API_TOKEN,
-      style: env.NEXT_PUBLIC_MAPBOX_STYLE,
+      accessToken: process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN,
+      style: process.env.NEXT_PUBLIC_MAPBOX_STYLE,
       center: [INITIAL_LONGITUDE, INITIAL_LATITUDE],
       zoom: isLaptop ? DESKTOP_INITIAL_ZOOM : MOBILE_INITIAL_ZOOM,
       minZoom: ZOOM_LIMIT,
     });
 
     const geocoder = new MapboxGeocoder({
-      accessToken: env.NEXT_PUBLIC_MAPBOX_API_TOKEN,
+      accessToken: process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN as string,
       countries: 'fr',
       language: 'fr-FR',
       placeholder: 'Recherche par lieu',
