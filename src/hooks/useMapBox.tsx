@@ -6,11 +6,7 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import ReactDOM from 'react-dom';
 import mapboxgl, { MapboxGeoJSONFeature, Marker } from 'mapbox-gl';
 import { Tooltip } from 'components/Tooltip';
-
-// TODO: Should be env vars
-const MAPBOX_STYLE = 'mapbox://styles/sabrimyllaud/ckcavaw0y4hx81ipjdzbdw1up';
-const MAPBOX_API_TOKEN =
-  'pk.eyJ1Ijoic2FicmlteWxsYXVkIiwiYSI6ImNrYWwyYmxmbzA3cnQyeW15cTY0aTd4cTgifQ.6OY0hboWqf4zuhVXdYtFxw';
+import { env } from 'env.mjs';
 
 const INITIAL_LONGITUDE = 1.872;
 const INITIAL_LATITUDE = 46.62;
@@ -41,15 +37,15 @@ export function useMapBox() {
   useEffect(() => {
     const map: mapboxgl.Map = new mapboxgl.Map({
       container: mapContainerRef.current as HTMLDivElement,
-      accessToken: MAPBOX_API_TOKEN,
-      style: MAPBOX_STYLE,
+      accessToken: env.NEXT_PUBLIC_MAPBOX_API_TOKEN,
+      style: env.NEXT_PUBLIC_MAPBOX_STYLE,
       center: [INITIAL_LONGITUDE, INITIAL_LATITUDE],
       zoom: isLaptop ? DESKTOP_INITIAL_ZOOM : MOBILE_INITIAL_ZOOM,
       minZoom: ZOOM_LIMIT,
     });
 
     const geocoder = new MapboxGeocoder({
-      accessToken: MAPBOX_API_TOKEN,
+      accessToken: env.NEXT_PUBLIC_MAPBOX_API_TOKEN,
       countries: 'fr',
       language: 'fr-FR',
       placeholder: 'Recherche par lieu',
