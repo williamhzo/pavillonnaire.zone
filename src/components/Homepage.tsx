@@ -54,12 +54,14 @@ export default function Homepage() {
         </div>
       )}
 
-      <div
-        className="map-container relative h-full w-full"
-        ref={mapContainerRef}
-      >
-        {feature && <DetailsModal feature={feature} />}
-      </div>
+      {mapContainerRef && (
+        <div
+          className="map-container relative h-full w-full"
+          ref={mapContainerRef}
+        >
+          <DetailsModal feature={feature} />
+        </div>
+      )}
     </>
   );
 }

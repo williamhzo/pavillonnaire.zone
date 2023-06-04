@@ -9,10 +9,16 @@ function Text({ children, className }: ComponentProps<'p'>) {
 }
 
 type DetailsModalProps = PropsWithChildren<{
-  feature: MapboxGeoJSONFeature;
+  feature: MapboxGeoJSONFeature | undefined;
 }>;
 
-export const DetailsModal: FC<DetailsModalProps> = (props) => {
+export const DetailsModal: FC<DetailsModalProps> = ({ feature }) => {
+  function toggleAside() {
+    document.getElementById('details-dialog')?.classList.add('hidden');
+  }
+
+  if (!feature) return null;
+
   const {
     title,
     type,
@@ -26,11 +32,7 @@ export const DetailsModal: FC<DetailsModalProps> = (props) => {
     image,
     abstract,
     link,
-  } = props.feature.properties || {};
-
-  function toggleAside() {
-    document.getElementById('details-dialog')?.classList.add('hidden');
-  }
+  } = feature.properties || {};
 
   return (
     <aside
