@@ -6,7 +6,6 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import ReactDOM from 'react-dom';
 import mapboxgl, { MapboxGeoJSONFeature, Marker } from 'mapbox-gl';
 import { Tooltip } from 'components/Tooltip';
-import { env } from 'env.mjs';
 
 const INITIAL_LONGITUDE = 1.872;
 const INITIAL_LATITUDE = 46.62;
