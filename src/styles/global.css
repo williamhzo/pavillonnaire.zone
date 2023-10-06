@@ -4,13 +4,15 @@
 
 @font-face {
   font-family: 'Yoster-Island';
-  src: local('yoster-island.regular'),
+  src:
+    local('yoster-island.regular'),
     url(../../public/fonts/yoster-island.regular.ttf) format('truetype');
 }
 
 @font-face {
   font-family: 'Alice';
-  src: local('Alice-Regular'),
+  src:
+    local('Alice-Regular'),
     url(../../public/fonts/Alice-Regular.ttf) format('truetype');
 }
 
@@ -218,7 +220,7 @@ svg.mapboxgl-ctrl-geocoder--icon {
 }
 
 .mapboxgl-map {
-  font: inherit;
+  font: inherit !important;
 }
 
 /* Popup styles
