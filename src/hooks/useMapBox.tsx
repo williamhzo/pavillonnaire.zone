@@ -85,6 +85,9 @@ export function useMapBox() {
 
       // Create tooltip node
       const tooltipNode = document.createElement('div');
+
+      // TODO: replace deprecated ReactDOM.render below by createRoot.
+      // eslint-disable-next-line react/no-deprecated
       ReactDOM.render(<Tooltip feature={feature} />, tooltipNode);
 
       // Set tooltip on map
