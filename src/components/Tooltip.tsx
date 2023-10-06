@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/utils';
+import { cn, formatTypeString } from '@/utils';
 import { ComponentProps, FC } from 'react';
 
 function Text({ children, className }: ComponentProps<'p'>) {
@@ -15,7 +15,7 @@ export const Tooltip: FC<TooltipProps> = ({ feature }) => {
   const { title, type, author, director, artist, album, editor, year, place } =
     feature.properties || {};
 
-  const types: string[] = type.split(' ; ').join(', ');
+  const types = formatTypeString(type);
 
   return (
     <div id={title} className="min-w-fit max-w-sm font-body scrollbar-hide">

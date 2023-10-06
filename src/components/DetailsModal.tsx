@@ -2,7 +2,7 @@
 
 import { MapboxGeoJSONFeature } from 'mapbox-gl';
 import { ComponentProps, PropsWithChildren, FC } from 'react';
-import { cn } from '@/utils';
+import { cn, formatTypeString } from '@/utils';
 
 function Text({ children, className }: ComponentProps<'p'>) {
   return <p className={cn('text-center', className)}>{children}</p>;
@@ -34,6 +34,8 @@ export const DetailsModal: FC<DetailsModalProps> = ({ feature }) => {
     link,
   } = feature.properties || {};
 
+  const types = formatTypeString(type);
+
   return (
     <aside
       id="details-dialog"
@@ -59,7 +61,7 @@ export const DetailsModal: FC<DetailsModalProps> = ({ feature }) => {
           {title}
         </h3>
 
-        {type && <Text className="italic">{type}</Text>}
+        {type && <Text className="italic lowercase">{type}</Text>}
         {author && <Text>{author}</Text>}
         {director && <Text>{director}</Text>}
         {artist && <Text>{artist}</Text>}
