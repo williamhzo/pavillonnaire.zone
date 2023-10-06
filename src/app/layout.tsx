@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import Script from 'next/script';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
-import 'styles/global.css';
+import '@/styles/global.css';
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

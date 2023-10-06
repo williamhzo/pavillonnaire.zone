@@ -1,11 +1,11 @@
 'use client';
 
-import useMediaQuery from 'hooks/useMediaQuery';
+import useMediaQuery from '@/hooks/useMediaQuery';
 import { useEffect, useRef, useState } from 'react';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import ReactDOM from 'react-dom';
 import mapboxgl, { MapboxGeoJSONFeature, Marker } from 'mapbox-gl';
-import { Tooltip } from 'components/Tooltip';
+import { Tooltip } from '@/components/Tooltip';
 
 const INITIAL_LONGITUDE = 1.872;
 const INITIAL_LATITUDE = 46.62;

@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/src/utils';
+import { cn } from '@/utils';
 import { ComponentProps, FC } from 'react';
 
 function Text({ children, className }: ComponentProps<'p'>) {

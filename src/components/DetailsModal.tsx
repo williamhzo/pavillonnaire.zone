@@ -2,7 +2,7 @@
 
 import { MapboxGeoJSONFeature } from 'mapbox-gl';
 import { ComponentProps, PropsWithChildren, FC } from 'react';
-import { cn } from 'utils';
+import { cn } from '@/utils';
 
 function Text({ children, className }: ComponentProps<'p'>) {
   return <p className={cn('text-center', className)}>{children}</p>;

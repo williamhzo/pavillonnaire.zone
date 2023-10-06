@@ -1,7 +1,7 @@
-import Homepage from 'components/Homepage';
-import { Instagram } from 'components/Instagram';
+import Homepage from '@/components/Homepage';
+import { Instagram } from '@/components/Instagram';
 import Link from 'next/link';
-import { ROOT_PATH } from 'paths';
+import { ROOT_PATH } from '@/paths';
 
 export default function Home() {
   return (
