@@ -1,10 +1,11 @@
 'use client';
 
+import { ContributionForm } from '@/components/ContributionForm';
 import { FC } from 'react';
 
 export const About: FC = () => {
   return (
-    <div className="h-full overflow-auto text-white scrollbar-hide sm:w-11/12 md:w-3/4 lg:w-1/2">
+    <div className="h-full overflow-auto text-white scrollbar-hide sm:w-11/12 md:w-3/4 lg:w-1/2 flex flex-col gap-4">
       <div className="flex w-full justify-end">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -20,98 +21,98 @@ export const About: FC = () => {
           />
         </svg>
       </div>
-      <p className="mb-4">
+      <p>
         Le pavillonnaire est un territoire dont on connaît trop peu la culture.
         Nous sommes beaucoup à y avoir grandi ou vécu, et pourtant l&apos;idée
         d&apos;une culture pavillonnaire reste encore discrète et fragile. Que
         se cache-t-il derrière ces maisons que beaucoup croient toutes
-        identiques ? qu&apos;en pensent leurs habitants, et quel univers y
+        identiques ? Qu&apos;en pensent leurs habitants, et quel univers y
         ont-ils développé ?
       </p>
-      <p className="mb-4">
-        pavillonnaire.zone (v1.0) est un outil contributif dont le but est de
-        faire émerger les éléments d&apos;une culture pavillonnaire, en même
-        temps qu&apos;il permet de les situer. La page web rassemblera bientôt
-        (future v2.0) les éléments d&apos;une archive et ceux d&apos;une
-        cartographie de façon interactive. Elle deviendra le support cliquable à
-        une archive géolocalisée.
+      <p>
+        Le pavillonnaire.zone est un espace contributif dont le but est de faire
+        émerger les éléments d&apos;une culture pavillonnaire, en même temps
+        qu&apos;il permet de les situer. Le .zone est le support cliquable à
+        cette archive géolocalisée.
       </p>
-      <p className="mb-4">
+      <p>
         La map donne à voir, sans ambiguïté, et pour la première fois, la
-        silhouette du pavillonnaire sur le territoire français. Pixels noirs,
-        éparpillés entre campagnes et centres-villes. La trace est issue
-        d&apos;un traitement de{' '}
+        silhouette du pavillonnaire sur le territoire français. Pixels noirs
+        éparpillés entre campagnes et centres-villes, la trace est issue
+        d&apos;un traitement des{' '}
         <a
           className="underline"
           href="https://www.insee.fr/fr/statistiques/2520034"
         >
           données carroyées
         </a>{' '}
-        de l&apos;INSEE. Chaque pixel correspond à un carreau de 200/200 mètres,
-        estimé à dominante pavillonnaire suivant les{' '}
+        de l&apos;INSEE. Chaque pixel correspond à un carreau de 200/200 mètres,
+        estimé à{' '}
         <a
           className="underline"
           href="http://www.donnees.normandie.developpement-durable.gouv.fr/pavillonnaire/details.html"
         >
-          critères de sélection
-        </a>{' '}
-        de la DREAL Normandie pour sa démarche « devenir des zones
-        pavillonnaires ».
+          dominante pavillonnaire
+        </a>
+        .
       </p>
-      <p className="mb-4">
+      <p>
         L&apos;archive explore l&apos;idée d&apos;une culture pavillonnaire, au
         travers des travaux ou des expériences qui en émanent. Elle rassemble un
         imaginaire en constellation, sans souci de hiérarchie entre les
         différents items qui la composent. Une sélection contributive, à prendre
-        comme une exploration, pour la visibilité d&apos;une culture discrète,
-        vécue de l&apos;intérieure.
-      </p>
-      <p className="mb-4">
-        <span className="mr-2">🏡</span> Le tout est le fruit de la
-        collaboration entre{' '}
-        <a
-          className="underline"
-          href="https://www.linkedin.com/in/samy-brillaud-b94234199/"
-        >
-          Samy Brillaud
-        </a>{' '}
-        (curation, QGIS) et{' '}
-        <a
-          className="underline"
-          href="https://www.linkedin.com/in/williamhermozo/"
-        >
-          William Hermozo
-        </a>{' '}
-        (développement web) qui ont eux même grandi dans la{' '}
-        <a
-          className="underline"
-          href="https://goo.gl/maps/FFbuSHsMo4TDCq3e8"
-          target="_blank"
-          rel="noreferrer"
-        >
-          zone
-        </a>
-        .
-      </p>
-      <p className="mb-4">
-        <span className="mr-2">✉️</span> Ecrivez-nous si vous voulez{' '}
-        <a className="underline" href="mailto:contribuer@pavillonnaire.zone">
-          contribuer@pavillonnaire.zone
-        </a>
-        .
+        comme une enquête pour l&apos;épanouissement d&apos;une culture
+        discrète, vécue de l&apos;intérieur.
       </p>
 
+      <p className="mt-8">Pavillonnairement,</p>
+
       <p>
-        <span className="mr-2">💾</span>{' '}
+        <a className="underline" href="https://www.instagram.com/sabrimyllaud/">
+          Samy
+        </a>
+        ,{' '}
+        <a className="underline" href="https://twitter.com/williamhzo">
+          William
+        </a>
+        , et la participation de{' '}
+        <a className="underline" href="https://www.instagram.com/traast_agram/">
+          Victor
+        </a>{' '}
+        qui ont eux même grandi dans la zone.
+      </p>
+
+      <div className="my-8">
+        <svg
+          width="18"
+          height="67"
+          viewBox="0 0 18 67"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M10.2102 0.240234C12.1802 0.870234 11.2202 9.34023 11.0202 10.4502C10.8402 11.4302 9.98017 12.1802 9.59017 13.1102C9.09017 14.3202 9.68017 15.5302 9.09017 16.6702C8.66017 17.4902 8.03017 17.5402 7.90017 18.5402C7.76017 19.6002 7.92016 20.6902 7.89016 21.7502C7.84016 23.5802 9.48016 24.5602 9.43016 26.4202C9.39016 28.0202 9.44016 29.6302 9.44016 31.2402V41.5702V59.4402C9.44016 60.2902 10.2502 63.6502 9.52016 64.1702C7.78016 65.3902 6.33016 62.4802 5.78016 61.6602C4.94016 60.3902 3.78016 59.8402 2.68016 58.7402C2.13016 58.1902 0.230157 55.7802 0.250157 55.1802C2.81016 55.6502 2.61015 57.6402 3.42015 58.8402C4.15015 59.9102 5.40017 60.7702 6.54017 61.6502C8.16017 62.8902 8.32016 65.0702 10.0302 65.9702C10.3302 64.8302 11.0502 64.0402 11.5902 63.0702C12.1402 62.0702 11.5002 60.9202 11.7302 59.8902C12.0302 58.5302 14.7002 55.1702 17.1402 54.7202"
+            stroke="white"
+            stroke-width="1"
+          />
+        </svg>
+      </div>
+
+      <p>
+        Pour{' '}
         <a
           className="underline"
           href="./assets/guide-contribution.pdf"
           target="_blank"
           rel="noreferrer"
         >
-          Guide contribution
-        </a>
+          contribuer
+        </a>{' '}
+        il suffit de remplir les champs en dessous (plus c&apos;est précis mieux
+        c&apos;est !).
       </p>
+
+      <ContributionForm />
     </div>
   );
 };

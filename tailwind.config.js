@@ -1,3 +1,6 @@
+const colors = require('tailwindcss/colors');
+
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     './public/**/*.html',
@@ -9,6 +12,11 @@ module.exports = {
       display: ['Gilroy', 'Arial', 'sans-serif'],
       body: ['Alice', 'Arial', 'sans-serif'],
       serif: ['Yoster-Island', 'serif'],
+    },
+    extend: {
+      colors: {
+        muted: colors.gray[400],
+      },
     },
   },
   plugins: [require('tailwind-scrollbar-hide')],
