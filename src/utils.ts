@@ -6,5 +6,6 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatTypeString(type: string) {
+  // TODO: ajouter le "et" sur le dernier si plus d'un.
   return type.split(' ; ').join(', ');
 }
