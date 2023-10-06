@@ -61,7 +61,7 @@ export const DetailsModal: FC<DetailsModalProps> = ({ feature }) => {
           {title}
         </h3>
 
-        {type && <Text className="italic lowercase">{type}</Text>}
+        {types && <Text className="italic lowercase">{types}</Text>}
         {author && <Text>{author}</Text>}
         {director && <Text>{director}</Text>}
         {artist && <Text>{artist}</Text>}
