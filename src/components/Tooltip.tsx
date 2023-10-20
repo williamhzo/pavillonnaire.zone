@@ -12,6 +12,8 @@ type TooltipProps = {
 };
 
 export const Tooltip: FC<TooltipProps> = ({ feature }) => {
+  if (!feature) return null;
+
   const { title, type, author, director, artist, album, editor, year, place } =
     feature.properties || {};
 
