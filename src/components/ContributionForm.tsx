@@ -4,6 +4,18 @@ import { Label } from '@/components/Label';
 import { Textarea } from '@/components/Textarea';
 import { FC, FormEvent, PropsWithChildren, useEffect, useState } from 'react';
 
+export type FormData = {
+  title: string;
+  author: string;
+  coordinates: string;
+  year: string;
+  editor: string;
+  description: string;
+  image: string;
+  contributor: string;
+  email: string;
+};
+
 export const ContributionForm: FC = () => {
   const [submitted, setSubmitted] = useState(false);
 
