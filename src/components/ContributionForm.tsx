@@ -4,7 +4,7 @@ import { Label } from '@/components/Label';
 import { Textarea } from '@/components/Textarea';
 import { FC, FormEvent, PropsWithChildren, useEffect, useState } from 'react';
 
-export type FormData = {
+export type ContributionFormData = {
   title: string;
   author: string;
   coordinates: string;
@@ -23,26 +23,20 @@ export const ContributionForm: FC = () => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    console.log(data);
     setSubmitted(true);
 
-    // post to api route handler to save data
     try {
       const res = await fetch('/api/send', {
         method: 'POST',
         body: JSON.stringify(data),
-        // body: formData,
         headers: {
           'content-type': 'application/json',
         },
       });
-      console.log('Response in handle submit', res);
     } catch (error) {
-      console.log(error);
+      console.error('error', error);
     }
   }
-
-  // re-set submitted to false after 5 seconds
 
   useEffect(() => {
     if (submitted) {
