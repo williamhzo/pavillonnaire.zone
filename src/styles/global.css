@@ -71,26 +71,12 @@ body {
   font-family: 'Alice';
 }
 
-p::selection,
-a::selection,
-h1::selection,
-h2::selection,
-h3::selection,
-h4::selection,
-h5::selection,
-h6::selection {
+::selection {
   background: white;
   color: black;
 }
 
-.invert-select p::selection,
-a::selection,
-h1::selection,
-h2::selection,
-h3::selection,
-h4::selection,
-h5::selection,
-h6::selection {
+.invert-select ::selection {
   background: black;
   color: white;
 }

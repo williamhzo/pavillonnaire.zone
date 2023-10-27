@@ -41,7 +41,7 @@ export const DetailsModal: FC<DetailsModalProps> = ({ feature }) => {
   return (
     <aside
       id="details-dialog"
-      className="invert-select absolute right-0 top-0 z-50 hidden h-full w-full overflow-auto border border-black bg-white p-4 scrollbar-hide sm:w-[max(33%,350px)]"
+      className="absolute invert-select right-0 top-0 z-50 hidden h-full w-full overflow-auto border border-black bg-white p-4 scrollbar-hide sm:w-[max(33%,350px)]"
     >
       {image && (
         <div className="flex h-[36%] w-full justify-center">
