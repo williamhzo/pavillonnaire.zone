@@ -107,7 +107,11 @@ export const ContributionForm: FC = () => {
 
           <Field>
             <Label htmlFor="email">Mail</Label>
-            <Input name="email" id="email" placeholder="pav@zone.com" />
+            <Input
+              name="email"
+              id="email"
+              placeholder="contribuer@pavillonnaire.zone"
+            />
           </Field>
         </Column>
       </div>
