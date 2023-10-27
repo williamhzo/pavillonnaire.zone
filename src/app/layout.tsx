@@ -16,6 +16,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.pavillonnaire.zone.com/'),
   title: 'pavillonnaire.zone',
   description:
     "Une Map pour l'exploration spatiale d'une culture pavillonnaire 🏡",
