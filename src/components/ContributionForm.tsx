@@ -120,7 +120,7 @@ export const ContributionForm: FC = () => {
         {submitted ? (
           <p>
             Merci pour ta contribution ! Elle sera très rapidement ajoutée à la
-            carte collaborative.
+            map.
           </p>
         ) : (
           <button
