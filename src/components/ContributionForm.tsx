@@ -87,7 +87,7 @@ export const ContributionForm: FC = () => {
             <Textarea
               name="description"
               id="description"
-              placeholder="Description (1500 charactères max)"
+              placeholder="Description (1500 caractères max)"
             />
           </Field>
 
