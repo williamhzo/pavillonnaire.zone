@@ -13,6 +13,8 @@ type DetailsModalProps = PropsWithChildren<{
 }>;
 
 export const DetailsModal: FC<DetailsModalProps> = ({ feature }) => {
+  if (!feature) return null;
+
   function toggleAside() {
     document.getElementById('details-dialog')?.classList.add('hidden');
   }
