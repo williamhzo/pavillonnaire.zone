@@ -30,9 +30,10 @@ export const About: FC = () => {
         ont-ils développé ?
       </p>
       <p>
-        Le pavillonnaire.zone est un espace contributif dont le but est de faire
-        émerger les éléments d&apos;une culture pavillonnaire, en même temps
-        qu&apos;il permet de les situer. Le .zone est le support cliquable à
+        Le <span className="font-serif">pavillonnaire.zone</span> est un espace
+        contributif dont le but est de faire émerger les éléments d&apos;une
+        culture pavillonnaire, en même temps qu&apos;il permet de les situer. Le
+        <span className="font-serif">.zone</span> est le support cliquable à
         cette archive géolocalisée.
       </p>
       <p>
