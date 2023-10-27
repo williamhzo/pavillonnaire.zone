@@ -17,11 +17,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
 export const metadata: Metadata = {
   title: 'pavillonnaire.zone',
-  description: "Une Map pour l'épanouissement d'une culture pavillonnaire 🏡",
+  description:
+    "Une Map pour l'exploration spatiale d'une culture pavillonnaire 🏡",
   viewport: 'width=device-width',
   openGraph: {
     title: 'pavillonnaire.zone',
-    description: "Une Map pour l'épanouissement d'une culture pavillonnaire 🏡",
+    description:
+      "Une Map pour l'exploration spatiale d'une culture pavillonnaire 🏡",
     locale: 'fr_FR',
     type: 'website',
     url: 'https://www.pavillonnaire.zone.com/',
