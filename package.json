@@ -22,7 +22,7 @@
     "@types/mapbox__mapbox-gl-geocoder": "^4.7.5",
     "@types/mapbox-gl": "^2.7.15",
     "@types/react": "^18.2.25",
-    "@types/react-dom": "^18.2.11",
+    "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
     "autoprefixer": "^10.4.16",
