@@ -18,11 +18,12 @@ const LAYERS = [
   'edition',
   'musique',
   'photographie',
-  'fashion',
-  'bozarts',
   'initiative',
-  'sports',
-  'numerique',
+  // removed from mapbox
+  // 'fashion',
+  // 'bozarts',
+  // 'sports',
+  // 'numerique',
 ];
 
 export function useMapBox() {
