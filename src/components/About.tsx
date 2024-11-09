@@ -1,6 +1,7 @@
 'use client';
 
 import { ContributionForm } from '@/components/ContributionForm';
+// import { Flags } from '@/components/Flags';
 import { FC } from 'react';
 
 export const About: FC = () => {
@@ -66,7 +67,9 @@ export const About: FC = () => {
         discrète, vécue de l&apos;intérieur.
       </p>
 
-      <p className="mt-8">Pavillonnairement,</p>
+      {/* <Flags /> */}
+
+      <p>Pavillonnairement,</p>
 
       <p>
         <a className="underline" href="https://www.instagram.com/sabrimyllaud/">
