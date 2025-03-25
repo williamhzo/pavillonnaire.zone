@@ -1,7 +1,7 @@
 'use client';
 
 import { ContributionForm } from '@/components/ContributionForm';
-// import { Flags } from '@/components/Flags';
+import { Flags } from '@/components/Flags';
 import { FC } from 'react';
 
 export const About: FC = () => {
@@ -67,7 +67,7 @@ export const About: FC = () => {
         discrète, vécue de l&apos;intérieur.
       </p>
 
-      {/* <Flags /> */}
+      <Flags />
 
       <p>Pavillonnairement,</p>
 

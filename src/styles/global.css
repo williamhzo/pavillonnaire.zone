@@ -236,3 +236,30 @@ see https://docs.mapbox.com/help/tutorials/building-a-store-locator/#define-inte
   background-color: black;
   z-index: 1;
 }
+
+.mapbox-legend-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  padding: 10px;
+}
+
+.mapbox-legend-item {
+  padding: 10px;
+  justify-content: center;
+  display: flex;
+}
+
+.mapbox-legend-item svg {
+  width: 25px;
+  height: 25px;
+}
+
+.mapbox-legend-item:hover svg {
+  transform: scale(1.5);
+}
+
+.mapbox-legend-item-description {
+  height: 75px;
+  padding: 10px;
+}
