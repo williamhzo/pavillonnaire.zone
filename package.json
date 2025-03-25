@@ -19,6 +19,7 @@
     "tailwind-merge": "^1.14.0"
   },
   "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
     "@types/mapbox__mapbox-gl-geocoder": "^4.7.5",
     "@types/mapbox-gl": "^2.7.15",
     "@types/react": "^18.2.25",
