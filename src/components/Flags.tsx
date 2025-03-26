@@ -41,7 +41,7 @@ const LegendIcon: FC<{
 
   return (
     <div
-      className={`mapbox-legend-item ${hovered ? 'hovered' : ''}`}
+      className={`mapbox-legend-item`}
       onMouseEnter={() => {
         setHovered(true);
         setDescription(description);
