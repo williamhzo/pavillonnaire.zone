@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Pavillons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+<style type="text/css">
+	.st0{display:none;}
+	.st1{display:inline;fill:#FF85FF;}
+	.st2{display:inline;}
+	.st3{display:inline;fill:#662D91;}
+	.st4{display:inline;fill:#FBD2E4;}
+	.st5{fill:#8557A7;}
+	.st6{stroke:#F485FA;stroke-width:85;stroke-dasharray:8.4,8.6;}
+	.st7{display:inline;fill:#FFFFFF;}
+	.st8{stroke:#FFFFFF;stroke-width:10.5;}
+	.st9{display:none;fill:#FF85FF;}
+	.st10{fill:#FF85FF;}
+	.st11{fill:#FBD2E4;}
+</style>
+<g id="zulu" class="st0">
+	<path class="st1" d="M0,0h50v50H0V0z"/>
+	<path class="st2" d="M0,0l25,25L0,50V0z"/>
+	<path class="st3" d="M0,50l25-25l25,25H0z"/>
+	<path class="st4" d="M50,50L25,25L50,0V50z"/>
+</g>
+<g class="st0">
+	<g id="yankee" class="st2">
+		<rect class="st5" width="50" height="50"/>
+		<path class="st6" d="M0,0l50,50"/>
+	</g>
+</g>
+<g id="whiskey" class="st0">
+	<rect y="0" class="st4" width="50" height="50"/>
+	<rect x="10" y="9.98" class="st7" width="30" height="29.94"/>
+	<rect x="20" y="19.96" class="st3" width="10" height="9.98"/>
+</g>
+<g id="romeo" class="st0">
+	<path class="st3" d="M0,0h50v50H0V0z"/>
+	<path class="st1" d="M20,0h10v20h20v10H30v20H20V30H0V20h20V0z"/>
+</g>
+<g id="papa" class="st0">
+	<path class="st4" d="M0,0h50v50H0"/>
+	<path class="st7" d="M16.67,16.67h16.67v16.67H16.67"/>
+</g>
+<g id="oscar" class="st0">
+	<path class="st3" d="M0,0h50v50H0V0z"/>
+	<path class="st1" d="M0,0v50h50L0,0z"/>
+</g>
+<g id="mike_1_" class="st0">
+	<rect class="st4" width="50" height="50"/>
+	<g class="st2">
+		<path class="st8" d="M0,0l50,50L0,0z"/>
+		<path class="st8" d="M0,50L50,0L0,50z"/>
+	</g>
+</g>
+<rect id="quebec" class="st9" width="50" height="50"/>
+<g id="lima" class="st0">
+	<path class="st1" d="M0,0h50v50H0V0z"/>
+	<path class="st2" d="M0,25h50V0H25v50H0V25z"/>
+</g>
+<g id="kilo" class="st0">
+	<path class="st1" d="M0,0h25v50H0V0z"/>
+	<path class="st4" d="M25,0h25v50H25V0z"/>
+</g>
+<g id="india" class="st0">
+	<path class="st1" d="M0,0h50v50H0"/>
+	<circle class="st2" cx="25" cy="25" r="12.5"/>
+</g>
+<g id="golf">
+	<path class="st10" d="M0,0h50v50H0V0z"/>
+	<path class="st11" d="M8.33,0v50h8.33V0H25v50h8.33V0h8.33v50H50V0H8.33z"/>
+</g>
+<g id="echo" class="st0">
+	<rect class="st4" width="50" height="25"/>
+	<rect id="a" y="25" class="st3" width="50" height="25"/>
+</g>
+<g id="delta" class="st0">
+	<rect class="st1" width="50" height="50"/>
+	<rect y="10" class="st4" width="50" height="30"/>
+</g>
+</svg>
