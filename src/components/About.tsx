@@ -22,7 +22,7 @@ export const About: FC = () => {
           />
         </svg>
       </div>
-      <p>
+      <p className="text-justify">
         Le pavillonnaire est un territoire dont on connaît trop peu la culture.
         Nous sommes beaucoup à y avoir grandi ou vécu, et pourtant l&apos;idée
         d&apos;une culture pavillonnaire reste encore discrète et fragile. Que
@@ -30,14 +30,14 @@ export const About: FC = () => {
         identiques ? Qu&apos;en pensent leurs habitants, et quel univers y
         ont-ils développé ?
       </p>
-      <p>
+      <p className="text-justify">
         Le <span className="font-serif">pavillonnaire.zone</span> est un espace
         contributif dont le but est de faire émerger les éléments d&apos;une
         culture pavillonnaire, en même temps qu&apos;il permet de les situer. Le
         <span className="font-serif">.zone</span> est le support cliquable à
         cette archive géolocalisée.
       </p>
-      <p>
+      <p className="text-justify">
         La map donne à voir, sans ambiguïté, et pour la première fois, la
         silhouette du pavillonnaire sur le territoire français. Pixels noirs
         éparpillés entre campagnes et centres-villes, la trace est issue
@@ -58,7 +58,7 @@ export const About: FC = () => {
         </a>
         .
       </p>
-      <p>
+      <p className="text-justify">
         L&apos;archive explore l&apos;idée d&apos;une culture pavillonnaire, au
         travers des travaux ou des expériences qui en émanent. Elle rassemble un
         imaginaire en constellation, sans souci de hiérarchie entre les
@@ -67,7 +67,7 @@ export const About: FC = () => {
         discrète, vécue de l&apos;intérieur.
       </p>
 
-      <p>
+      <p className="text-justify">
         Chaque item ajouté à la map correspond à un des 6 univers qui cadrillent
         cet espace. Ils sont signalés par un des pavillons couleur rose enduit
         et nous guident à la navigation dans la zone :
