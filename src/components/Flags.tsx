@@ -38,6 +38,7 @@ const LegendIcon: FC<{
   setDescription: (description: JSX.Element | null) => void;
 }> = ({ letter, title, description, icon: Icon, setDescription }) => {
   const [hovered, setHovered] = useState<boolean>(false);
+
   return (
     <div
       className={`mapbox-legend-item ${hovered ? 'hovered' : ''}`}
@@ -48,6 +49,9 @@ const LegendIcon: FC<{
       onMouseLeave={() => {
         setHovered(false);
         setDescription(null);
+      }}
+      onClick={() => {
+        setDescription(description);
       }}
     >
       <Icon />
