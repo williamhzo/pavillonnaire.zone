@@ -260,6 +260,6 @@ see https://docs.mapbox.com/help/tutorials/building-a-store-locator/#define-inte
 }
 
 .mapbox-legend-item-description {
-  height: 75px;
-  padding: 10px;
+  height: 150px;
+  padding: 10px 50px;
 }
