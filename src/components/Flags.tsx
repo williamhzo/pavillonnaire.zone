@@ -90,7 +90,7 @@ const data = [
         <div>
           <p>
             <strong>
-              Série photographique, illustration, arts numériques, jeux vidéos,
+              série photographique, illustration, arts numériques, jeux vidéos,
               sculpture, ...
             </strong>
           </p>
@@ -114,7 +114,7 @@ const data = [
       <>
         <div>
           <p>
-            <strong>Musique, clip, concert, podcast, mix, radio, ...</strong>
+            <strong>musique, clip, concert, podcast, mix, radio, ...</strong>
           </p>
         </div>
         <div className="mt-4">
@@ -137,7 +137,7 @@ const data = [
         <div>
           <p>
             <strong>
-              Cinéma, long métrage, court métrage, série, vidéo, ...
+              cinéma, long métrage, court métrage, série, vidéo, ...
             </strong>
           </p>
         </div>
@@ -160,7 +160,7 @@ const data = [
       <>
         <div>
           <p>
-            <strong>Roman, thèse, essai, BD, poésie, article, ...</strong>
+            <strong>roman, thèse, essai, BD, poésie, article, ...</strong>
           </p>
         </div>
         <div className="mt-4">
@@ -184,7 +184,7 @@ const data = [
         <div>
           <p>
             <strong>
-              Théâtre, exposition, performance, sport, initiative, cuisine, ...
+              théâtre, exposition, performance, sport, initiative, cuisine, ...
             </strong>
           </p>
         </div>
