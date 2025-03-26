@@ -261,5 +261,10 @@ see https://docs.mapbox.com/help/tutorials/building-a-store-locator/#define-inte
 
 .mapbox-legend-item-description {
   min-height: 200px;
+
+  @media (max-width: 768px) {
+    min-height: 260px;
+  }
+
   padding: 25px;
 }
