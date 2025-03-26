@@ -67,6 +67,12 @@ export const About: FC = () => {
         discrète, vécue de l&apos;intérieur.
       </p>
 
+      <p>
+        Chaque item ajouté à la map correspond à un des 6 univers qui cadrillent
+        cet espace. Ils sont signalés par un des pavillons couleur rose enduit
+        et nous guident à la navigation dans la zone :
+      </p>
+
       <Flags />
 
       <p>Pavillonnairement,</p>
