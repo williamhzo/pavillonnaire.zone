@@ -63,17 +63,19 @@ const data = [
       <>
         <div>
           <p>
-            ici on a toutes les échelles de l&apos;<strong>architecture</strong>
-            , du <strong>mobilier</strong> au <strong>lotissement</strong>, dès
-            lors qu&apos;elles travaillent à partir des existants
-            pavillonnaires, et dans une logique de soin, de réparation, de
-            détournement ou d&apos;ajout.
+            <strong>
+              architectures, maison, raquette, extension, garage, préfiguration,
+              quartiers pionniers, ...
+            </strong>
           </p>
         </div>
         <div className="mt-4">
           <p>
-            Maison, raquette, extension, garage, préfiguration, quartiers
-            pionniers
+            Ici on a toutes les échelles de l&apos;<strong>architecture</strong>
+            , du <strong>mobilier</strong> au <strong>lotissement</strong>, dès
+            lors qu&apos;elles travaillent à partir des existants
+            pavillonnaires, et dans une logique de soin, de réparation, de
+            détournement ou d&apos;ajout.
           </p>
         </div>
       </>
@@ -87,16 +89,18 @@ const data = [
       <>
         <div>
           <p>
-            ici on trouve l&apos;<strong>image</strong> dans toutes ses nuances,
-            du papier à l&apos;écran, animé ou pas, du moment qu&apos;elle
-            documente en même temps qu&apos;elle développe une{' '}
-            <strong>esthétique</strong> propre à la zone et ses imaginaires.
+            <strong>
+              Série photographique, illustration, arts numériques, jeux vidéos,
+              sculpture, ...
+            </strong>
           </p>
         </div>
         <div className="mt-4">
           <p>
-            Série photographique, illustration, arts numériques, jeux vidéos,
-            sculpture
+            Ici on trouve l&apos;<strong>image</strong> dans toutes ses nuances,
+            du papier à l&apos;écran, animé ou pas, du moment qu&apos;elle
+            documente en même temps qu&apos;elle développe une{' '}
+            <strong>esthétique</strong> propre à la zone et ses imaginaires.
           </p>
         </div>
       </>
@@ -110,14 +114,16 @@ const data = [
       <>
         <div>
           <p>
-            ici on écoute la <strong>radio</strong> le soir avant de dormir, on
+            <strong>Musique, clip, concert, podcast, mix, radio, ...</strong>
+          </p>
+        </div>
+        <div className="mt-4">
+          <p>
+            Ici on écoute la <strong>radio</strong> le soir avant de dormir, on
             regarde les <strong>clips</strong> en rentrant à la maison, ou dans
             le <strong>mp3</strong> à l&apos;arrière de la voiture sur la
             rocade.
           </p>
-        </div>
-        <div className="mt-4">
-          <p>Musique, clip, concert, podcast, mix, radio</p>
         </div>
       </>
     ),
@@ -130,14 +136,18 @@ const data = [
       <>
         <div>
           <p>
-            ici on rend visible le <strong>cinéma</strong> dans toutes ces
+            <strong>
+              Cinéma, long métrage, court métrage, série, vidéo, ...
+            </strong>
+          </p>
+        </div>
+        <div className="mt-4">
+          <p>
+            Ici on rend visible le <strong>cinéma</strong> dans toutes ces
             durées, la multiplicité et la singularité des regards posés sur le
             pavillonnaire, ou qui en expriment le quotidien et ses drames par
             l&apos;image mouvement et la <strong>narration</strong>.
           </p>
-        </div>
-        <div className="mt-4">
-          <p>Cinéma, long métrage, court métrage, série, vidéo</p>
         </div>
       </>
     ),
@@ -150,15 +160,17 @@ const data = [
       <>
         <div>
           <p>
-            ici on range les <strong>écrits</strong>, qu&apos;ils soient
+            <strong>Roman, thèse, essai, BD, poésie, article, ...</strong>
+          </p>
+        </div>
+        <div className="mt-4">
+          <p>
+            Ici on range les <strong>écrits</strong>, qu&apos;ils soient
             théoriques, fictionnels, universitaires, amateurs, sur papier ou à
             l&apos;écran, du moment qu&apos;ils posent les mots sans idées
             préconçues, et <strong>décrivent</strong> l&apos;état des choses
             pavillonnaires.
           </p>
-        </div>
-        <div className="mt-4">
-          <p>Roman, thèse, essai, BD, poésie, article</p>
         </div>
       </>
     ),
@@ -171,13 +183,17 @@ const data = [
       <>
         <div>
           <p>
-            ici on rassemble les <strong>actions</strong> vivantes, physiques et{' '}
-            <strong>performatives</strong>, qui transforment les lieux le temps
-            de l&apos;éphémère ou les regards et imaginaires de façon durable.
+            <strong>
+              Théâtre, exposition, performance, sport, initiative, cuisine, ...
+            </strong>
           </p>
         </div>
         <div className="mt-4">
-          <p>Théâtre, exposition, performance, sport, initiative, cuisine</p>
+          <p>
+            Ici on rassemble les <strong>actions</strong> vivantes, physiques et{' '}
+            <strong>performatives</strong>, qui transforment les lieux le temps
+            de l&apos;éphémère ou les regards et imaginaires de façon durable.
+          </p>
         </div>
       </>
     ),
