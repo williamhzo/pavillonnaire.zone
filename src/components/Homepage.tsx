@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { ABOUT_PATH, ROOT_PATH } from '@/paths';
 import { useMapBox } from '@/hooks/useMapBox';
 import { DetailsModal } from '@/components/DetailsModal';
+import { LegendFilter } from '@/components/LegendFilter';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 export default function Homepage() {
@@ -37,7 +38,7 @@ export default function Homepage() {
     };
   }, []);
 
-  const { mapContainerRef, feature } = useMapBox();
+  const { mapContainerRef, feature, toggleLayer, visibleLayers } = useMapBox();
 
   return (
     <>
@@ -59,6 +60,7 @@ export default function Homepage() {
           className="map-container relative h-full w-full"
           ref={mapContainerRef}
         >
+          <LegendFilter visibleLayers={visibleLayers} onToggle={toggleLayer} />
           <DetailsModal feature={feature} />
         </div>
       )}
