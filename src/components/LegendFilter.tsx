@@ -5,38 +5,34 @@ import { cn } from '@/utils';
 
 import { LAYERS_CONFIG, LayerType } from '@/constants/layers';
 
-import GolfIcon from '../assets/LegendIcons/golf_r.svg';
-import IndiaIcon from '../assets/LegendIcons/india_r.svg';
-import LimaIcon from '../assets/LegendIcons/lima_r.svg';
-import OscarIcon from '../assets/LegendIcons/oscar_r.svg';
-import RomeoIcon from '../assets/LegendIcons/romeo_r.svg';
-import ZuluIcon from '../assets/LegendIcons/zulu_r.svg';
-
-interface LegendProps {
-  visibleLayers: Set<LayerType>;
-  onToggle: (layer: LayerType) => void;
+interface LegendFilterProps {
+  selectedLayers: Set<LayerType>;
+  onFilterChange: (layerId: LayerType) => void;
 }
 
-export const LegendFilter: FC<LegendProps> = ({ visibleLayers, onToggle }) => {
+export const LegendFilter: FC<LegendFilterProps> = ({
+  selectedLayers,
+  onFilterChange,
+}) => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   return (
     <nav className="absolute left-6 top-1/2 z-10 flex -translate-y-1/2 flex-col gap-4">
       {LAYERS_CONFIG.map(({ id, label, Icon }) => {
-        const isActive = visibleLayers.has(id as LayerType);
+        const isSelected = selectedLayers.has(id as LayerType);
         const isHovered = hoveredId === id;
 
         return (
           <button
             key={id}
-            onClick={() => onToggle(id as LayerType)}
+            onClick={() => onFilterChange(id as LayerType)}
             onMouseEnter={() => setHoveredId(id)}
             onMouseLeave={() => setHoveredId(null)}
             className={cn(
               'group relative flex items-center transition-all duration-300 ease-out outline-none',
-              isActive ? 'opacity-100' : 'opacity-40 hover:opacity-70'
+              isSelected ? 'opacity-100' : 'opacity-40 hover:opacity-70'
             )}
             aria-label={`Filtrer ${label}`}
-            aria-pressed={isActive}
+            aria-pressed={isSelected}
           >
             <div
               className={cn(

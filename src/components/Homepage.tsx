@@ -39,7 +39,7 @@ export default function Homepage() {
     };
   }, []);
 
-  const { mapContainerRef, feature, toggleLayer, visibleLayers, isMapLoaded } =
+  const { mapContainerRef, feature, toggleLayer, selectedLayers, isMapLoaded } =
     useMapBox();
 
   return (
@@ -69,8 +69,8 @@ export default function Homepage() {
             )}
           >
             <LegendFilter
-              visibleLayers={visibleLayers}
-              onToggle={toggleLayer}
+              selectedLayers={selectedLayers}
+              onFilterChange={toggleLayer}
             />
           </div>
           <DetailsModal feature={feature} />
