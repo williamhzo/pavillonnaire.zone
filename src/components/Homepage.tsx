@@ -2,6 +2,7 @@
 
 import { About } from '@/components/About';
 import { useEffect } from 'react';
+import { cn } from '@/utils';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ABOUT_PATH, ROOT_PATH } from '@/paths';
@@ -38,7 +39,8 @@ export default function Homepage() {
     };
   }, []);
 
-  const { mapContainerRef, feature, toggleLayer, visibleLayers } = useMapBox();
+  const { mapContainerRef, feature, toggleLayer, visibleLayers, isMapLoaded } =
+    useMapBox();
 
   return (
     <>
@@ -60,7 +62,17 @@ export default function Homepage() {
           className="map-container relative h-full w-full"
           ref={mapContainerRef}
         >
-          <LegendFilter visibleLayers={visibleLayers} onToggle={toggleLayer} />
+          <div
+            className={cn(
+              'transition-opacity duration-300 ease-in-out',
+              isMapLoaded ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            )}
+          >
+            <LegendFilter
+              visibleLayers={visibleLayers}
+              onToggle={toggleLayer}
+            />
+          </div>
           <DetailsModal feature={feature} />
         </div>
       )}

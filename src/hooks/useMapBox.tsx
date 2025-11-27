@@ -19,6 +19,7 @@ export function useMapBox() {
   const [visibleLayers, setVisibleLayers] = useState<Set<LayerType>>(
     new Set(LAYER_IDS as LayerType[])
   );
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
 
   const isLaptop = useMediaQuery('(min-width: 1024px)');
 
@@ -61,6 +62,9 @@ export function useMapBox() {
 
     // Search
     map.addControl(geocoder, 'bottom-right');
+    map.once('styledata', () => {
+      setIsMapLoaded(true);
+    });
 
     function getVisibleFeatures(point: mapboxgl.Point) {
       return map.queryRenderedFeatures(point, {
@@ -149,5 +153,5 @@ export function useMapBox() {
     });
   };
 
-  return { mapContainerRef, feature, toggleLayer, visibleLayers };
+  return { mapContainerRef, feature, toggleLayer, visibleLayers, isMapLoaded };
 }
