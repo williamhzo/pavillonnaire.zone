@@ -6,33 +6,28 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import ReactDOM from 'react-dom';
 import mapboxgl, { MapboxGeoJSONFeature, Marker } from 'mapbox-gl';
 import { Tooltip } from '@/components/Tooltip';
+import { LAYER_IDS, LayerType } from '@/constants/layers';
 
 const INITIAL_LONGITUDE = 1.872;
 const INITIAL_LATITUDE = 46.62;
 const MOBILE_INITIAL_ZOOM = 4.2;
 const DESKTOP_INITIAL_ZOOM = 4.4;
 const ZOOM_LIMIT = 3;
-const LAYERS = [
-  'ville',
-  'audiovisuel',
-  'edition',
-  'musique',
-  'photographie',
-  'initiative',
-  // removed from mapbox
-  // 'fashion',
-  // 'bozarts',
-  // 'sports',
-  // 'numerique',
-];
 
 export function useMapBox() {
   const [feature, setFeature] = useState<MapboxGeoJSONFeature | undefined>();
+  const [visibleLayers, setVisibleLayers] = useState<Set<LayerType>>(
+    new Set(LAYER_IDS as LayerType[])
+  );
 
   const isLaptop = useMediaQuery('(min-width: 1024px)');
 
   const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<mapboxgl.Map | null>(null);
   const tooltipRef = useRef(new mapboxgl.Popup({ offset: [0, 0] }));
+  const visibleLayersRef = useRef<Set<LayerType>>(
+    new Set(LAYER_IDS as LayerType[])
+  );
 
   useEffect(() => {
     const map: mapboxgl.Map = new mapboxgl.Map({
@@ -43,6 +38,8 @@ export function useMapBox() {
       zoom: isLaptop ? DESKTOP_INITIAL_ZOOM : MOBILE_INITIAL_ZOOM,
       minZoom: ZOOM_LIMIT,
     });
+
+    mapRef.current = map;
 
     const geocoder = new MapboxGeocoder({
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN as string,
@@ -65,13 +62,17 @@ export function useMapBox() {
     // Search
     map.addControl(geocoder, 'bottom-right');
 
+    function getVisibleFeatures(point: mapboxgl.Point) {
+      return map.queryRenderedFeatures(point, {
+        layers: Array.from(visibleLayersRef.current),
+      });
+    }
+
     // see https://docs.mapbox.com/help/tutorials/add-points-pt-3/ for more.
     // see https://github.com/mapbox/mapbox-react-examples/blob/master/react-tooltip/src/Map.js.
 
     function renderTooltip(event: mapboxgl.MapMouseEvent & mapboxgl.EventData) {
-      const features = map.queryRenderedFeatures(event.point, {
-        layers: LAYERS,
-      });
+      const features = getVisibleFeatures(event.point);
 
       if (!features.length) {
         map.getCanvas().style.cursor = 'inherit';
@@ -106,9 +107,7 @@ export function useMapBox() {
     ) {
       const dialog = document.getElementById('details-dialog');
 
-      const features = map.queryRenderedFeatures(event.point, {
-        layers: LAYERS,
-      });
+      const features = getVisibleFeatures(event.point);
 
       if (!features.length) {
         dialog?.classList.add('hidden');
@@ -125,5 +124,30 @@ export function useMapBox() {
     return () => map.remove();
   }, [isLaptop]);
 
-  return { mapContainerRef, feature };
+  const toggleLayer = (layerId: LayerType) => {
+    setVisibleLayers((prev) => {
+      const newSet = new Set(prev);
+      const willBeVisible = !newSet.has(layerId);
+
+      if (willBeVisible) {
+        newSet.add(layerId);
+      } else {
+        newSet.delete(layerId);
+      }
+
+      visibleLayersRef.current = newSet;
+
+      if (mapRef.current?.getLayer(layerId)) {
+        mapRef.current.setLayoutProperty(
+          layerId,
+          'visibility',
+          willBeVisible ? 'visible' : 'none'
+        );
+      }
+
+      return newSet;
+    });
+  };
+
+  return { mapContainerRef, feature, toggleLayer, visibleLayers };
 }
