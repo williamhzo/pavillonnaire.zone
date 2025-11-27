@@ -16,8 +16,8 @@ const ZOOM_LIMIT = 3;
 
 export function useMapBox() {
   const [feature, setFeature] = useState<MapboxGeoJSONFeature | undefined>();
-  const [visibleLayers, setVisibleLayers] = useState<Set<LayerType>>(
-    new Set(LAYER_IDS as LayerType[])
+  const [selectedLayers, setSelectedLayers] = useState<Set<LayerType>>(
+    new Set()
   );
   const [isMapLoaded, setIsMapLoaded] = useState(false);
 
@@ -26,9 +26,7 @@ export function useMapBox() {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const tooltipRef = useRef(new mapboxgl.Popup({ offset: [0, 0] }));
-  const visibleLayersRef = useRef<Set<LayerType>>(
-    new Set(LAYER_IDS as LayerType[])
-  );
+  const selectedLayersRef = useRef<Set<LayerType>>(new Set());
 
   useEffect(() => {
     const map: mapboxgl.Map = new mapboxgl.Map({
@@ -67,8 +65,11 @@ export function useMapBox() {
     });
 
     function getVisibleFeatures(point: mapboxgl.Point) {
+      const effectiveLayers = getEffectiveVisibleLayers(
+        selectedLayersRef.current
+      );
       return map.queryRenderedFeatures(point, {
-        layers: Array.from(visibleLayersRef.current),
+        layers: Array.from(effectiveLayers),
       });
     }
 
@@ -129,29 +130,39 @@ export function useMapBox() {
   }, [isLaptop]);
 
   const toggleLayer = (layerId: LayerType) => {
-    setVisibleLayers((prev) => {
+    setSelectedLayers((prev) => {
       const newSet = new Set(prev);
-      const willBeVisible = !newSet.has(layerId);
-
-      if (willBeVisible) {
-        newSet.add(layerId);
-      } else {
+      if (newSet.has(layerId)) {
         newSet.delete(layerId);
+      } else {
+        newSet.add(layerId);
       }
 
-      visibleLayersRef.current = newSet;
+      selectedLayersRef.current = newSet;
 
-      if (mapRef.current?.getLayer(layerId)) {
-        mapRef.current.setLayoutProperty(
-          layerId,
-          'visibility',
-          willBeVisible ? 'visible' : 'none'
-        );
-      }
+      const effectiveLayers = getEffectiveVisibleLayers(newSet);
+
+      LAYER_IDS.forEach((id) => {
+        if (mapRef.current?.getLayer(id)) {
+          const isVisible = effectiveLayers.has(id as LayerType);
+          mapRef.current.setLayoutProperty(
+            id,
+            'visibility',
+            isVisible ? 'visible' : 'none'
+          );
+        }
+      });
 
       return newSet;
     });
   };
 
-  return { mapContainerRef, feature, toggleLayer, visibleLayers, isMapLoaded };
+  return { mapContainerRef, feature, toggleLayer, selectedLayers, isMapLoaded };
 }
+
+const getEffectiveVisibleLayers = (selection: Set<LayerType>) => {
+  if (selection.size === 0) {
+    return new Set(LAYER_IDS as LayerType[]);
+  }
+  return selection;
+};
