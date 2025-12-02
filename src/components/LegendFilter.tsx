@@ -40,14 +40,14 @@ export const LegendFilter: FC<LegendFilterProps> = ({
                 isHovered ? 'scale-110' : 'scale-100'
               )}
             >
-              <Icon className="h-9 w-9" />
+              <Icon className="h-6 w-6" />
             </div>
 
             <span
               className={cn(
-                'absolute left-full ml-4 whitespace-nowrap border border-white bg-black px-3 py-1 text-xs text-white font-serif tracking-wider transition-all duration-300',
+                'absolute flex h-6 items-center left-full ml-4 whitespace-nowrap border border-white bg-black px-3  text-xs text-white font-serif tracking-wider transition-all duration-300',
                 isHovered
-                  ? 'translate-x-0 opacity-100'
+                  ? 'translate-x-0 opacity-100 scale-110'
                   : '-translate-x-2 opacity-0 pointer-events-none'
               )}
             >
