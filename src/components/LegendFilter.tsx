@@ -3,7 +3,7 @@
 import { FC, useState } from 'react';
 import { cn } from '@/utils';
 
-import { LAYERS_CONFIG, LayerType } from '@/constants/layers';
+import { LAYERS_CONFIG, LayerType, LayerConfig } from '@/constants/layers';
 
 interface LegendFilterProps {
   selectedLayers: Set<LayerType>;
@@ -16,9 +16,12 @@ export const LegendFilter: FC<LegendFilterProps> = ({
 }) => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   return (
-    <nav className="absolute left-6 top-1/2 z-10 flex -translate-y-1/2 flex-col gap-4">
-      {LAYERS_CONFIG.map(({ id, label, Icon }) => {
+    <nav className="absolute left-6 inset-y-0 flex flex-col justify-center gap-4 pointer-events-none">
+      {LAYERS_CONFIG.map((layer) => {
+        const { id, label, Icon, IconOutline } = layer as LayerConfig;
+
         const isSelected = selectedLayers.has(id as LayerType);
+        const CurrentIcon = isSelected ? Icon : IconOutline || Icon;
         const isHovered = hoveredId === id;
 
         return (
@@ -28,27 +31,21 @@ export const LegendFilter: FC<LegendFilterProps> = ({
             onMouseEnter={() => setHoveredId(id)}
             onMouseLeave={() => setHoveredId(null)}
             className={cn(
-              'group relative flex items-center transition-all duration-300 ease-out outline-none',
-              isSelected ? 'opacity-100' : 'opacity-40 hover:opacity-70'
+              'pointer-events-auto group relative flex items-center transition-all duration-300 ease-out outline-none'
             )}
             aria-label={`Filtrer ${label}`}
             aria-pressed={isSelected}
           >
-            <div
-              className={cn(
-                'transition-transform duration-300',
-                isHovered ? 'scale-110' : 'scale-100'
-              )}
-            >
-              <Icon className="h-6 w-6" />
+            <div className={cn(!isSelected && 'mix-blend-difference', 'z-20')}>
+              <CurrentIcon className="h-6 w-6 text-white" />
             </div>
 
             <span
               className={cn(
-                'absolute flex h-6 items-center left-full ml-4 whitespace-nowrap border border-white bg-black px-3  text-xs text-white font-serif tracking-wider transition-all duration-300',
-                isHovered
-                  ? 'translate-x-0 opacity-100 scale-110'
-                  : '-translate-x-2 opacity-0 pointer-events-none'
+                'absolute flex h-6 items-center left-full ml-4 whitespace-nowrap border border-white bg-black px-3 text-xs text-white font-serif tracking-wider z-20 mix-blend-difference',
+                isHovered || isSelected
+                  ? 'opacity-100'
+                  : 'opacity-0 pointer-events-none'
               )}
             >
               {label}
