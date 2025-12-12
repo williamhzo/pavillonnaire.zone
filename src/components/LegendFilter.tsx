@@ -3,7 +3,7 @@
 import { FC, useState } from 'react';
 import { cn } from '@/utils';
 
-import { LAYERS_CONFIG, LayerType, LayerConfig } from '@/constants/layers';
+import { LAYERS_CONFIG, LayerType } from '@/constants/layers';
 
 interface LegendFilterProps {
   selectedLayers: Set<LayerType>;
@@ -18,20 +18,20 @@ export const LegendFilter: FC<LegendFilterProps> = ({
   return (
     <nav className="absolute left-6 inset-y-0 flex flex-col justify-center gap-4 pointer-events-none">
       {LAYERS_CONFIG.map((layer) => {
-        const { id, label, Icon, IconOutline } = layer as LayerConfig;
+        const { id, label, Icon, IconOutline } = layer;
 
-        const isSelected = selectedLayers.has(id as LayerType);
+        const isSelected = selectedLayers.has(id);
         const CurrentIcon = isSelected ? Icon : IconOutline || Icon;
         const isHovered = hoveredId === id;
 
         return (
           <button
             key={id}
-            onClick={() => onFilterChange(id as LayerType)}
+            onClick={() => onFilterChange(id)}
             onMouseEnter={() => setHoveredId(id)}
             onMouseLeave={() => setHoveredId(null)}
             className={cn(
-              'pointer-events-auto group relative flex items-center transition-all duration-300 ease-out outline-none'
+              'pointer-events-auto group relative flex items-center outline-none'
             )}
             aria-label={`Filtrer ${label}`}
             aria-pressed={isSelected}
