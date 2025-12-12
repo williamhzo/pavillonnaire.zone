@@ -89,6 +89,8 @@ export const About: FC = () => {
         <a
           className="underline"
           href="https://www.linkedin.com/in/raphaelchappert/"
+          target="_blank"
+          rel="noreferrer"
         >
           Raphaël
         </a>
