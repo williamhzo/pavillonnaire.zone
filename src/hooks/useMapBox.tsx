@@ -14,6 +14,13 @@ const MOBILE_INITIAL_ZOOM = 4.2;
 const DESKTOP_INITIAL_ZOOM = 4.4;
 const ZOOM_LIMIT = 3;
 
+const getEffectiveVisibleLayers = (selection: Set<LayerType>) => {
+  if (selection.size === 0) {
+    return new Set(LAYER_IDS);
+  }
+  return selection;
+};
+
 export function useMapBox() {
   const [feature, setFeature] = useState<MapboxGeoJSONFeature | undefined>();
   const [selectedLayers, setSelectedLayers] = useState<Set<LayerType>>(
@@ -159,10 +166,3 @@ export function useMapBox() {
 
   return { mapContainerRef, feature, toggleLayer, selectedLayers, isMapLoaded };
 }
-
-const getEffectiveVisibleLayers = (selection: Set<LayerType>) => {
-  if (selection.size === 0) {
-    return new Set(LAYER_IDS as LayerType[]);
-  }
-  return selection;
-};
