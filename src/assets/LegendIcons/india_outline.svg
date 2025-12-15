@@ -5,6 +5,6 @@
 	style="enable-background:new 0 0 50 50;" xml:space="preserve">
 	<g id="india">
 		<path d="M0,0h50v50H0V0z" fill="none" stroke="white" stroke-width="5" />
-		<circle class="st10" cx="25" cy="25" r="12.5" stroke="white" stroke-width="3" />
+		<circle class="st10" cx="25" cy="25" r="12.5" stroke="white" stroke-width="3" fill="none"/>
 	</g>
 </svg>
