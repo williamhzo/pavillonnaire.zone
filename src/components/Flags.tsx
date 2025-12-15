@@ -20,7 +20,7 @@ export const Flags: FC = () => {
           />
         ))}
       </div>
-      <div className="mapbox-legend-item-description min-h-[150px]">
+      <div className="mapbox-legend-item-description">
         <div className="text-center leading-relaxed italic">
           {activeLayer ? (
             <>
@@ -51,7 +51,7 @@ const LegendIcon: FC<{
   pinnedFlag: LayerConfig | null;
   setPinnedFlag: (layer: LayerConfig | null) => void;
 }> = ({ config, hoveredFlag, setHoveredFlag, pinnedFlag, setPinnedFlag }) => {
-  const { Icon, IconOutline } = config;
+  const { Icon, IconOutline = Icon } = config;
 
   const isPinned = pinnedFlag?.id === config.id;
   const isHovered = hoveredFlag?.id === config.id;
