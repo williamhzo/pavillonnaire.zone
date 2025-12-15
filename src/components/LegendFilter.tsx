@@ -16,7 +16,7 @@ export const LegendFilter: FC<LegendFilterProps> = ({
 }) => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   return (
-    <nav className="absolute left-6 inset-y-0 flex flex-col justify-center gap-4 pointer-events-none">
+    <nav className="absolute left-6 inset-y-0 flex flex-col justify-center gap-4">
       {LAYERS_CONFIG.map((layer) => {
         const { id, label, Icon, IconOutline } = layer;
 
