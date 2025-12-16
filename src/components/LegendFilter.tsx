@@ -17,10 +17,9 @@ export const LegendFilter: FC<LegendFilterProps> = ({
   return (
     <nav className="absolute left-6 inset-y-0 flex flex-col justify-center gap-4">
       {LAYERS_CONFIG.map((layer) => {
-        const { id, label, Icon, IconOutline } = layer;
+        const { id, label, Icon, OutlineIcon } = layer;
 
         const isSelected = selectedLayers.has(id);
-        const CurrentIcon = isSelected ? Icon : IconOutline || Icon;
 
         return (
           <button
@@ -32,8 +31,28 @@ export const LegendFilter: FC<LegendFilterProps> = ({
             aria-label={`Filtrer ${label}`}
             aria-pressed={isSelected}
           >
-            <div className={cn(!isSelected && 'mix-blend-difference', 'z-20')}>
-              <CurrentIcon className="h-6 w-6 text-white" />
+            <div
+              className={cn(
+                'relative h-6 w-6 z-20',
+                !isSelected && 'mix-blend-difference'
+              )}
+            >
+              <OutlineIcon
+                className={cn(
+                  'absolute inset-0 h-6 w-6 text-white',
+                  isSelected
+                    ? 'opacity-0'
+                    : 'opacity-100 group-hover:[@media(hover:hover)]:opacity-0'
+                )}
+              />
+              <Icon
+                className={cn(
+                  'absolute inset-0 h-6 w-6 text-white',
+                  isSelected
+                    ? 'opacity-100'
+                    : 'opacity-0 group-hover:[@media(hover:hover)]:opacity-100'
+                )}
+              />
             </div>
 
             <span
