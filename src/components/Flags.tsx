@@ -51,13 +51,13 @@ const LegendIcon: FC<{
   pinnedFlag: LayerConfig | null;
   setPinnedFlag: (layer: LayerConfig | null) => void;
 }> = ({ config, hoveredFlag, setHoveredFlag, pinnedFlag, setPinnedFlag }) => {
-  const { Icon, IconOutline = Icon } = config;
+  const { Icon, OutlineIcon = Icon } = config;
 
   const isPinned = pinnedFlag?.id === config.id;
   const isHovered = hoveredFlag?.id === config.id;
   const shouldShowFull = isPinned || isHovered;
 
-  const CurrentIcon = shouldShowFull ? Icon : IconOutline || Icon;
+  const CurrentIcon = shouldShowFull ? Icon : OutlineIcon || Icon;
 
   return (
     <div

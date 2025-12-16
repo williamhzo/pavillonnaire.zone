@@ -16,7 +16,7 @@ export interface LayerConfig {
   id: string;
   label: string;
   Icon: FC<{ className?: string }>;
-  IconOutline?: FC<{ className?: string }>;
+  OutlineIcon?: FC<{ className?: string }>;
   types: string[];
   description: ReactNode;
 }
@@ -26,7 +26,7 @@ export const LAYERS_CONFIG = [
     id: 'edition',
     label: 'Édition',
     Icon: GolfIcon,
-    IconOutline: GolfOutlineIcon,
+    OutlineIcon: GolfOutlineIcon,
     types: ['roman', 'thèse', 'essai', 'BD', 'poésie', 'article'],
     description: (
       <>
@@ -39,9 +39,9 @@ export const LAYERS_CONFIG = [
   },
   {
     id: 'musique',
-    label: 'Musique',
+    label: 'Audio',
     Icon: IndiaIcon,
-    IconOutline: IndiaOutlineIcon,
+    OutlineIcon: IndiaOutlineIcon,
     types: ['musique', 'clip', 'concert', 'podcast', 'mix', 'radio'],
     description: (
       <>
@@ -53,9 +53,9 @@ export const LAYERS_CONFIG = [
   },
   {
     id: 'photographie',
-    label: 'Photographie',
+    label: 'Image',
     Icon: LimaIcon,
-    IconOutline: LimaOutlineIcon,
+    OutlineIcon: LimaOutlineIcon,
     types: [
       'série photographique',
       'illustration',
@@ -74,9 +74,9 @@ export const LAYERS_CONFIG = [
   },
   {
     id: 'audiovisuel',
-    label: 'Audiovisuel',
+    label: 'Cinéma',
     Icon: OscarIcon,
-    IconOutline: OscarOutlineIcon,
+    OutlineIcon: OscarOutlineIcon,
     types: ['cinéma', 'long métrage', 'court métrage', 'série', 'vidéo'],
     description: (
       <>
@@ -89,9 +89,9 @@ export const LAYERS_CONFIG = [
   },
   {
     id: 'ville',
-    label: 'Urbain',
+    label: 'Architecture',
     Icon: RomeoIcon,
-    IconOutline: RomeoOutlineIcon,
+    OutlineIcon: RomeoOutlineIcon,
     types: [
       'architectures',
       'maison',
@@ -114,7 +114,7 @@ export const LAYERS_CONFIG = [
     id: 'initiative',
     label: 'Initiative',
     Icon: ZuluIcon,
-    IconOutline: ZuluOutlineIcon,
+    OutlineIcon: ZuluOutlineIcon,
     types: [
       'théâtre',
       'exposition',
