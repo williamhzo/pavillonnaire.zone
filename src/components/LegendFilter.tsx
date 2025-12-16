@@ -58,7 +58,7 @@ export const LegendFilter: FC<LegendFilterProps> = ({
               className={cn(
                 'absolute flex h-6 items-center left-full ml-4 whitespace-nowrap border border-white/20 bg-black px-3 text-xs text-white font-serif tracking-wider z-20 backdrop-blur-sm bg-neutral-800/50',
                 'opacity-0 pointer-events-none',
-                'group-hover:[@media(hover:hover)]:opacity-100 group-hover:[@media(hover:hover)]:pointer-events-auto',
+                'group-hover:[@media(hover:hover)]:opacity-100 group-hover:[@media(hover:hover)]:pointer-events-auto group-hover:[@media(hover:hover)]:bg-neutral-600/50',
                 isSelected && 'opacity-100 pointer-events-auto'
               )}
             >
