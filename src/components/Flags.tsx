@@ -74,6 +74,7 @@ const LegendIcon: FC<{
         } else {
           setPinnedFlag(config);
         }
+        setHoveredFlag(null);
       }}
     >
       <CurrentIcon className="h-12 w-12 text-white" />

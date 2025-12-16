@@ -14,7 +14,6 @@ export const LegendFilter: FC<LegendFilterProps> = ({
   selectedLayers,
   onFilterChange,
 }) => {
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
   return (
     <nav className="absolute left-6 inset-y-0 flex flex-col justify-center gap-4">
       {LAYERS_CONFIG.map((layer) => {
@@ -22,14 +21,11 @@ export const LegendFilter: FC<LegendFilterProps> = ({
 
         const isSelected = selectedLayers.has(id);
         const CurrentIcon = isSelected ? Icon : IconOutline || Icon;
-        const isHovered = hoveredId === id;
 
         return (
           <button
             key={id}
             onClick={() => onFilterChange(id)}
-            onMouseEnter={() => setHoveredId(id)}
-            onMouseLeave={() => setHoveredId(null)}
             className={cn(
               'pointer-events-auto group relative flex items-center outline-none'
             )}
@@ -43,9 +39,9 @@ export const LegendFilter: FC<LegendFilterProps> = ({
             <span
               className={cn(
                 'absolute flex h-6 items-center left-full ml-4 whitespace-nowrap border border-white/20 bg-black px-3 text-xs text-white font-serif tracking-wider z-20 backdrop-blur-sm bg-neutral-800/50',
-                isHovered || isSelected
-                  ? 'opacity-100'
-                  : 'opacity-0 pointer-events-none'
+                'opacity-0 pointer-events-none',
+                'group-hover:[@media(hover:hover)]:opacity-100 group-hover:[@media(hover:hover)]:pointer-events-auto',
+                isSelected && 'opacity-100 pointer-events-auto'
               )}
             >
               {label}
