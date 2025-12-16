@@ -31,28 +31,27 @@ export const LegendFilter: FC<LegendFilterProps> = ({
             aria-label={`Filtrer ${label}`}
             aria-pressed={isSelected}
           >
-            <div
-              className={cn(
-                'relative h-6 w-6 z-20',
-                !isSelected && 'mix-blend-difference'
-              )}
-            >
-              <OutlineIcon
+            <div className="relative h-6 w-6 ">
+              <div
                 className={cn(
-                  'absolute inset-0 h-6 w-6 text-white',
+                  'absolute inset-0 mix-blend-difference z-20 isolation-isolate',
                   isSelected
                     ? 'opacity-0'
                     : 'opacity-100 group-hover:[@media(hover:hover)]:opacity-0'
                 )}
-              />
-              <Icon
+              >
+                <OutlineIcon className="h-6 w-6 text-white" />
+              </div>
+              <div
                 className={cn(
-                  'absolute inset-0 h-6 w-6 text-white',
+                  'absolute inset-0 z-20 isolation-isolate',
                   isSelected
                     ? 'opacity-100'
                     : 'opacity-0 group-hover:[@media(hover:hover)]:opacity-100'
                 )}
-              />
+              >
+                <Icon className="h-6 w-6 text-white" />
+              </div>
             </div>
 
             <span
