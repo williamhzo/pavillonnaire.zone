@@ -255,9 +255,6 @@ see https://docs.mapbox.com/help/tutorials/building-a-store-locator/#define-inte
   height: 25px;
 }
 
-.mapbox-legend-item:hover svg {
-  transform: scale(1.5);
-}
 
 .mapbox-legend-item-description {
   min-height: 200px;

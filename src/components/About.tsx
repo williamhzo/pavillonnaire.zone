@@ -85,6 +85,15 @@ export const About: FC = () => {
         <a className="underline" href="https://twitter.com/williamhzo">
           William
         </a>
+        ,{' '}
+        <a
+          className="underline"
+          href="https://www.linkedin.com/in/raphaelchappert/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Raphaël
+        </a>
         , et la participation de{' '}
         <a className="underline" href="https://www.instagram.com/traast_agram/">
           Victor

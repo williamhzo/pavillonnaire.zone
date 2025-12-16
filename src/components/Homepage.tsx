@@ -2,11 +2,13 @@
 
 import { About } from '@/components/About';
 import { useEffect } from 'react';
+import { cn } from '@/utils';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ABOUT_PATH, ROOT_PATH } from '@/paths';
 import { useMapBox } from '@/hooks/useMapBox';
 import { DetailsModal } from '@/components/DetailsModal';
+import { LegendFilter } from '@/components/LegendFilter';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 export default function Homepage() {
@@ -37,7 +39,8 @@ export default function Homepage() {
     };
   }, []);
 
-  const { mapContainerRef, feature } = useMapBox();
+  const { mapContainerRef, feature, toggleLayer, selectedLayers, isMapLoaded } =
+    useMapBox();
 
   return (
     <>
@@ -59,6 +62,17 @@ export default function Homepage() {
           className="map-container relative h-full w-full"
           ref={mapContainerRef}
         >
+          <div
+            className={cn(
+              'transition-opacity duration-300 ease-in-out',
+              isMapLoaded ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            )}
+          >
+            <LegendFilter
+              selectedLayers={selectedLayers}
+              onFilterChange={toggleLayer}
+            />
+          </div>
           <DetailsModal feature={feature} />
         </div>
       )}
