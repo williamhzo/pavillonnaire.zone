@@ -4,17 +4,13 @@ import { FC, useState, useEffect, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { cn } from '@/utils';
 
-function isImageCached(src: string) {
-  const img = new Image();
-  img.src = src;
-  return img.complete && img.naturalWidth > 0;
-}
+const loadedImages = new Set<string>();
 
 function useImageLoader(src: string) {
-  const [loaded, setLoaded] = useState(() => isImageCached(src));
+  const [loaded, setLoaded] = useState(() => loadedImages.has(src));
 
   useEffect(() => {
-    if (isImageCached(src)) {
+    if (loadedImages.has(src)) {
       setLoaded(true);
       return;
     }
@@ -24,6 +20,7 @@ function useImageLoader(src: string) {
     const img = new Image();
     img.src = src;
     img.onload = () => {
+      loadedImages.add(src);
       if (!cancelled) setLoaded(true);
     };
     return () => {
@@ -39,12 +36,15 @@ function usePreloadAdjacentImages(images: string[], current: number) {
   useEffect(() => {
     if (images.length <= 1) return;
 
-    const preloaded = [
+    const toPreload = [
       images[(current + 1) % images.length],
       images[(current - 1 + images.length) % images.length],
-    ].map((src) => {
+    ].filter((src) => !loadedImages.has(src));
+
+    const preloaded = toPreload.map((src) => {
       const img = new Image();
       img.src = src;
+      img.onload = () => loadedImages.add(src);
       return img;
     });
 
