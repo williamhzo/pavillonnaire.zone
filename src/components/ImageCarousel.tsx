@@ -4,21 +4,28 @@ import { FC, useState, useEffect, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { cn } from '@/utils';
 
+function isImageCached(src: string) {
+  const img = new Image();
+  img.src = src;
+  return img.complete && img.naturalWidth > 0;
+}
+
 function useImageLoader(src: string) {
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(() => isImageCached(src));
 
   useEffect(() => {
+    if (isImageCached(src)) {
+      setLoaded(true);
+      return;
+    }
+
     let cancelled = false;
     setLoaded(false);
     const img = new Image();
     img.src = src;
-    if (img.complete) {
-      setLoaded(true);
-    } else {
-      img.onload = () => {
-        if (!cancelled) setLoaded(true);
-      };
-    }
+    img.onload = () => {
+      if (!cancelled) setLoaded(true);
+    };
     return () => {
       cancelled = true;
       img.onload = null;
