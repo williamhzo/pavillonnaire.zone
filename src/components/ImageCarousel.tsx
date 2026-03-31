@@ -32,14 +32,9 @@ function useImageLoader(src: string) {
   return loaded;
 }
 
-function usePreloadAdjacentImages(images: string[], current: number) {
+function usePreloadImages(images: string[]) {
   useEffect(() => {
-    if (images.length <= 1) return;
-
-    const toPreload = [
-      images[(current + 1) % images.length],
-      images[(current - 1 + images.length) % images.length],
-    ].filter((src) => !loadedImages.has(src));
+    const toPreload = images.filter((src) => !loadedImages.has(src));
 
     const preloaded = toPreload.map((src) => {
       const img = new Image();
@@ -53,76 +48,56 @@ function usePreloadAdjacentImages(images: string[], current: number) {
         img.onload = null;
       });
     };
-  }, [images, current]);
+  }, [images]);
 }
 
-function useSwipe(
-  ref: React.RefObject<HTMLElement | null>,
-  onSwipeLeft: () => void,
-  onSwipeRight: () => void,
-) {
-  const swipedRef = useRef(false);
+function useScrollCarousel(images: string[]) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [current, setCurrent] = useState(0);
+
+  usePreloadImages(images);
 
   useEffect(() => {
-    const el = ref.current;
+    const el = scrollRef.current;
     if (!el) return;
 
-    let startX = 0;
-    let startY = 0;
-
-    const onTouchStart = (e: TouchEvent) => {
-      if (!e.touches[0]) return;
-      swipedRef.current = false;
-      startX = e.touches[0].clientX;
-      startY = e.touches[0].clientY;
+    let timeout: ReturnType<typeof setTimeout>;
+    const onScroll = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        const index = Math.round(el.scrollLeft / el.clientWidth);
+        setCurrent(index);
+      }, 50);
     };
 
-    const onTouchEnd = (e: TouchEvent) => {
-      if (!e.changedTouches[0]) return;
-      const dx = e.changedTouches[0].clientX - startX;
-      const dy = e.changedTouches[0].clientY - startY;
-      if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
-      swipedRef.current = true;
-      if (dx < 0) onSwipeLeft();
-      else onSwipeRight();
-    };
-
-    // Prevent click from firing after a swipe
-    const onClickCapture = (e: MouseEvent) => {
-      if (swipedRef.current) {
-        e.stopPropagation();
-        e.preventDefault();
-        swipedRef.current = false;
-      }
-    };
-
-    el.addEventListener('touchstart', onTouchStart, { passive: true });
-    el.addEventListener('touchend', onTouchEnd, { passive: true });
-    el.addEventListener('click', onClickCapture, true);
+    el.addEventListener('scroll', onScroll, { passive: true });
     return () => {
-      el.removeEventListener('touchstart', onTouchStart);
-      el.removeEventListener('touchend', onTouchEnd);
-      el.removeEventListener('click', onClickCapture, true);
+      el.removeEventListener('scroll', onScroll);
+      clearTimeout(timeout);
     };
-  }, [ref, onSwipeLeft, onSwipeRight]);
-}
+  }, []);
 
-function useCarousel(images: string[], startIndex = 0) {
-  const [current, setCurrent] = useState(startIndex);
-  const loaded = useImageLoader(images[current]);
+  const currentRef = useRef(current);
+  currentRef.current = current;
 
-  usePreloadAdjacentImages(images, current);
+  const scrollTo = useCallback((index: number) => {
+    scrollRef.current?.scrollTo({
+      left: index * (scrollRef.current?.clientWidth ?? 0),
+      behavior: 'smooth',
+    });
+  }, []);
 
-  const prev = useCallback(
-    () => setCurrent((i) => (i === 0 ? images.length - 1 : i - 1)),
-    [images.length],
-  );
-  const next = useCallback(
-    () => setCurrent((i) => (i === images.length - 1 ? 0 : i + 1)),
-    [images.length],
-  );
+  const prev = useCallback(() => {
+    const i = currentRef.current === 0 ? images.length - 1 : currentRef.current - 1;
+    scrollTo(i);
+  }, [images.length, scrollTo]);
 
-  return { current, loaded, prev, next };
+  const next = useCallback(() => {
+    const i = currentRef.current === images.length - 1 ? 0 : currentRef.current + 1;
+    scrollTo(i);
+  }, [images.length, scrollTo]);
+
+  return { scrollRef, current, prev, next, scrollTo };
 }
 
 const CarouselNav: FC<{
@@ -158,16 +133,21 @@ const CarouselNav: FC<{
   </>
 );
 
-const CarouselImage: FC<{
+const SlideImage: FC<{
   src: string;
   alt?: string;
-  loaded: boolean;
   variant: 'thumbnail' | 'fullscreen';
   onClick?: () => void;
-}> = ({ src, alt, loaded, variant, onClick }) => {
+}> = ({ src, alt, variant, onClick }) => {
+  const loaded = useImageLoader(src);
   const isFullscreen = variant === 'fullscreen';
+
   return (
-    <>
+    <div
+      className={cn(
+        'relative flex w-full flex-shrink-0 snap-start items-center justify-center h-full',
+      )}
+    >
       {!loaded && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           <div
@@ -190,10 +170,10 @@ const CarouselImage: FC<{
           loaded ? 'opacity-100' : 'opacity-0',
           isFullscreen
             ? 'pointer-events-none max-h-full max-w-full object-contain'
-            : 'cursor-pointer object-cover',
+            : 'h-full cursor-pointer object-cover',
         )}
       />
-    </>
+    </div>
   );
 };
 
@@ -203,13 +183,20 @@ const Lightbox: FC<{
   startIndex: number;
   onClose: () => void;
 }> = ({ images, alt, startIndex, onClose }) => {
-  const { current, loaded, prev, next } = useCarousel(images, startIndex);
-  const swipeRef = useRef<HTMLDivElement>(null);
-  useSwipe(swipeRef, next, prev);
+  const { scrollRef, current, prev, next } = useScrollCarousel(images);
   const onCloseRef = useRef(onClose);
   onCloseRef.current = onClose;
 
   const handleClose = useCallback(() => onCloseRef.current(), []);
+
+  useEffect(() => {
+    if (startIndex > 0) {
+      scrollRef.current?.scrollTo({
+        left: startIndex * (scrollRef.current?.clientWidth ?? 0),
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [startIndex]);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -239,16 +226,22 @@ const Lightbox: FC<{
       </button>
 
       <div
-        ref={swipeRef}
-        className="relative flex h-full w-full items-center justify-center px-8 pb-16 pt-8"
+        className="relative flex h-full w-full flex-col items-center justify-center px-8 pb-16 pt-8"
         onClick={(e) => e.stopPropagation()}
       >
-        <CarouselImage
-          src={images[current]}
-          alt={alt ? `${alt} ${current + 1}/${images.length}` : undefined}
-          loaded={loaded}
-          variant="fullscreen"
-        />
+        <div
+          ref={scrollRef}
+          className="flex h-full w-full snap-x snap-mandatory overflow-x-auto scrollbar-hide"
+        >
+          {images.map((src, i) => (
+            <SlideImage
+              key={src}
+              src={src}
+              alt={alt ? `${alt} ${i + 1}/${images.length}` : undefined}
+              variant="fullscreen"
+            />
+          ))}
+        </div>
 
         {images.length > 1 && (
           <>
@@ -267,26 +260,28 @@ export const ImageCarousel: FC<{ images: string[]; alt?: string }> = ({
   images,
   alt,
 }) => {
-  const { current, loaded, prev, next } = useCarousel(images);
-  const swipeRef = useRef<HTMLDivElement>(null);
-  useSwipe(swipeRef, next, prev);
+  const { scrollRef, current, prev, next } = useScrollCarousel(images);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const closeLightbox = useCallback(() => setLightboxOpen(false), []);
 
   return (
     <>
       <div className="flex h-[36%] w-full flex-col">
-        <div
-          ref={swipeRef}
-          className="relative flex h-full w-full justify-center"
-        >
-          <CarouselImage
-            src={images[current]}
-            alt={alt ? `${alt} ${current + 1}/${images.length}` : undefined}
-            loaded={loaded}
-            variant="thumbnail"
-            onClick={() => setLightboxOpen(true)}
-          />
+        <div className="relative h-full w-full">
+          <div
+            ref={scrollRef}
+            className="flex h-full w-full snap-x snap-mandatory overflow-x-auto scrollbar-hide"
+          >
+            {images.map((src, i) => (
+              <SlideImage
+                key={src}
+                src={src}
+                alt={alt ? `${alt} ${i + 1}/${images.length}` : undefined}
+                variant="thumbnail"
+                onClick={() => setLightboxOpen(true)}
+              />
+            ))}
+          </div>
 
           {images.length > 1 && (
             <CarouselNav onPrev={prev} onNext={next} />
