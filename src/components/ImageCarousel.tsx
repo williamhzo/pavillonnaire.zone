@@ -49,6 +49,57 @@ function usePreloadAdjacentImages(images: string[], current: number) {
   }, [images, current]);
 }
 
+function useSwipe(
+  ref: React.RefObject<HTMLElement | null>,
+  onSwipeLeft: () => void,
+  onSwipeRight: () => void,
+) {
+  const swipedRef = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    let startX = 0;
+    let startY = 0;
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (!e.touches[0]) return;
+      swipedRef.current = false;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    };
+
+    const onTouchEnd = (e: TouchEvent) => {
+      if (!e.changedTouches[0]) return;
+      const dx = e.changedTouches[0].clientX - startX;
+      const dy = e.changedTouches[0].clientY - startY;
+      if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
+      swipedRef.current = true;
+      if (dx < 0) onSwipeLeft();
+      else onSwipeRight();
+    };
+
+    // Prevent click from firing after a swipe
+    const onClickCapture = (e: MouseEvent) => {
+      if (swipedRef.current) {
+        e.stopPropagation();
+        e.preventDefault();
+        swipedRef.current = false;
+      }
+    };
+
+    el.addEventListener('touchstart', onTouchStart, { passive: true });
+    el.addEventListener('touchend', onTouchEnd, { passive: true });
+    el.addEventListener('click', onClickCapture, true);
+    return () => {
+      el.removeEventListener('touchstart', onTouchStart);
+      el.removeEventListener('touchend', onTouchEnd);
+      el.removeEventListener('click', onClickCapture, true);
+    };
+  }, [ref, onSwipeLeft, onSwipeRight]);
+}
+
 function useCarousel(images: string[], startIndex = 0) {
   const [current, setCurrent] = useState(startIndex);
   const loaded = useImageLoader(images[current]);
@@ -76,7 +127,7 @@ const CarouselNav: FC<{
     <button
       onClick={onPrev}
       className={cn(
-        'absolute left-2 top-1/2 -translate-y-1/2',
+        'absolute left-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer',
         fullscreen
           ? 'px-3 py-2 text-2xl text-white/60 hover:text-white'
           : 'bg-white/80 px-2 py-1 text-sm hover:bg-white',
@@ -88,7 +139,7 @@ const CarouselNav: FC<{
     <button
       onClick={onNext}
       className={cn(
-        'absolute right-2 top-1/2 -translate-y-1/2',
+        'absolute right-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer',
         fullscreen
           ? 'px-3 py-2 text-2xl text-white/60 hover:text-white'
           : 'bg-white/80 px-2 py-1 text-sm hover:bg-white',
@@ -105,12 +156,13 @@ const CarouselImage: FC<{
   alt?: string;
   loaded: boolean;
   variant: 'thumbnail' | 'fullscreen';
-}> = ({ src, alt, loaded, variant }) => {
+  onClick?: () => void;
+}> = ({ src, alt, loaded, variant, onClick }) => {
   const isFullscreen = variant === 'fullscreen';
   return (
     <>
       {!loaded && (
-        <div className="absolute inset-0 flex items-center justify-center">
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           <div
             className={cn(
               'animate-spin rounded-full',
@@ -125,12 +177,13 @@ const CarouselImage: FC<{
       <img
         src={src}
         alt={alt}
+        onClick={onClick}
         className={cn(
           'transition-opacity duration-300',
           loaded ? 'opacity-100' : 'opacity-0',
           isFullscreen
-            ? 'max-h-full max-w-full object-contain'
-            : 'object-cover',
+            ? 'pointer-events-none max-h-full max-w-full object-contain'
+            : 'cursor-pointer object-cover',
         )}
       />
     </>
@@ -144,6 +197,8 @@ const Lightbox: FC<{
   onClose: () => void;
 }> = ({ images, alt, startIndex, onClose }) => {
   const { current, loaded, prev, next } = useCarousel(images, startIndex);
+  const swipeRef = useRef<HTMLDivElement>(null);
+  useSwipe(swipeRef, next, prev);
   const onCloseRef = useRef(onClose);
   onCloseRef.current = onClose;
 
@@ -170,13 +225,14 @@ const Lightbox: FC<{
     >
       <button
         onClick={handleClose}
-        className="absolute right-4 top-4 z-10 text-3xl text-white hover:text-white/70"
+        className="absolute right-4 top-4 z-10 cursor-pointer text-3xl text-white hover:text-white/70"
         aria-label="Fermer"
       >
         &times;
       </button>
 
       <div
+        ref={swipeRef}
         className="relative flex h-full w-full items-center justify-center px-8 pb-16 pt-8"
         onClick={(e) => e.stopPropagation()}
       >
@@ -205,6 +261,8 @@ export const ImageCarousel: FC<{ images: string[]; alt?: string }> = ({
   alt,
 }) => {
   const { current, loaded, prev, next } = useCarousel(images);
+  const swipeRef = useRef<HTMLDivElement>(null);
+  useSwipe(swipeRef, next, prev);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const closeLightbox = useCallback(() => setLightboxOpen(false), []);
 
@@ -212,20 +270,19 @@ export const ImageCarousel: FC<{ images: string[]; alt?: string }> = ({
     <>
       <div className="flex h-[36%] w-full flex-col">
         <div
-          className="relative flex h-full w-full cursor-pointer justify-center"
-          onClick={() => setLightboxOpen(true)}
+          ref={swipeRef}
+          className="relative flex h-full w-full justify-center"
         >
           <CarouselImage
             src={images[current]}
             alt={alt ? `${alt} ${current + 1}/${images.length}` : undefined}
             loaded={loaded}
             variant="thumbnail"
+            onClick={() => setLightboxOpen(true)}
           />
 
           {images.length > 1 && (
-            <div onClick={(e) => e.stopPropagation()}>
-              <CarouselNav onPrev={prev} onNext={next} />
-            </div>
+            <CarouselNav onPrev={prev} onNext={next} />
           )}
         </div>
 
