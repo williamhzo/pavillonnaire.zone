@@ -125,17 +125,18 @@ const CurrentImage: FC<{
   }, [src]);
 
   useEffect(() => {
-    if (isMobileLightbox && imgRef.current?.complete && imgRef.current.naturalWidth > 0) {
-      setDomLoadedSrc(src);
+    if (isMobile && imgRef.current?.complete && imgRef.current.naturalWidth > 0) {
+      setDomLoadedSrc(imgRef.current.getAttribute('src') || '');
     }
-  }, [isMobileLightbox, src]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile]);
 
-  const loading = isMobileLightbox
+  const loading = isMobile
     ? domLoadedSrc !== src
     : displaySrc !== src;
   const showMobileLightboxLoader = loading && isMobileLightbox;
   const showLoader = (loading && !isFullscreen) || showMobileLightboxLoader;
-  const showImage = displaySrc && (!loading || showMobileLightboxLoader);
+  const showImage = displaySrc && (!loading || isMobile);
 
   return (
     <div className="relative flex h-full w-full items-center justify-center">
@@ -155,16 +156,17 @@ const CurrentImage: FC<{
       {showImage && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          ref={isMobileLightbox ? imgRef : undefined}
+          ref={isMobile ? imgRef : undefined}
           src={displaySrc}
           alt={alt}
           onClick={onClick}
-          onLoad={isMobileLightbox ? handleImgLoad : undefined}
+          onLoad={isMobile ? handleImgLoad : undefined}
           className={cn(
             isFullscreen
               ? 'max-h-full max-w-full object-contain'
               : 'h-full cursor-pointer object-cover',
             showMobileLightboxLoader && 'blur-sm brightness-50',
+            showLoader && !isFullscreen && 'invisible',
           )}
         />
       )}
@@ -219,7 +221,7 @@ const Lightbox: FC<{
 
       <div
         ref={swipeRef}
-        className="relative flex h-full w-full items-center justify-center px-8 pb-16 pt-8"
+        className="relative flex h-full w-full items-center justify-center px-2 pb-16 pt-8 md:px-8"
         onClick={(e) => e.stopPropagation()}
       >
         <CurrentImage
