@@ -98,57 +98,51 @@ const CurrentImage: FC<{
   variant: 'thumbnail' | 'fullscreen';
   onClick?: () => void;
 }> = ({ src, alt, variant, onClick }) => {
-  const [loadedSrc, setLoadedSrc] = useState('');
-  const imgRef = useRef<HTMLImageElement>(null);
+  const [displaySrc, setDisplaySrc] = useState(() =>
+    verifiedImages.has(src) ? src : '',
+  );
   const isFullscreen = variant === 'fullscreen';
-  const loaded = loadedSrc === src || verifiedImages.has(src);
 
-  const handleLoad = useCallback(() => {
-    const img = imgRef.current;
-    if (!img) return;
-    const url = img.src;
-    if (verifiedImages.has(url)) return;
-    img.decode().then(
-      () => {
-        verifiedImages.add(url);
-        setLoadedSrc(url);
-      },
-      () => {
-        // Decode raté mais src inchangé — afficher quand même pour éviter un spinner permanent
-        if (imgRef.current?.src === url) {
-          verifiedImages.add(url);
-          setLoadedSrc(url);
-        }
-      },
+  useEffect(() => {
+    if (verifiedImages.has(src)) {
+      setDisplaySrc(src);
+      return;
+    }
+    let cancelled = false;
+    loadAndDecode(src).then(
+      () => { if (!cancelled) setDisplaySrc(src); },
+      () => {},
     );
-  }, []);
+    return () => { cancelled = true; };
+  }, [src]);
+
+  const loading = displaySrc !== src;
 
   return (
     <div className="relative flex h-full w-full items-center justify-center">
-      {!loaded && (
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+      {(!displaySrc || loading) && (
+        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/icon-maison-transp.gif"
             alt=""
-            className={isFullscreen ? 'h-20 w-20 invert md:hidden' : 'h-24 w-24'}
+            className={!displaySrc && isFullscreen ? 'h-20 w-20 invert md:hidden' : 'h-24 w-24'}
           />
         </div>
       )}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        ref={imgRef}
-        src={src}
-        alt={alt}
-        onClick={onClick}
-        onLoad={handleLoad}
-        className={cn(
-          loaded ? 'opacity-100 transition-opacity duration-150' : 'opacity-0',
-          isFullscreen
-            ? 'max-h-full max-w-full object-contain'
-            : 'h-full cursor-pointer object-cover',
-        )}
-      />
+      {displaySrc && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={displaySrc}
+          alt={alt}
+          onClick={onClick}
+          className={
+            isFullscreen
+              ? 'max-h-full max-w-full object-contain'
+              : 'h-full cursor-pointer object-cover'
+          }
+        />
+      )}
     </div>
   );
 };
