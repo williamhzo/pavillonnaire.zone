@@ -9,6 +9,7 @@ import { useSwipe } from '@/hooks/useSwipe';
 const MOBILE_QUERY = '(max-width: 767px)';
 
 const decodeCache = new Map<string, Promise<void>>();
+const verifiedImages = new Set<string>();
 
 function loadAndDecode(src: string): Promise<void> {
   const cached = decodeCache.get(src);
@@ -18,13 +19,18 @@ function loadAndDecode(src: string): Promise<void> {
     const img = new Image();
     img.src = src;
 
+    const done = () => {
+      verifiedImages.add(src);
+      resolve();
+    };
+
     if (img.complete && img.naturalWidth > 0) {
-      img.decode().then(resolve, resolve);
+      img.decode().then(done, done);
       return;
     }
 
     img.onload = () => {
-      img.decode().then(resolve, resolve);
+      img.decode().then(done, done);
     };
     img.onerror = () => {
       decodeCache.delete(src);
@@ -95,18 +101,24 @@ const CurrentImage: FC<{
   const [loadedSrc, setLoadedSrc] = useState('');
   const imgRef = useRef<HTMLImageElement>(null);
   const isFullscreen = variant === 'fullscreen';
-  const loaded = loadedSrc === src;
+  const loaded = loadedSrc === src || verifiedImages.has(src);
 
   const handleLoad = useCallback(() => {
     const img = imgRef.current;
     if (!img) return;
     const url = img.src;
+    if (verifiedImages.has(url)) return;
     img.decode().then(
-      () => setLoadedSrc(url),
       () => {
-        // Decode raté ou src changé entre-temps — afficher quand même
-        // seulement si le src n'a pas changé (ex: image corrompue)
-        if (imgRef.current?.src === url) setLoadedSrc(url);
+        verifiedImages.add(url);
+        setLoadedSrc(url);
+      },
+      () => {
+        // Decode raté mais src inchangé — afficher quand même pour éviter un spinner permanent
+        if (imgRef.current?.src === url) {
+          verifiedImages.add(url);
+          setLoadedSrc(url);
+        }
       },
     );
   }, []);
@@ -119,9 +131,7 @@ const CurrentImage: FC<{
           <img
             src="/icon-maison-transp.gif"
             alt=""
-            className={cn(
-              isFullscreen ? 'h-20 w-20 invert' : 'h-24 w-24',
-            )}
+            className={isFullscreen ? 'h-20 w-20 invert md:hidden' : 'h-24 w-24'}
           />
         </div>
       )}
