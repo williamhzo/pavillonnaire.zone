@@ -119,7 +119,9 @@ const CurrentImage: FC<{
           <img
             src="/icon-maison-transp.gif"
             alt=""
-            className={isFullscreen ? 'h-32 w-32' : 'h-24 w-24'}
+            className={cn(
+              isFullscreen ? 'h-20 w-20 invert' : 'h-24 w-24',
+            )}
           />
         </div>
       )}
