@@ -3,7 +3,10 @@
 import { FC, useState, useEffect, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { cn } from '@/utils';
+import useMediaQuery from '@/hooks/useMediaQuery';
+import { useSwipe } from '@/hooks/useSwipe';
 
+const MOBILE_QUERY = '(max-width: 767px)';
 const loadedImages = new Set<string>();
 
 function useImageLoader(src: string) {
@@ -112,6 +115,12 @@ const Lightbox: FC<{
   onClose: () => void;
 }> = ({ images, alt, startIndex, onClose }) => {
   const { current, prev, next } = useCarousel(images, startIndex);
+  const isMobile = useMediaQuery(MOBILE_QUERY);
+  const swipeRef = useSwipe<HTMLDivElement>({
+    onSwipeLeft: next,
+    onSwipeRight: prev,
+    enabled: isMobile && images.length > 1,
+  });
   const onCloseRef = useRef(onClose);
   onCloseRef.current = onClose;
 
@@ -145,6 +154,7 @@ const Lightbox: FC<{
       </button>
 
       <div
+        ref={swipeRef}
         className="relative flex h-full w-full items-center justify-center px-8 pb-16 pt-8"
         onClick={(e) => e.stopPropagation()}
       >
@@ -158,12 +168,12 @@ const Lightbox: FC<{
           <>
             <button
               onClick={prev}
-              className="absolute inset-y-[5%] left-0 z-10 w-1/2 cursor-w-resize"
+              className="absolute inset-y-[5%] left-0 z-10 hidden w-1/2 cursor-w-resize md:block"
               aria-label="Image précédente"
             />
             <button
               onClick={next}
-              className="absolute inset-y-[5%] right-0 z-10 w-1/2 cursor-e-resize"
+              className="absolute inset-y-[5%] right-0 z-10 hidden w-1/2 cursor-e-resize md:block"
               aria-label="Image suivante"
             />
             <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-sm text-white/60">
@@ -182,13 +192,19 @@ export const ImageCarousel: FC<{
   onClose?: () => void;
 }> = ({ images, alt, onClose }) => {
   const { current, prev, next } = useCarousel(images);
+  const isMobile = useMediaQuery(MOBILE_QUERY);
+  const swipeRef = useSwipe<HTMLDivElement>({
+    onSwipeLeft: next,
+    onSwipeRight: prev,
+    enabled: isMobile && images.length > 1,
+  });
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const closeLightbox = useCallback(() => setLightboxOpen(false), []);
   const hasMultiple = images.length > 1;
 
   return (
     <>
-      <div className="flex h-[42%] w-full flex-col">
+      <div ref={swipeRef} className="flex h-[55%] w-full flex-col md:h-[42%]">
         <div className="min-h-0 flex-1 overflow-hidden">
           <CurrentImage
             src={images[current]}
@@ -203,7 +219,7 @@ export const ImageCarousel: FC<{
             {hasMultiple ? `${current + 1}/${images.length}` : '\u00A0'}
           </span>
 
-          <div className="flex items-center gap-3">
+          <div className="hidden items-center gap-3 md:flex">
             {hasMultiple && (
               <>
                 <button
