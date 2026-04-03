@@ -92,8 +92,24 @@ const CurrentImage: FC<{
   variant: 'thumbnail' | 'fullscreen';
   onClick?: () => void;
 }> = ({ src, alt, variant, onClick }) => {
-  const loaded = useImageLoader(src);
+  const [loadedSrc, setLoadedSrc] = useState('');
+  const imgRef = useRef<HTMLImageElement>(null);
   const isFullscreen = variant === 'fullscreen';
+  const loaded = loadedSrc === src;
+
+  const handleLoad = useCallback(() => {
+    const img = imgRef.current;
+    if (!img) return;
+    const url = img.src;
+    img.decode().then(
+      () => setLoadedSrc(url),
+      () => {
+        // Decode raté ou src changé entre-temps — afficher quand même
+        // seulement si le src n'a pas changé (ex: image corrompue)
+        if (imgRef.current?.src === url) setLoadedSrc(url);
+      },
+    );
+  }, []);
 
   return (
     <div className="relative flex h-full w-full items-center justify-center">
@@ -109,9 +125,11 @@ const CurrentImage: FC<{
       )}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
+        ref={imgRef}
         src={src}
         alt={alt}
         onClick={onClick}
+        onLoad={handleLoad}
         className={cn(
           loaded ? 'opacity-100 transition-opacity duration-150' : 'opacity-0',
           isFullscreen
@@ -162,7 +180,7 @@ const Lightbox: FC<{
     >
       <button
         onClick={handleClose}
-        className="absolute right-4 top-4 z-10 cursor-pointer text-3xl text-white hover:text-white/70"
+        className="absolute right-4 top-4 z-20 cursor-pointer text-3xl text-white hover:text-white/70"
         aria-label="Fermer"
       >
         &times;
@@ -183,12 +201,12 @@ const Lightbox: FC<{
           <>
             <button
               onClick={prev}
-              className="absolute inset-y-[5%] left-0 z-10 w-1/2 md:cursor-w-resize"
+              className="absolute bottom-16 left-0 top-14 z-10 w-1/2 [-webkit-tap-highlight-color:transparent] md:inset-y-[5%] md:cursor-w-resize"
               aria-label="Image précédente"
             />
             <button
               onClick={next}
-              className="absolute inset-y-[5%] right-0 z-10 w-1/2 md:cursor-e-resize"
+              className="absolute bottom-16 right-0 top-14 z-10 w-1/2 [-webkit-tap-highlight-color:transparent] md:inset-y-[5%] md:cursor-e-resize"
               aria-label="Image suivante"
             />
             <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-sm text-white/60">
