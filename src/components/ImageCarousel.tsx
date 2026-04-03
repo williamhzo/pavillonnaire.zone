@@ -51,89 +51,23 @@ function usePreloadImages(images: string[]) {
   }, [images]);
 }
 
-function useScrollCarousel(images: string[]) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [current, setCurrent] = useState(0);
+function useCarousel(images: string[], initialIndex = 0) {
+  const [current, setCurrent] = useState(initialIndex);
 
   usePreloadImages(images);
 
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-
-    let timeout: ReturnType<typeof setTimeout>;
-    const onScroll = () => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        const index = Math.round(el.scrollLeft / el.clientWidth);
-        setCurrent(index);
-      }, 50);
-    };
-
-    el.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      el.removeEventListener('scroll', onScroll);
-      clearTimeout(timeout);
-    };
-  }, []);
-
-  const currentRef = useRef(current);
-  currentRef.current = current;
-
-  const scrollTo = useCallback((index: number) => {
-    scrollRef.current?.scrollTo({
-      left: index * (scrollRef.current?.clientWidth ?? 0),
-      behavior: 'smooth',
-    });
-  }, []);
-
   const prev = useCallback(() => {
-    const i = currentRef.current === 0 ? images.length - 1 : currentRef.current - 1;
-    scrollTo(i);
-  }, [images.length, scrollTo]);
+    setCurrent((c) => (c === 0 ? images.length - 1 : c - 1));
+  }, [images.length]);
 
   const next = useCallback(() => {
-    const i = currentRef.current === images.length - 1 ? 0 : currentRef.current + 1;
-    scrollTo(i);
-  }, [images.length, scrollTo]);
+    setCurrent((c) => (c === images.length - 1 ? 0 : c + 1));
+  }, [images.length]);
 
-  return { scrollRef, current, prev, next, scrollTo };
+  return { current, prev, next };
 }
 
-const CarouselNav: FC<{
-  onPrev: () => void;
-  onNext: () => void;
-  fullscreen?: boolean;
-}> = ({ onPrev, onNext, fullscreen }) => (
-  <>
-    <button
-      onClick={onPrev}
-      className={cn(
-        'absolute left-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer',
-        fullscreen
-          ? 'px-3 py-2 text-2xl text-white/60 hover:text-white'
-          : 'bg-white/80 px-2 py-1 text-sm hover:bg-white',
-      )}
-      aria-label="Image précédente"
-    >
-      &#8249;
-    </button>
-    <button
-      onClick={onNext}
-      className={cn(
-        'absolute right-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer',
-        fullscreen
-          ? 'px-3 py-2 text-2xl text-white/60 hover:text-white'
-          : 'bg-white/80 px-2 py-1 text-sm hover:bg-white',
-      )}
-      aria-label="Image suivante"
-    >
-      &#8250;
-    </button>
-  </>
-);
-
-const SlideImage: FC<{
+const CurrentImage: FC<{
   src: string;
   alt?: string;
   variant: 'thumbnail' | 'fullscreen';
@@ -143,20 +77,14 @@ const SlideImage: FC<{
   const isFullscreen = variant === 'fullscreen';
 
   return (
-    <div
-      className={cn(
-        'relative flex w-full flex-shrink-0 snap-start items-center justify-center h-full',
-      )}
-    >
+    <div className="relative flex h-full w-full items-center justify-center">
       {!loaded && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div
-            className={cn(
-              'animate-spin rounded-full',
-              isFullscreen
-                ? 'h-6 w-6 border-2 border-white/20 border-t-white'
-                : 'h-5 w-5 border border-black/10 border-t-black',
-            )}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/icon-maison-transp.gif"
+            alt=""
+            className={isFullscreen ? 'h-32 w-32' : 'h-24 w-24'}
           />
         </div>
       )}
@@ -169,7 +97,7 @@ const SlideImage: FC<{
           'transition-opacity duration-300',
           loaded ? 'opacity-100' : 'opacity-0',
           isFullscreen
-            ? 'pointer-events-none max-h-full max-w-full object-contain'
+            ? 'max-h-full max-w-full object-contain'
             : 'h-full cursor-pointer object-cover',
         )}
       />
@@ -183,20 +111,11 @@ const Lightbox: FC<{
   startIndex: number;
   onClose: () => void;
 }> = ({ images, alt, startIndex, onClose }) => {
-  const { scrollRef, current, prev, next } = useScrollCarousel(images);
+  const { current, prev, next } = useCarousel(images, startIndex);
   const onCloseRef = useRef(onClose);
   onCloseRef.current = onClose;
 
   const handleClose = useCallback(() => onCloseRef.current(), []);
-
-  useEffect(() => {
-    if (startIndex > 0) {
-      scrollRef.current?.scrollTo({
-        left: startIndex * (scrollRef.current?.clientWidth ?? 0),
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startIndex]);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -214,7 +133,7 @@ const Lightbox: FC<{
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black"
       onClick={handleClose}
     >
       <button
@@ -226,26 +145,27 @@ const Lightbox: FC<{
       </button>
 
       <div
-        className="relative flex h-full w-full flex-col items-center justify-center px-8 pb-16 pt-8"
+        className="relative flex h-full w-full items-center justify-center px-8 pb-16 pt-8"
         onClick={(e) => e.stopPropagation()}
       >
-        <div
-          ref={scrollRef}
-          className="flex h-full w-full snap-x snap-mandatory overflow-x-auto scrollbar-hide"
-        >
-          {images.map((src, i) => (
-            <SlideImage
-              key={src}
-              src={src}
-              alt={alt ? `${alt} ${i + 1}/${images.length}` : undefined}
-              variant="fullscreen"
-            />
-          ))}
-        </div>
+        <CurrentImage
+          src={images[current]}
+          alt={alt ? `${alt} ${current + 1}/${images.length}` : undefined}
+          variant="fullscreen"
+        />
 
         {images.length > 1 && (
           <>
-            <CarouselNav onPrev={prev} onNext={next} fullscreen />
+            <button
+              onClick={prev}
+              className="absolute inset-y-[5%] left-0 z-10 w-1/2 cursor-w-resize"
+              aria-label="Image précédente"
+            />
+            <button
+              onClick={next}
+              className="absolute inset-y-[5%] right-0 z-10 w-1/2 cursor-e-resize"
+              aria-label="Image suivante"
+            />
             <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-sm text-white/60">
               {current + 1}/{images.length}
             </span>
@@ -256,43 +176,66 @@ const Lightbox: FC<{
   );
 };
 
-export const ImageCarousel: FC<{ images: string[]; alt?: string }> = ({
-  images,
-  alt,
-}) => {
-  const { scrollRef, current, prev, next } = useScrollCarousel(images);
+export const ImageCarousel: FC<{
+  images: string[];
+  alt?: string;
+  onClose?: () => void;
+}> = ({ images, alt, onClose }) => {
+  const { current, prev, next } = useCarousel(images);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const closeLightbox = useCallback(() => setLightboxOpen(false), []);
+  const hasMultiple = images.length > 1;
 
   return (
     <>
-      <div className="flex h-[36%] w-full flex-col">
-        <div className="relative h-full w-full">
-          <div
-            ref={scrollRef}
-            className="flex h-full w-full snap-x snap-mandatory overflow-x-auto scrollbar-hide"
-          >
-            {images.map((src, i) => (
-              <SlideImage
-                key={src}
-                src={src}
-                alt={alt ? `${alt} ${i + 1}/${images.length}` : undefined}
-                variant="thumbnail"
-                onClick={() => setLightboxOpen(true)}
-              />
-            ))}
-          </div>
-
-          {images.length > 1 && (
-            <CarouselNav onPrev={prev} onNext={next} />
-          )}
+      <div className="flex h-[42%] w-full flex-col">
+        <div className="min-h-0 flex-1 overflow-hidden">
+          <CurrentImage
+            src={images[current]}
+            alt={alt ? `${alt} ${current + 1}/${images.length}` : undefined}
+            variant="thumbnail"
+            onClick={() => setLightboxOpen(true)}
+          />
         </div>
 
-        {images.length > 1 && (
-          <span className="mt-1 block text-center text-xs text-black/50">
-            {current + 1}/{images.length}
+        <div className="flex items-center justify-between px-2 py-1.5">
+          <span className="min-w-[3rem] text-xs text-black">
+            {hasMultiple ? `${current + 1}/${images.length}` : '\u00A0'}
           </span>
-        )}
+
+          <div className="flex items-center gap-3">
+            {hasMultiple && (
+              <>
+                <button
+                  onClick={prev}
+                  className="cursor-pointer px-1 py-0.5 text-sm hover:opacity-60"
+                  aria-label="Image précédente"
+                >
+                  &#8249;
+                </button>
+                <button
+                  onClick={next}
+                  className="cursor-pointer px-1 py-0.5 text-sm hover:opacity-60"
+                  aria-label="Image suivante"
+                >
+                  &#8250;
+                </button>
+              </>
+            )}
+          </div>
+
+          {onClose ? (
+            <button
+              onClick={onClose}
+              className="min-w-[3rem] cursor-pointer text-right text-xl leading-none"
+              aria-label="Fermer"
+            >
+              &times;
+            </button>
+          ) : (
+            <span className="min-w-[3rem]" />
+          )}
+        </div>
       </div>
 
       {lightboxOpen &&

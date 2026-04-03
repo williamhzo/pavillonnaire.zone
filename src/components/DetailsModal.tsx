@@ -57,20 +57,23 @@ export const DetailsModal: FC<DetailsModalProps> = ({ feature }) => {
       className="absolute invert-select right-0 top-0 z-50 hidden h-full w-full overflow-auto border border-black bg-white p-4 scrollbar-hide sm:w-[max(33%,350px)]"
     >
       {images && images.length > 0 ? (
-        <ImageCarousel key={images[0]} images={images} alt={title} />
+        <ImageCarousel
+          key={images[0]}
+          images={images}
+          alt={title}
+          onClose={toggleAside}
+        />
       ) : image ? (
-        <ImageCarousel key={image} images={[image]} alt={title} />
+        <ImageCarousel
+          key={image}
+          images={[image]}
+          alt={title}
+          onClose={toggleAside}
+        />
       ) : null}
 
       <div className="flex flex-col items-center gap-2 py-2">
-        <button
-          onClick={toggleAside}
-          className="self-end p-4 text-2xl md:text-base"
-        >
-          &times;
-        </button>
-
-        <h3 className="mb-2 text-center font-serif text-base leading-6 ">
+        <h3 className="mt-8 mb-2 text-center font-serif text-base leading-6 ">
           {title}
         </h3>
 
