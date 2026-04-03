@@ -101,8 +101,11 @@ const CurrentImage: FC<{
   const [displaySrc, setDisplaySrc] = useState(() =>
     verifiedImages.has(src) ? src : '',
   );
+  const [domLoadedSrc, setDomLoadedSrc] = useState('');
+  const imgRef = useRef<HTMLImageElement>(null);
   const isMobile = useMediaQuery(MOBILE_QUERY);
   const isFullscreen = variant === 'fullscreen';
+  const isMobileLightbox = isFullscreen && isMobile;
 
   useEffect(() => {
     if (verifiedImages.has(src)) {
@@ -117,8 +120,20 @@ const CurrentImage: FC<{
     return () => { cancelled = true; };
   }, [src]);
 
-  const loading = displaySrc !== src;
-  const showMobileLightboxLoader = loading && isFullscreen && isMobile;
+  const handleImgLoad = useCallback(() => {
+    setDomLoadedSrc(src);
+  }, [src]);
+
+  useEffect(() => {
+    if (isMobileLightbox && imgRef.current?.complete && imgRef.current.naturalWidth > 0) {
+      setDomLoadedSrc(src);
+    }
+  }, [isMobileLightbox, src]);
+
+  const loading = isMobileLightbox
+    ? domLoadedSrc !== src
+    : displaySrc !== src;
+  const showMobileLightboxLoader = loading && isMobileLightbox;
   const showLoader = (loading && !isFullscreen) || showMobileLightboxLoader;
   const showImage = displaySrc && (!loading || showMobileLightboxLoader);
 
@@ -140,9 +155,11 @@ const CurrentImage: FC<{
       {showImage && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
+          ref={isMobileLightbox ? imgRef : undefined}
           src={displaySrc}
           alt={alt}
           onClick={onClick}
+          onLoad={isMobileLightbox ? handleImgLoad : undefined}
           className={cn(
             isFullscreen
               ? 'max-h-full max-w-full object-contain'
