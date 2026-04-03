@@ -101,6 +101,7 @@ const CurrentImage: FC<{
   const [displaySrc, setDisplaySrc] = useState(() =>
     verifiedImages.has(src) ? src : '',
   );
+  const isMobile = useMediaQuery(MOBILE_QUERY);
   const isFullscreen = variant === 'fullscreen';
 
   useEffect(() => {
@@ -117,33 +118,37 @@ const CurrentImage: FC<{
   }, [src]);
 
   const loading = displaySrc !== src;
+  const showMobileLightboxLoader = loading && isFullscreen && isMobile;
+  const showLoader = (loading && !isFullscreen) || showMobileLightboxLoader;
+  const showImage = displaySrc && (!loading || showMobileLightboxLoader);
 
   return (
     <div className="relative flex h-full w-full items-center justify-center">
-      {(!displaySrc || loading) && (
+      {showLoader && (
         <div className={cn(
-          'pointer-events-none absolute inset-0 z-10 flex items-center justify-center',
-          loading && isFullscreen && 'bg-black/40 backdrop-blur-sm md:bg-transparent md:backdrop-blur-none',
+          'pointer-events-none absolute inset-0 flex items-center justify-center',
+          showMobileLightboxLoader && 'z-10',
         )}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/icon-maison-transp.gif"
             alt=""
-            className={isFullscreen ? 'h-20 w-20 md:hidden' : 'h-24 w-24'}
+            className={isFullscreen ? 'h-20 w-20' : 'h-24 w-24'}
           />
         </div>
       )}
-      {displaySrc && (
+      {showImage && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={displaySrc}
           alt={alt}
           onClick={onClick}
-          className={
+          className={cn(
             isFullscreen
               ? 'max-h-full max-w-full object-contain'
-              : 'h-full cursor-pointer object-cover'
-          }
+              : 'h-full cursor-pointer object-cover',
+            showMobileLightboxLoader && 'blur-sm brightness-50',
+          )}
         />
       )}
     </div>
