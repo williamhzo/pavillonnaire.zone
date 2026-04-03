@@ -121,7 +121,10 @@ const CurrentImage: FC<{
   return (
     <div className="relative flex h-full w-full items-center justify-center">
       {(!displaySrc || loading) && (
-        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
+        <div className={cn(
+          'pointer-events-none absolute inset-0 z-10 flex items-center justify-center',
+          loading && isFullscreen && 'bg-black/40 backdrop-blur-sm md:bg-transparent md:backdrop-blur-none',
+        )}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/icon-maison-transp.gif"
