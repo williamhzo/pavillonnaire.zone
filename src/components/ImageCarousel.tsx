@@ -7,57 +7,73 @@ import useMediaQuery from '@/hooks/useMediaQuery';
 import { useSwipe } from '@/hooks/useSwipe';
 
 const MOBILE_QUERY = '(max-width: 767px)';
-const loadedImages = new Set<string>();
 
-function useImageLoader(src: string) {
-  const [loaded, setLoaded] = useState(() => loadedImages.has(src));
+const decodeCache = new Map<string, Promise<void>>();
 
-  useEffect(() => {
-    if (loadedImages.has(src)) {
-      setLoaded(true);
+function loadAndDecode(src: string): Promise<void> {
+  const cached = decodeCache.get(src);
+  if (cached) return cached;
+
+  const promise = new Promise<void>((resolve, reject) => {
+    const img = new Image();
+    img.src = src;
+
+    if (img.complete && img.naturalWidth > 0) {
+      img.decode().then(resolve, resolve);
       return;
     }
 
-    let cancelled = false;
-    setLoaded(false);
-    const img = new Image();
-    img.src = src;
     img.onload = () => {
-      loadedImages.add(src);
-      if (!cancelled) setLoaded(true);
+      img.decode().then(resolve, resolve);
     };
+    img.onerror = () => {
+      decodeCache.delete(src);
+      reject();
+    };
+  });
+
+  decodeCache.set(src, promise);
+  return promise;
+}
+
+function useImageLoader(src: string) {
+  const [loadedSrc, setLoadedSrc] = useState('');
+
+  useEffect(() => {
+    let cancelled = false;
+
+    loadAndDecode(src).then(
+      () => { if (!cancelled) setLoadedSrc(src); },
+      () => {},
+    );
+
     return () => {
       cancelled = true;
-      img.onload = null;
     };
   }, [src]);
 
-  return loaded;
+  return loadedSrc === src;
 }
 
-function usePreloadImages(images: string[]) {
+function usePreloadAdjacent(images: string[], current: number) {
+  const currentLoaded = useImageLoader(images[current]);
+
   useEffect(() => {
-    const toPreload = images.filter((src) => !loadedImages.has(src));
+    if (!currentLoaded || images.length <= 1) return;
 
-    const preloaded = toPreload.map((src) => {
-      const img = new Image();
-      img.src = src;
-      img.onload = () => loadedImages.add(src);
-      return img;
-    });
+    const indices = [
+      (current + 1) % images.length,
+      (current - 1 + images.length) % images.length,
+    ];
 
-    return () => {
-      preloaded.forEach((img) => {
-        img.onload = null;
-      });
-    };
-  }, [images]);
+    indices.forEach((i) => loadAndDecode(images[i]));
+  }, [images, current, currentLoaded]);
 }
 
 function useCarousel(images: string[], initialIndex = 0) {
   const [current, setCurrent] = useState(initialIndex);
 
-  usePreloadImages(images);
+  usePreloadAdjacent(images, current);
 
   const prev = useCallback(() => {
     setCurrent((c) => (c === 0 ? images.length - 1 : c - 1));
@@ -97,8 +113,7 @@ const CurrentImage: FC<{
         alt={alt}
         onClick={onClick}
         className={cn(
-          'transition-opacity duration-300',
-          loaded ? 'opacity-100' : 'opacity-0',
+          loaded ? 'opacity-100 transition-opacity duration-150' : 'opacity-0',
           isFullscreen
             ? 'max-h-full max-w-full object-contain'
             : 'h-full cursor-pointer object-cover',
@@ -168,12 +183,12 @@ const Lightbox: FC<{
           <>
             <button
               onClick={prev}
-              className="absolute inset-y-[5%] left-0 z-10 hidden w-1/2 cursor-w-resize md:block"
+              className="absolute inset-y-[5%] left-0 z-10 w-1/2 md:cursor-w-resize"
               aria-label="Image précédente"
             />
             <button
               onClick={next}
-              className="absolute inset-y-[5%] right-0 z-10 hidden w-1/2 cursor-e-resize md:block"
+              className="absolute inset-y-[5%] right-0 z-10 w-1/2 md:cursor-e-resize"
               aria-label="Image suivante"
             />
             <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-sm text-white/60">
@@ -219,7 +234,7 @@ export const ImageCarousel: FC<{
             {hasMultiple ? `${current + 1}/${images.length}` : '\u00A0'}
           </span>
 
-          <div className="hidden items-center gap-3 md:flex">
+          <div className="flex items-center gap-3">
             {hasMultiple && (
               <>
                 <button
