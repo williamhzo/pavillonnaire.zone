@@ -49,7 +49,9 @@ function useImageLoader(src: string) {
     let cancelled = false;
 
     loadAndDecode(src).then(
-      () => { if (!cancelled) setLoadedSrc(src); },
+      () => {
+        if (!cancelled) setLoadedSrc(src);
+      },
       () => {},
     );
 
@@ -76,6 +78,25 @@ function usePreloadAdjacent(images: string[], current: number) {
   }, [images, current, currentLoaded]);
 }
 
+function usePreloadAll(images: string[], isMobile: boolean): boolean {
+  const [allLoaded, setAllLoaded] = useState(
+    () => isMobile || images.every((src) => verifiedImages.has(src)),
+  );
+
+  useEffect(() => {
+    if (isMobile || images.every((src) => verifiedImages.has(src))) {
+      setAllLoaded(true);
+      return;
+    }
+    setAllLoaded(false);
+    Promise.all(images.map((src) => loadAndDecode(src).catch(() => {}))).then(
+      () => setAllLoaded(true),
+    );
+  }, [images, isMobile]);
+
+  return allLoaded;
+}
+
 function useCarousel(images: string[], initialIndex = 0) {
   const [current, setCurrent] = useState(initialIndex);
 
@@ -96,8 +117,9 @@ const CurrentImage: FC<{
   src: string;
   alt?: string;
   variant: 'thumbnail' | 'fullscreen';
+  skipLoader?: boolean;
   onClick?: () => void;
-}> = ({ src, alt, variant, onClick }) => {
+}> = ({ src, alt, variant, skipLoader, onClick }) => {
   const [displaySrc, setDisplaySrc] = useState(() =>
     verifiedImages.has(src) ? src : '',
   );
@@ -108,48 +130,65 @@ const CurrentImage: FC<{
   const isMobileLightbox = isFullscreen && isMobile;
 
   useEffect(() => {
+    if (skipLoader) return;
     if (verifiedImages.has(src)) {
       setDisplaySrc(src);
       return;
     }
     let cancelled = false;
     loadAndDecode(src).then(
-      () => { if (!cancelled) setDisplaySrc(src); },
+      () => {
+        if (!cancelled) setDisplaySrc(src);
+      },
       () => {},
     );
-    return () => { cancelled = true; };
-  }, [src]);
+    return () => {
+      cancelled = true;
+    };
+  }, [src, skipLoader]);
 
   const handleImgLoad = useCallback(() => {
-    setDomLoadedSrc(src);
+    setDomLoadedSrc((prev) => (prev === src ? prev : src));
   }, [src]);
 
   useEffect(() => {
-    if (isMobile && imgRef.current?.complete && imgRef.current.naturalWidth > 0) {
+    if (
+      isMobile &&
+      imgRef.current?.complete &&
+      imgRef.current.naturalWidth > 0
+    ) {
       setDomLoadedSrc(imgRef.current.getAttribute('src') || '');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile]);
 
+  const effectiveSrc = skipLoader ? src : displaySrc;
   const loading = isMobile
     ? domLoadedSrc !== src
+    : skipLoader
+    ? false
     : displaySrc !== src;
   const showMobileLightboxLoader = loading && isMobileLightbox;
   const showLoader = (loading && !isFullscreen) || showMobileLightboxLoader;
-  const showImage = displaySrc && (!loading || isMobile);
+  const showImage = effectiveSrc && (!loading || isMobile);
 
   return (
     <div className="relative flex h-full w-full items-center justify-center">
       {showLoader && (
-        <div className={cn(
-          'pointer-events-none absolute inset-0 flex items-center justify-center',
-          showMobileLightboxLoader && 'z-10',
-        )}>
+        <div
+          className={cn(
+            'pointer-events-none absolute inset-0 flex items-center justify-center',
+            showMobileLightboxLoader && 'z-10',
+          )}
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/icon-maison-transp.gif"
             alt=""
-            className={isFullscreen ? 'h-20 w-20' : 'h-24 w-24'}
+            className={cn(
+              'object-contain',
+              isFullscreen ? 'h-20 w-20' : 'h-24 w-24',
+            )}
           />
         </div>
       )}
@@ -157,7 +196,7 @@ const CurrentImage: FC<{
         // eslint-disable-next-line @next/next/no-img-element
         <img
           ref={isMobile ? imgRef : undefined}
-          src={displaySrc}
+          src={effectiveSrc}
           alt={alt}
           onClick={onClick}
           onLoad={isMobile ? handleImgLoad : undefined}
@@ -192,6 +231,8 @@ const Lightbox: FC<{
 
   const handleClose = useCallback(() => onCloseRef.current(), []);
 
+  const allLoaded = usePreloadAll(images, isMobile);
+
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -221,14 +262,24 @@ const Lightbox: FC<{
 
       <div
         ref={swipeRef}
-        className="relative flex h-full w-full items-center justify-center px-2 pb-16 pt-8 md:px-8"
+        className="relative flex h-full w-full items-center justify-center px-2 pb-8 pt-8 md:px-8"
         onClick={(e) => e.stopPropagation()}
       >
-        <CurrentImage
-          src={images[current]}
-          alt={alt ? `${alt} ${current + 1}/${images.length}` : undefined}
-          variant="fullscreen"
-        />
+        {allLoaded ? (
+          <CurrentImage
+            src={images[current]}
+            alt={alt ? `${alt} ${current + 1}/${images.length}` : undefined}
+            variant="fullscreen"
+            skipLoader={allLoaded && !isMobile}
+          />
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src="/icon-maison-transp.gif"
+            alt=""
+            className="h-20 w-20 object-contain"
+          />
+        )}
 
         {images.length > 1 && (
           <>
@@ -242,7 +293,7 @@ const Lightbox: FC<{
               className="absolute bottom-16 right-0 top-14 z-10 w-1/2 [-webkit-tap-highlight-color:transparent] md:inset-y-[5%] md:cursor-e-resize"
               aria-label="Image suivante"
             />
-            <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-sm text-white/60">
+            <span className="absolute left-4 top-4 z-20 text-sm text-white">
               {current + 1}/{images.length}
             </span>
           </>
@@ -268,6 +319,8 @@ export const ImageCarousel: FC<{
   const closeLightbox = useCallback(() => setLightboxOpen(false), []);
   const hasMultiple = images.length > 1;
 
+  const allLoaded = usePreloadAll(images, isMobile);
+
   return (
     <>
       <div ref={swipeRef} className="flex h-[55%] w-full flex-col md:h-[42%]">
@@ -276,31 +329,32 @@ export const ImageCarousel: FC<{
             src={images[current]}
             alt={alt ? `${alt} ${current + 1}/${images.length}` : undefined}
             variant="thumbnail"
+            skipLoader={allLoaded && !isMobile}
             onClick={() => setLightboxOpen(true)}
           />
         </div>
 
-        <div className="flex items-center justify-between px-2 py-1.5">
+        <div className="flex items-center justify-between py-1.5">
           <span className="min-w-[3rem] text-xs text-black">
             {hasMultiple ? `${current + 1}/${images.length}` : '\u00A0'}
           </span>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-8">
             {hasMultiple && (
               <>
                 <button
                   onClick={prev}
-                  className="cursor-pointer px-1 py-0.5 text-sm hover:opacity-60"
+                  className="cursor-pointer px-1 py-0.5 text-xs hover:opacity-60"
                   aria-label="Image précédente"
                 >
-                  &#8249;
+                  <span className="inline-block -scale-x-100">▸</span>
                 </button>
                 <button
                   onClick={next}
-                  className="cursor-pointer px-1 py-0.5 text-sm hover:opacity-60"
+                  className="cursor-pointer px-1 py-0.5 text-xs hover:opacity-60"
                   aria-label="Image suivante"
                 >
-                  &#8250;
+                  ▸
                 </button>
               </>
             )}
