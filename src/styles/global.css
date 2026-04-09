@@ -114,10 +114,10 @@ body {
 }
 
 .mapboxgl-ctrl-group button {
-  width: 36px;
-  height: 36px;
+  width: 28px;
+  height: 28px;
   background-color: black;
-  border: 1px solid white;
+  border: 1.5px solid white;
 }
 
 .mapboxgl-ctrl-bottom-right .mapboxgl-ctrl-geocoder {
@@ -126,23 +126,23 @@ body {
   padding: 0;
   font-family: 'Yoster-Island';
   background-color: transparent;
-  border: 1px solid white;
+  border: 1.5px solid white;
   border-radius: 0;
 }
 
 svg.mapboxgl-ctrl-geocoder--icon {
   fill: #fff;
   position: absolute;
-  top: 6px;
-  left: 6px;
-  width: 22px;
-  height: 22px;
+  top: 4px;
+  left: 4px;
+  width: 18px;
+  height: 18px;
 }
 
 .mapboxgl-ctrl-geocoder--input {
   color: white !important;
-  height: 36px !important;
-  padding: 0 36px !important;
+  height: 28px !important;
+  padding: 0 32px !important;
 }
 
 .mapboxgl-ctrl-geocoder--input:focus {
@@ -173,13 +173,13 @@ svg.mapboxgl-ctrl-geocoder--icon {
 }
 
 .mapboxgl-ctrl-geocoder--icon-search {
-  left: 7px;
-  width: 20px;
-  height: 20px;
+  left: 6px;
+  width: 18px;
+  height: 18px;
 }
 
 .mapboxgl-ctrl-geocoder--icon {
-  top: 8px;
+  top: 7px;
 }
 
 .mapboxgl-ctrl-geocoder--icon-close {
@@ -190,20 +190,20 @@ svg.mapboxgl-ctrl-geocoder--icon {
 }
 
 .mapboxgl-ctrl-geocoder.mapboxgl-ctrl-geocoder--collapsed {
-  width: 36px !important;
-  height: 36px;
-  min-width: 36px !important;
+  width: 28px !important;
+  height: 28px;
+  min-width: 28px !important;
 }
 
 .mapboxgl-ctrl-geocoder {
-  height: 36px;
+  height: 28px;
   width: 33.3333%;
   max-width: 360px;
 }
 
 .mapboxgl-ctrl-geocoder--input {
-  height: 36px;
-  padding: 6px 35px;
+  height: 28px;
+  padding: 6px 28px;
 }
 
 .mapboxgl-ctrl-bottom-left {
