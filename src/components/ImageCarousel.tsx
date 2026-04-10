@@ -117,9 +117,8 @@ const CurrentImage: FC<{
   src: string;
   alt?: string;
   variant: 'thumbnail' | 'fullscreen';
-  skipLoader?: boolean;
   onClick?: () => void;
-}> = ({ src, alt, variant, skipLoader, onClick }) => {
+}> = ({ src, alt, variant, onClick }) => {
   const [displaySrc, setDisplaySrc] = useState(() =>
     verifiedImages.has(src) ? src : '',
   );
@@ -130,7 +129,6 @@ const CurrentImage: FC<{
   const isMobileLightbox = isFullscreen && isMobile;
 
   useEffect(() => {
-    if (skipLoader) return;
     if (verifiedImages.has(src)) {
       setDisplaySrc(src);
       return;
@@ -145,7 +143,7 @@ const CurrentImage: FC<{
     return () => {
       cancelled = true;
     };
-  }, [src, skipLoader]);
+  }, [src]);
 
   const handleImgLoad = useCallback(() => {
     setDomLoadedSrc((prev) => (prev === src ? prev : src));
@@ -162,10 +160,11 @@ const CurrentImage: FC<{
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile]);
 
-  const effectiveSrc = skipLoader ? src : displaySrc;
+  const alreadyVerified = !isMobile && verifiedImages.has(src);
+  const effectiveSrc = alreadyVerified ? src : displaySrc;
   const loading = isMobile
     ? domLoadedSrc !== src
-    : skipLoader
+    : alreadyVerified
     ? false
     : displaySrc !== src;
   const showMobileLightboxLoader = loading && isMobileLightbox;
@@ -252,13 +251,20 @@ const Lightbox: FC<{
       className="fixed inset-0 z-[100] flex items-center justify-center bg-black"
       onClick={handleClose}
     >
-      <button
-        onClick={handleClose}
-        className="absolute right-4 top-4 z-20 cursor-pointer text-3xl text-white hover:text-white/70"
-        aria-label="Fermer"
-      >
-        &times;
-      </button>
+      <div className="absolute left-4 right-4 top-4 z-20 flex items-center justify-between">
+        {images.length > 1 && (
+          <span className="text-sm text-white">
+            {current + 1}/{images.length}
+          </span>
+        )}
+        <button
+          onClick={handleClose}
+          className="ml-auto cursor-pointer text-3xl leading-none text-white hover:text-white/70"
+          aria-label="Fermer"
+        >
+          &times;
+        </button>
+      </div>
 
       <div
         ref={swipeRef}
@@ -270,7 +276,6 @@ const Lightbox: FC<{
             src={images[current]}
             alt={alt ? `${alt} ${current + 1}/${images.length}` : undefined}
             variant="fullscreen"
-            skipLoader={allLoaded && !isMobile}
           />
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
@@ -293,9 +298,6 @@ const Lightbox: FC<{
               className="absolute bottom-16 right-0 top-14 z-10 w-1/2 [-webkit-tap-highlight-color:transparent] md:inset-y-[5%] md:cursor-e-resize"
               aria-label="Image suivante"
             />
-            <span className="absolute left-4 top-4 z-20 text-sm text-white">
-              {current + 1}/{images.length}
-            </span>
           </>
         )}
       </div>
@@ -325,13 +327,19 @@ export const ImageCarousel: FC<{
     <>
       <div ref={swipeRef} className="flex h-[55%] w-full flex-col md:h-[42%]">
         <div className="min-h-0 flex-1 overflow-hidden">
-          <CurrentImage
-            src={images[current]}
-            alt={alt ? `${alt} ${current + 1}/${images.length}` : undefined}
-            variant="thumbnail"
-            skipLoader={allLoaded && !isMobile}
-            onClick={() => setLightboxOpen(true)}
-          />
+          {!isMobile && !allLoaded ? (
+            <div className="flex h-full w-full items-center justify-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/icon-maison-transp.gif" alt="" className="h-24 w-24 object-contain" />
+            </div>
+          ) : (
+            <CurrentImage
+              src={images[current]}
+              alt={alt ? `${alt} ${current + 1}/${images.length}` : undefined}
+              variant="thumbnail"
+              onClick={() => setLightboxOpen(true)}
+            />
+          )}
         </div>
 
         <div className="flex items-center justify-between py-1.5">
