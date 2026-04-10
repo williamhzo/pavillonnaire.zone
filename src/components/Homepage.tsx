@@ -46,9 +46,9 @@ export default function Homepage() {
     <>
       <Link
         href={view === 'about' ? ROOT_PATH : ABOUT_PATH}
-        className="group absolute left-6 top-6 z-20 flex h-9 w-9 cursor-pointer items-center justify-center border border-white fill-current text-white mix-blend-difference"
+        className="group absolute left-6 top-6 z-20 flex h-7 w-7 cursor-pointer items-center justify-center border-[1.5px] border-white fill-current text-white mix-blend-difference"
       >
-        <div className="h-3 w-3 rotate-45 transform bg-white transition duration-300 ease-in-out group-hover:rotate-0" />
+        <div className="h-2.5 w-2.5 rotate-45 transform bg-white transition duration-300 ease-in-out group-hover:rotate-0" />
       </Link>
 
       {view === 'about' && (

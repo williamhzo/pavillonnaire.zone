@@ -10,7 +10,7 @@ module.exports = {
   theme: {
     fontFamily: {
       display: ['Gilroy', 'Arial', 'sans-serif'],
-      body: ['Alice', 'Arial', 'sans-serif'],
+      body: ['Redaction35', 'Arial', 'sans-serif'],
       serif: ['Yoster-Island', 'serif'],
     },
     extend: {

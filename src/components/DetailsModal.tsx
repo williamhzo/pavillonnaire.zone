@@ -3,6 +3,7 @@
 import { MapboxGeoJSONFeature } from 'mapbox-gl';
 import { ComponentProps, PropsWithChildren, FC } from 'react';
 import { cn, formatTypeString } from '@/utils';
+import { ImageCarousel } from './ImageCarousel';
 
 function Text({ children, className }: ComponentProps<'p'>) {
   return <p className={cn('text-center', className)}>{children}</p>;
@@ -19,8 +20,6 @@ export const DetailsModal: FC<DetailsModalProps> = ({ feature }) => {
     document.getElementById('details-dialog')?.classList.add('hidden');
   }
 
-  if (!feature) return null;
-
   const {
     title,
     type,
@@ -32,9 +31,23 @@ export const DetailsModal: FC<DetailsModalProps> = ({ feature }) => {
     year,
     place,
     image,
+    images: imagesRaw,
     abstract,
     link,
   } = feature.properties || {};
+
+  let images: string[] | null = null;
+  if (imagesRaw) {
+    if (typeof imagesRaw === 'string') {
+      try {
+        images = JSON.parse(imagesRaw);
+      } catch {
+        images = null;
+      }
+    } else {
+      images = imagesRaw;
+    }
+  }
 
   const types = formatTypeString(type);
 
@@ -43,23 +56,24 @@ export const DetailsModal: FC<DetailsModalProps> = ({ feature }) => {
       id="details-dialog"
       className="absolute invert-select right-0 top-0 z-50 hidden h-full w-full overflow-auto border border-black bg-white p-4 scrollbar-hide sm:w-[max(33%,350px)]"
     >
-      {image && (
-        <div className="flex h-[36%] w-full justify-center">
-          {/* TODO: Store images in dedicated provider and use Next Image (need to update next config to allow domain) */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={image} alt={title} className="object-cover " />
-        </div>
-      )}
+      {images && images.length > 0 ? (
+        <ImageCarousel
+          key={images[0]}
+          images={images}
+          alt={title}
+          onClose={toggleAside}
+        />
+      ) : image ? (
+        <ImageCarousel
+          key={image}
+          images={[image]}
+          alt={title}
+          onClose={toggleAside}
+        />
+      ) : null}
 
       <div className="flex flex-col items-center gap-2 py-2">
-        <button
-          onClick={toggleAside}
-          className="self-end p-4 text-2xl md:text-base"
-        >
-          &times;
-        </button>
-
-        <h3 className="mb-2 text-center font-serif text-base leading-6 ">
+        <h3 className="mt-8 mb-2 text-center font-serif text-base leading-6 ">
           {title}
         </h3>
 
