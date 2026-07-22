@@ -2,32 +2,315 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'Yoster-Island';
-  src:
-    local('yoster-island.regular'),
-    url(../../public/fonts/yoster-island.regular.ttf) format('truetype');
+:root {
+  --layout-rail: min(33.333vw, 264px);
+  --index-content-gutter-right: 1.5rem;
+  --index-content-gutter-left: 4.5rem;
+  --index-header-fade-height: 6rem;
+  --map-bottom-controls-reserve: calc(1.5rem + 28px + 0.125rem);
+  --filter-panel-fade-height: 1.5rem;
+  --filter-panel-header-padding: 1.5rem;
+  --filter-dropdown-width: 200px;
+  --index-grid-gap: 1.5rem;
+  --index-grid-columns: 2;
+  --index-grid-column: calc(
+    (
+        100vw - var(--index-content-gutter-left) -
+          var(--index-content-gutter-right) - (var(--index-grid-columns) - 1) *
+          var(--index-grid-gap)
+      ) /
+      var(--index-grid-columns)
+  );
+  --details-panel-width: calc(
+    var(--index-content-gutter-right) + var(--index-grid-column)
+  );
+}
+
+@media (min-width: 640px) {
+  :root {
+    --index-grid-columns: 3;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --index-content-gutter-left: var(--layout-rail);
+    --index-content-gutter-right: var(--layout-rail);
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --index-grid-columns: 5;
+  }
+}
+
+@layer utilities {
+  .index-content-gutter {
+    padding-left: var(--index-content-gutter-left);
+    padding-right: var(--index-content-gutter-right);
+  }
+
+  .index-grid-scroll {
+    padding-top: var(--index-header-fade-height);
+  }
+
+  .index-grid {
+    display: grid;
+    align-content: start;
+    grid-template-columns: repeat(var(--index-grid-columns), minmax(0, 1fr));
+    column-gap: var(--index-grid-gap);
+    row-gap: 2rem;
+  }
+
+  .index-header-fade {
+    height: var(--index-header-fade-height);
+    background: linear-gradient(
+      to bottom,
+      #ffffff 0%,
+      #ffffff 28%,
+      rgb(255 255 255 / 0.92) 42%,
+      rgb(255 255 255 / 0.72) 58%,
+      rgb(255 255 255 / 0.42) 74%,
+      rgb(255 255 255 / 0.14) 88%,
+      rgb(255 255 255 / 0) 100%
+    );
+  }
+
+  html.index-grid-view .site-title {
+    mix-blend-mode: normal;
+    color: #000;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .index-header-reserve {
+    height: calc(
+      var(--index-header-fade-height) - var(--filter-panel-header-padding)
+    );
+  }
+
+  .details-panel-width {
+    width: 100%;
+  }
+
+  @media (min-width: 640px) {
+    .details-panel-width {
+      width: max(25%, 350px);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .details-panel-width {
+      width: var(--details-panel-width);
+    }
+  }
+
+  .index-entry-media {
+    width: 100%;
+    height: clamp(5.5rem, 28vw, 9.5rem);
+    border: 1.5px solid #000;
+    padding: 0.5rem;
+  }
+
+  .index-entry-media-inner {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  @media (min-width: 640px) {
+    .index-entry-media {
+      height: clamp(6rem, 18vw, 9rem);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .index-entry-media {
+      height: clamp(5.5rem, 12vw, 8rem);
+    }
+  }
+
+  .index-entry-media img {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* Residual side-gap: fill the full cell width (see FIT_WIDTH_THRESHOLD_PX). */
+  .index-entry-media img.fit-width {
+    width: 100%;
+  }
+
+  .index-entry-caption {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    align-items: center;
+    gap: 0.375rem;
+  }
+
+  .index-entry-title {
+    display: block;
+    width: 0;
+    min-width: 0;
+    flex: 1 1 auto;
+    line-height: 1.375;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .filter-panel-scroll {
+    padding-bottom: calc(
+      var(--map-bottom-controls-reserve) + var(--filter-panel-fade-height)
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      #000 0%,
+      #000
+        calc(
+          100% - var(--map-bottom-controls-reserve) -
+            var(--filter-panel-fade-height)
+        ),
+      rgb(0 0 0 / 0.86)
+        calc(
+          100% - var(--map-bottom-controls-reserve) -
+            var(--filter-panel-fade-height) * 0.88
+        ),
+      rgb(0 0 0 / 0.58)
+        calc(
+          100% - var(--map-bottom-controls-reserve) -
+            var(--filter-panel-fade-height) * 0.74
+        ),
+      rgb(0 0 0 / 0.28)
+        calc(
+          100% - var(--map-bottom-controls-reserve) -
+            var(--filter-panel-fade-height) * 0.58
+        ),
+      rgb(0 0 0 / 0.08)
+        calc(
+          100% - var(--map-bottom-controls-reserve) -
+            var(--filter-panel-fade-height) * 0.42
+        ),
+      transparent calc(100% - var(--map-bottom-controls-reserve)),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      #000 0%,
+      #000
+        calc(
+          100% - var(--map-bottom-controls-reserve) -
+            var(--filter-panel-fade-height)
+        ),
+      rgb(0 0 0 / 0.86)
+        calc(
+          100% - var(--map-bottom-controls-reserve) -
+            var(--filter-panel-fade-height) * 0.88
+        ),
+      rgb(0 0 0 / 0.58)
+        calc(
+          100% - var(--map-bottom-controls-reserve) -
+            var(--filter-panel-fade-height) * 0.74
+        ),
+      rgb(0 0 0 / 0.28)
+        calc(
+          100% - var(--map-bottom-controls-reserve) -
+            var(--filter-panel-fade-height) * 0.58
+        ),
+      rgb(0 0 0 / 0.08)
+        calc(
+          100% - var(--map-bottom-controls-reserve) -
+            var(--filter-panel-fade-height) * 0.42
+        ),
+      transparent calc(100% - var(--map-bottom-controls-reserve)),
+      transparent 100%
+    );
+  }
+
+  .filter-panel-search-scrim {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 1;
+    height: calc(
+      var(--map-bottom-controls-reserve) + var(--filter-panel-fade-height)
+    );
+    pointer-events: none;
+  }
+
+  .filter-panel-search-scrim--light {
+    background: linear-gradient(
+      to top,
+      #ffffff 0%,
+      #ffffff 22%,
+      rgb(255 255 255 / 0.94) 38%,
+      rgb(255 255 255 / 0.78) 54%,
+      rgb(255 255 255 / 0.48) 70%,
+      rgb(255 255 255 / 0.2) 84%,
+      rgb(255 255 255 / 0) 100%
+    );
+  }
+
+  .filter-panel-search-scrim--dark {
+    background: linear-gradient(
+      to top,
+      #000000 0%,
+      #000000 22%,
+      rgb(0 0 0 / 0.94) 38%,
+      rgb(0 0 0 / 0.78) 54%,
+      rgb(0 0 0 / 0.48) 70%,
+      rgb(0 0 0 / 0.2) 84%,
+      rgb(0 0 0 / 0) 100%
+    );
+  }
+
+  .filter-panel-search-reserve {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: var(--map-bottom-controls-reserve);
+    pointer-events: none;
+  }
 }
 
 @font-face {
-  font-family: 'Redaction35';
+  font-family: "Yoster-Island";
+  src:
+    local("yoster-island.regular"),
+    url(../../public/fonts/yoster-island.regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Redaction35";
   font-weight: normal;
   font-style: normal;
-  src: url(../../public/fonts/Redaction35-Regular.otf) format('opentype');
+  src: url(../../public/fonts/Redaction35-Regular.otf) format("opentype");
 }
 
 @font-face {
-  font-family: 'Redaction35';
+  font-family: "Redaction35";
   font-weight: bold;
   font-style: normal;
-  src: url(../../public/fonts/Redaction35-Bold.otf) format('opentype');
+  src: url(../../public/fonts/Redaction35-Bold.otf) format("opentype");
 }
 
 @font-face {
-  font-family: 'Redaction35';
+  font-family: "Redaction35";
   font-weight: normal;
   font-style: italic;
-  src: url(../../public/fonts/Redaction35-Italic.otf) format('opentype');
+  src: url(../../public/fonts/Redaction35-Italic.otf) format("opentype");
 }
 
 *,
@@ -82,7 +365,7 @@ h6 {
 }
 
 body {
-  font-family: 'Redaction35';
+  font-family: "Redaction35";
 }
 
 ::selection {
@@ -99,18 +382,28 @@ body {
   outline: none;
 }
 
-.mapbox-logo {
-  display: none;
+.mapboxgl-ctrl-logo {
+  display: none !important;
 }
 
-/* prevent overlay between title and search bar */
-.mapboxgl-ctrl-top-right {
+.mapboxgl-ctrl-top-right,
+.mapboxgl-ctrl-bottom-left {
   z-index: 20;
-  mix-blend-mode: difference;
+  mix-blend-mode: normal;
+}
+
+.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl-group {
+  margin-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl:not(.mapboxgl-ctrl-group) {
+  margin: 0;
 }
 
 .mapboxgl-ctrl-group {
   border-radius: 0;
+  background: transparent;
 }
 
 .mapboxgl-ctrl-group button {
@@ -120,14 +413,25 @@ body {
   border: 1.5px solid white;
 }
 
+.mapboxgl-ctrl-group button:hover {
+  background-color: rgb(251 113 133) !important;
+  border-color: rgb(251 113 133) !important;
+}
+
 .mapboxgl-ctrl-bottom-right .mapboxgl-ctrl-geocoder {
   margin-bottom: 1.5rem;
   margin-right: 1.5rem;
   padding: 0;
-  font-family: 'Yoster-Island';
+  font-family: "Yoster-Island";
   background-color: transparent;
   border: 1.5px solid white;
   border-radius: 0;
+  box-shadow: none;
+}
+
+.mapboxgl-ctrl-geocoder,
+.mapboxgl-ctrl-geocoder .suggestions {
+  box-shadow: none !important;
 }
 
 svg.mapboxgl-ctrl-geocoder--icon {
@@ -142,7 +446,10 @@ svg.mapboxgl-ctrl-geocoder--icon {
 .mapboxgl-ctrl-geocoder--input {
   color: white !important;
   height: 28px !important;
-  padding: 0 32px !important;
+  /* Right side only needs a small gap: the close icon is hidden, so the full
+     "Recherche par lieu" placeholder gets the reclaimed room. Left keeps space
+     for the search icon. */
+  padding: 0 8px 0 32px !important;
 }
 
 .mapboxgl-ctrl-geocoder--input:focus {
@@ -163,9 +470,90 @@ svg.mapboxgl-ctrl-geocoder--icon {
   background: black !important;
 }
 
+html.index-grid-view .map-container {
+  position: absolute;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  background: transparent;
+}
+
+html.index-grid-view .mapboxgl-map {
+  background: transparent !important;
+}
+
+html.index-grid-view .mapboxgl-canvas-container,
+html.index-grid-view .mapboxgl-ctrl-bottom-left {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+html.index-grid-view .mapboxgl-ctrl-bottom-right {
+  visibility: visible !important;
+  pointer-events: auto;
+  mix-blend-mode: normal;
+  filter: none;
+  z-index: 50;
+}
+
+html.index-grid-view .mapboxgl-ctrl-bottom-right .mapboxgl-ctrl-geocoder {
+  border-color: #000;
+  background-color: #fff;
+  box-shadow: none !important;
+  filter: none;
+}
+
+html.index-grid-view .mapboxgl-ctrl-geocoder .suggestions,
+html.index-grid-view .mapboxgl-ctrl-geocoder .suggestions-wrapper {
+  box-shadow: none !important;
+  filter: none;
+}
+
+html.index-grid-view
+  .mapboxgl-ctrl-geocoder.mapboxgl-ctrl-geocoder--collapsed
+  .suggestions-wrapper {
+  display: none;
+}
+
+html.index-grid-view svg.mapboxgl-ctrl-geocoder--icon {
+  fill: #000;
+}
+
+html.index-grid-view .mapboxgl-ctrl-geocoder--input,
+html.index-grid-view .mapboxgl-ctrl-geocoder--input:focus {
+  color: #000 !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+html.index-grid-view .mapboxgl-ctrl-geocoder--button {
+  background: transparent !important;
+  box-shadow: none !important;
+  filter: none;
+}
+
+html.index-grid-view .mapboxgl-ctrl-geocoder--button:hover {
+  background: #000 !important;
+}
+
+html.index-grid-view
+  .mapboxgl-ctrl-geocoder--button:hover
+  svg.mapboxgl-ctrl-geocoder--icon {
+  fill: #fff;
+}
+
 .mapboxgl-ctrl-bottom-right {
   max-width: 100px;
   mix-blend-mode: difference;
+}
+
+@media (min-width: 768px) {
+  html:not(.index-grid-view):has(aside[data-filter-open])
+    .mapboxgl-ctrl-bottom-right {
+    z-index: 50;
+    pointer-events: auto;
+  }
 }
 
 .mapboxgl-ctrl-geocoder {
@@ -197,17 +585,14 @@ svg.mapboxgl-ctrl-geocoder--icon {
 
 .mapboxgl-ctrl-geocoder {
   height: 28px;
-  width: 33.3333%;
-  max-width: 360px;
+  width: min(var(--filter-dropdown-width), calc(100vw - 3rem)) !important;
+  min-width: 0 !important;
+  max-width: calc(100vw - 3rem);
 }
 
 .mapboxgl-ctrl-geocoder--input {
   height: 28px;
   padding: 6px 28px;
-}
-
-.mapboxgl-ctrl-bottom-left {
-  display: none;
 }
 
 .mapboxgl-ctrl-top-right .mapboxgl-ctrl {
@@ -268,7 +653,6 @@ see https://docs.mapbox.com/help/tutorials/building-a-store-locator/#define-inte
   width: 25px;
   height: 25px;
 }
-
 
 .mapbox-legend-item-description {
   min-height: 200px;

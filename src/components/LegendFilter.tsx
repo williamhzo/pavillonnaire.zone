@@ -1,23 +1,36 @@
-'use client';
+"use client";
 
-import { FC, useState } from 'react';
-import { cn } from '@/utils';
+import { FC } from "react";
+import { cn } from "@/utils";
 
-import { LAYERS_CONFIG, LayerType } from '@/constants/layers';
+import { LAYERS_CONFIG, LayerType } from "@/constants/layers";
 
 interface LegendFilterProps {
   selectedLayers: Set<LayerType>;
   onFilterChange: (layerId: LayerType) => void;
+  className?: string;
+  /** map: icons negated via mix-blend-difference. grid: map-container is an
+   *  isolated stacking context → blend dies, so icons render solid black. */
+  surface?: "map" | "grid";
 }
 
 export const LegendFilter: FC<LegendFilterProps> = ({
   selectedLayers,
   onFilterChange,
+  className,
+  surface = "map",
 }) => {
+  const isGrid = surface === "grid";
   return (
-    <nav className="absolute left-6 inset-y-0 flex flex-col justify-center gap-4">
+    <nav
+      aria-label="Filtres par catégorie"
+      className={cn(
+        "pointer-events-none absolute inset-y-0 left-6 flex flex-col justify-center gap-4",
+        className,
+      )}
+    >
       {LAYERS_CONFIG.map((layer) => {
-        const { id, label, Icon, OutlineIcon } = layer;
+        const { id, label, Icon, OutlineIcon = Icon } = layer;
 
         const isSelected = selectedLayers.has(id);
 
@@ -25,29 +38,33 @@ export const LegendFilter: FC<LegendFilterProps> = ({
           <button
             key={id}
             onClick={() => onFilterChange(id)}
-            className={cn(
-              'pointer-events-auto group relative flex items-center outline-none'
-            )}
+            className="group relative flex items-center outline-none pointer-events-auto"
             aria-label={`Filtrer ${label}`}
             aria-pressed={isSelected}
           >
-            <div className="relative h-7 w-7 ">
+            <div className="relative h-7 w-7">
               <div
                 className={cn(
-                  'absolute inset-0 mix-blend-difference z-20 isolation-isolate',
+                  "absolute inset-0 z-20 isolation-isolate",
+                  !isGrid && "mix-blend-difference",
                   isSelected
-                    ? 'opacity-0'
-                    : 'opacity-100 group-hover:[@media(hover:hover)]:opacity-0'
+                    ? "opacity-0"
+                    : "opacity-100 group-hover:[@media(hover:hover)]:opacity-0",
                 )}
               >
-                <OutlineIcon className="h-7 w-7 text-white" />
+                <OutlineIcon
+                  className={cn(
+                    "h-7 w-7",
+                    isGrid ? "text-black" : "text-white",
+                  )}
+                />
               </div>
               <div
                 className={cn(
-                  'absolute inset-0 z-20 isolation-isolate',
+                  "absolute inset-0 z-20 isolation-isolate",
                   isSelected
-                    ? 'opacity-100'
-                    : 'opacity-0 group-hover:[@media(hover:hover)]:opacity-100'
+                    ? "opacity-100"
+                    : "opacity-0 group-hover:[@media(hover:hover)]:opacity-100",
                 )}
               >
                 <Icon className="h-7 w-7 text-white" />
@@ -56,10 +73,10 @@ export const LegendFilter: FC<LegendFilterProps> = ({
 
             <span
               className={cn(
-                'absolute flex h-7 items-center left-full ml-4 whitespace-nowrap border border-white/20 bg-black px-3 text-xs text-white font-serif tracking-wider z-20 backdrop-blur-sm bg-neutral-800/50',
-                'opacity-0 pointer-events-none',
-                'group-hover:[@media(hover:hover)]:opacity-100 group-hover:[@media(hover:hover)]:pointer-events-auto group-hover:[@media(hover:hover)]:bg-neutral-600/50',
-                isSelected && 'opacity-100 pointer-events-auto'
+                "absolute left-full z-20 ml-4 flex h-7 items-center whitespace-nowrap border border-white/20 bg-neutral-800/50 px-3 font-serif text-xs tracking-wider text-white backdrop-blur-sm",
+                "pointer-events-none opacity-0",
+                "group-hover:[@media(hover:hover)]:pointer-events-auto group-hover:[@media(hover:hover)]:opacity-100 group-hover:[@media(hover:hover)]:bg-neutral-600/50",
+                isSelected && "pointer-events-auto opacity-100",
               )}
             >
               {label}

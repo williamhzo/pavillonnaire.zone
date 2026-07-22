@@ -1,12 +1,14 @@
-'use client';
+"use client";
 
-import useMediaQuery from '@/hooks/useMediaQuery';
-import { useEffect, useRef, useState } from 'react';
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
-import ReactDOM from 'react-dom';
-import mapboxgl, { MapboxGeoJSONFeature, Marker } from 'mapbox-gl';
-import { Tooltip } from '@/components/Tooltip';
-import { LAYER_IDS, LayerType } from '@/constants/layers';
+import useMediaQuery from "@/hooks/useMediaQuery";
+import { useEffect, useRef, useState } from "react";
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import ReactDOM from "react-dom";
+import mapboxgl, { MapboxGeoJSONFeature, Marker } from "mapbox-gl";
+import { Tooltip } from "@/components/Tooltip";
+import { LAYER_IDS, LayerType } from "@/constants/layers";
+import { buildMapboxMultiValueFilter } from "@/lib/normalize";
+import { AUTHOR_FILTER_FIELDS, ActiveFilters } from "@/types/entry";
 
 const INITIAL_LONGITUDE = 1.872;
 const INITIAL_LATITUDE = 46.62;
@@ -21,23 +23,61 @@ const getEffectiveVisibleLayers = (selection: Set<LayerType>) => {
   return selection;
 };
 
-export function useMapBox() {
+function buildLayerFilter(activeFilters: ActiveFilters): unknown[] | null {
+  const conditions: unknown[][] = [];
+
+  if (activeFilters.date.length > 0) {
+    conditions.push([
+      "any",
+      ...activeFilters.date.map((d) => [
+        "==",
+        ["to-string", ["get", "year"]],
+        d,
+      ]),
+    ]);
+  }
+  const typeFilter = buildMapboxMultiValueFilter("type", activeFilters.type);
+  if (typeFilter) conditions.push(typeFilter);
+
+  const placeFilter = buildMapboxMultiValueFilter("place", activeFilters.place);
+  if (placeFilter) conditions.push(placeFilter);
+
+  if (activeFilters.author.length > 0) {
+    const authorFilters = AUTHOR_FILTER_FIELDS.flatMap((f) => {
+      const filter = buildMapboxMultiValueFilter(f, activeFilters.author);
+      return filter ? [filter] : [];
+    });
+    if (authorFilters.length > 0) {
+      conditions.push(["any", ...authorFilters]);
+    }
+  }
+
+  return conditions.length > 0 ? ["all", ...conditions] : null;
+}
+
+export function useMapBox(activeFilters: ActiveFilters, isMapVisible = true) {
   const [feature, setFeature] = useState<MapboxGeoJSONFeature | undefined>();
   const [selectedLayers, setSelectedLayers] = useState<Set<LayerType>>(
-    new Set()
+    new Set(),
   );
   const [isMapLoaded, setIsMapLoaded] = useState(false);
 
-  const isLaptop = useMediaQuery('(min-width: 1024px)');
+  const isLaptop = useMediaQuery("(min-width: 1024px)");
 
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const tooltipRef = useRef(new mapboxgl.Popup({ offset: [0, 0] }));
   const selectedLayersRef = useRef<Set<LayerType>>(new Set());
+  const prevFilterKeyRef = useRef("");
 
   useEffect(() => {
+    const container = mapContainerRef.current;
+    if (!container) return;
+
+    setIsMapLoaded(false);
+
     const map: mapboxgl.Map = new mapboxgl.Map({
-      container: mapContainerRef.current as HTMLDivElement,
+      container,
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN,
       style: process.env.NEXT_PUBLIC_MAPBOX_STYLE,
       center: [INITIAL_LONGITUDE, INITIAL_LATITUDE],
@@ -49,31 +89,35 @@ export function useMapBox() {
 
     const geocoder = new MapboxGeocoder({
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN as string,
-      countries: 'fr',
-      language: 'fr-FR',
-      placeholder: 'Recherche par lieu',
+      countries: "fr",
+      language: "fr-FR",
+      placeholder: "Recherche par lieu",
       mapboxgl: mapboxgl,
       collapsed: true,
       limit: 3,
       enableEventLogging: false,
-      marker: { color: '#000' } as unknown as Marker,
+      marker: { color: "#000" } as unknown as Marker,
     });
 
-    // Navigation control (zoom buttons)
     map.addControl(
       new mapboxgl.NavigationControl({ showZoom: false }),
-      'top-right'
+      "bottom-left",
     );
 
     // Search
-    map.addControl(geocoder, 'bottom-right');
-    map.once('styledata', () => {
+    map.addControl(geocoder, "bottom-right");
+    map.once("styledata", () => {
       setIsMapLoaded(true);
     });
 
+    function isDetailsDialogOpen() {
+      const dialog = document.getElementById("details-dialog");
+      return !!dialog && !dialog.classList.contains("hidden");
+    }
+
     function getVisibleFeatures(point: mapboxgl.Point) {
       const effectiveLayers = getEffectiveVisibleLayers(
-        selectedLayersRef.current
+        selectedLayersRef.current,
       );
       return map.queryRenderedFeatures(point, {
         layers: Array.from(effectiveLayers),
@@ -87,24 +131,23 @@ export function useMapBox() {
       const features = getVisibleFeatures(event.point);
 
       if (!features.length) {
-        map.getCanvas().style.cursor = 'inherit';
+        map.getCanvas().style.cursor = "inherit";
         tooltipRef.current.remove();
         return;
       }
 
       const feature = features[0];
-      setFeature(feature);
 
-      map.getCanvas().style.cursor = 'pointer';
+      if (!isDetailsDialogOpen()) setFeature(feature);
 
-      // Create tooltip node
-      const tooltipNode = document.createElement('div');
+      map.getCanvas().style.cursor = "pointer";
+
+      const tooltipNode = document.createElement("div");
 
       // TODO: replace deprecated ReactDOM.render below by createRoot.
       // eslint-disable-next-line react/no-deprecated
       ReactDOM.render(<Tooltip feature={feature} />, tooltipNode);
 
-      // Set tooltip on map
       tooltipRef.current
         .setLngLat(event.lngLat)
         .setDOMContent(tooltipNode)
@@ -112,29 +155,65 @@ export function useMapBox() {
     }
 
     // desktop
-    map.on('mousemove', renderTooltip);
+    map.on("mousemove", renderTooltip);
 
     function toggleDetailsDialog(
-      event: mapboxgl.MapMouseEvent & mapboxgl.EventData
+      event: mapboxgl.MapMouseEvent & mapboxgl.EventData,
     ) {
-      const dialog = document.getElementById('details-dialog');
+      const dialog = document.getElementById("details-dialog");
 
       const features = getVisibleFeatures(event.point);
 
       if (!features.length) {
-        dialog?.classList.add('hidden');
+        dialog?.classList.add("hidden");
         setFeature(undefined);
         return;
       }
 
-      dialog?.classList.remove('hidden');
+      setFeature(features[0]);
+      dialog?.classList.remove("hidden");
     }
 
-    map.on('click', toggleDetailsDialog);
+    map.on("click", toggleDetailsDialog);
 
-    // Clean up on unmount
-    return () => map.remove();
+    return () => {
+      prevFilterKeyRef.current = "";
+      setIsMapLoaded(false);
+      map.remove();
+      mapRef.current = null;
+    };
   }, [isLaptop]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !isMapLoaded || !isMapVisible) return;
+
+    let cancelled = false;
+    const resize = () => {
+      if (!cancelled) map.resize();
+    };
+    requestAnimationFrame(() => requestAnimationFrame(resize));
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isMapVisible, isMapLoaded]);
+
+  useEffect(() => {
+    if (!mapRef.current || !isMapLoaded) return;
+
+    const filterKey = JSON.stringify(activeFilters);
+    if (filterKey === prevFilterKeyRef.current) return;
+    prevFilterKeyRef.current = filterKey;
+
+    const filter = buildLayerFilter(activeFilters);
+    LAYER_IDS.forEach((id) => {
+      if (mapRef.current?.getLayer(id)) {
+        const map = mapRef.current;
+        map.setFilter(id, filter as Parameters<typeof map.setFilter>[1]);
+      }
+    });
+  }, [activeFilters, isMapLoaded]);
 
   const toggleLayer = (layerId: LayerType) => {
     setSelectedLayers((prev) => {
@@ -154,8 +233,8 @@ export function useMapBox() {
           const isVisible = effectiveLayers.has(id as LayerType);
           mapRef.current.setLayoutProperty(
             id,
-            'visibility',
-            isVisible ? 'visible' : 'none'
+            "visibility",
+            isVisible ? "visible" : "none",
           );
         }
       });
@@ -164,5 +243,24 @@ export function useMapBox() {
     });
   };
 
-  return { mapContainerRef, feature, toggleLayer, selectedLayers, isMapLoaded };
+  const clearSelectedLayers = () => {
+    const empty = new Set<LayerType>();
+    selectedLayersRef.current = empty;
+    setSelectedLayers(empty);
+
+    LAYER_IDS.forEach((id) => {
+      if (mapRef.current?.getLayer(id)) {
+        mapRef.current.setLayoutProperty(id, "visibility", "visible");
+      }
+    });
+  };
+
+  return {
+    mapContainerRef,
+    feature,
+    toggleLayer,
+    clearSelectedLayers,
+    selectedLayers,
+    isMapLoaded,
+  };
 }

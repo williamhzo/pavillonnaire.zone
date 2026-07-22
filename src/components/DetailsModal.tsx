@@ -1,23 +1,26 @@
-'use client';
+"use client";
 
-import { MapboxGeoJSONFeature } from 'mapbox-gl';
-import { ComponentProps, PropsWithChildren, FC } from 'react';
-import { cn, formatTypeString } from '@/utils';
-import { ImageCarousel } from './ImageCarousel';
+import { MapboxGeoJSONFeature } from "mapbox-gl";
+import { ComponentProps, PropsWithChildren, FC } from "react";
+import { cn, formatTypeString } from "@/utils";
+import { formatMultiValueString } from "@/lib/normalize";
+import { ImageCarousel } from "./ImageCarousel";
 
-function Text({ children, className }: ComponentProps<'p'>) {
-  return <p className={cn('text-center', className)}>{children}</p>;
+function Text({ children, className }: ComponentProps<"p">) {
+  return <p className={cn("text-center", className)}>{children}</p>;
 }
 
 type DetailsModalProps = PropsWithChildren<{
   feature: MapboxGeoJSONFeature | undefined;
+  onClose?: () => void;
 }>;
 
-export const DetailsModal: FC<DetailsModalProps> = ({ feature }) => {
+export const DetailsModal: FC<DetailsModalProps> = ({ feature, onClose }) => {
   if (!feature) return null;
 
   function toggleAside() {
-    document.getElementById('details-dialog')?.classList.add('hidden');
+    document.getElementById("details-dialog")?.classList.add("hidden");
+    onClose?.();
   }
 
   const {
@@ -38,7 +41,7 @@ export const DetailsModal: FC<DetailsModalProps> = ({ feature }) => {
 
   let images: string[] | null = null;
   if (imagesRaw) {
-    if (typeof imagesRaw === 'string') {
+    if (typeof imagesRaw === "string") {
       try {
         images = JSON.parse(imagesRaw);
       } catch {
@@ -54,7 +57,7 @@ export const DetailsModal: FC<DetailsModalProps> = ({ feature }) => {
   return (
     <aside
       id="details-dialog"
-      className="absolute invert-select right-0 top-0 z-50 hidden h-full w-full overflow-auto border border-black bg-white p-4 scrollbar-hide sm:w-[max(33%,350px)]"
+      className="details-panel-width absolute invert-select right-0 top-0 z-50 hidden h-full overflow-auto bg-white p-4 scrollbar-hide"
     >
       {images && images.length > 0 ? (
         <ImageCarousel
@@ -78,13 +81,13 @@ export const DetailsModal: FC<DetailsModalProps> = ({ feature }) => {
         </h3>
 
         {types && <Text className="italic lowercase">{types}</Text>}
-        {author && <Text>{author}</Text>}
-        {director && <Text>{director}</Text>}
-        {artist && <Text>{artist}</Text>}
-        {album && <Text>{album}</Text>}
-        {editor && <Text>{editor}</Text>}
+        {author && <Text>{formatMultiValueString(author)}</Text>}
+        {director && <Text>{formatMultiValueString(director)}</Text>}
+        {artist && <Text>{formatMultiValueString(artist)}</Text>}
+        {album && <Text>{formatMultiValueString(album)}</Text>}
+        {editor && <Text>{formatMultiValueString(editor)}</Text>}
         {year && <Text>{year}</Text>}
-        {place && <Text>{place}</Text>}
+        {place && <Text>{formatMultiValueString(place)}</Text>}
         {link && <LinkItem linkTo={link} />}
         {abstract && <Text className="text-justify text-sm">{abstract}</Text>}
       </div>
@@ -98,12 +101,11 @@ const LinkItem: FC<{ linkTo: string }> = ({ linkTo }) => {
       href={linkTo}
       target="_blank"
       rel="noreferrer"
-      aria-hidden={true}
+      aria-label="Voir plus"
       className="my-6 p-6 transition-transform duration-300 hover:translate-x-2"
     >
-      <span className="sr-only">Voir plus</span>
-
       <svg
+        aria-hidden={true}
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 173 27"

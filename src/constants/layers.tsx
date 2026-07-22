@@ -12,8 +12,16 @@ import RomeoOutlineIcon from '@/assets/LegendIcons/romeo_outline.svg';
 import ZuluIcon from '@/assets/LegendIcons/zulu_r.svg';
 import ZuluOutlineIcon from '@/assets/LegendIcons/zulu_outline.svg';
 
+export type LayerType =
+  | 'edition'
+  | 'musique'
+  | 'photographie'
+  | 'audiovisuel'
+  | 'ville'
+  | 'initiative';
+
 export interface LayerConfig {
-  id: string;
+  id: LayerType;
   label: string;
   Icon: FC<{ className?: string }>;
   OutlineIcon?: FC<{ className?: string }>;
@@ -21,7 +29,7 @@ export interface LayerConfig {
   description: ReactNode;
 }
 
-export const LAYERS_CONFIG = [
+export const LAYERS_CONFIG: LayerConfig[] = [
   {
     id: 'edition',
     label: 'Édition',
@@ -135,4 +143,6 @@ export const LAYERS_CONFIG = [
 
 export const LAYER_IDS = LAYERS_CONFIG.map((layer) => layer.id);
 
-export type LayerType = (typeof LAYERS_CONFIG)[number]['id'];
+export function isLayerType(id: string): id is LayerType {
+  return (LAYER_IDS as string[]).includes(id);
+}
